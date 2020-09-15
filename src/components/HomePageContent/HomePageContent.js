@@ -31,10 +31,26 @@ const HomePageContent = () => {
       imgPath: uploadIcon,
     },
     {
-      cardTitle: "E-Books",
+      cardTitle: "e-Books",
       cardSubTitle: "all your documents",
       cardContent:
         "Once you uploaded the documents, you can view their status, preview, history at anytime",
+      routePath: "e-books",
+      imgPath: viewIcon,
+    },
+    {
+      cardTitle: "Audio Books",
+      cardSubTitle: "all your documents",
+      cardContent:
+          "Once you uploaded the documents, you can view their status, preview, history at anytime",
+      routePath: "e-books",
+      imgPath: viewIcon,
+    },
+    {
+      cardTitle: "Article",
+      cardSubTitle: "all your documents",
+      cardContent:
+          "Once you uploaded the documents, you can view their status, preview, history at anytime",
       routePath: "e-books",
       imgPath: viewIcon,
     },
@@ -42,16 +58,16 @@ const HomePageContent = () => {
 
   return (
     <div className="home-content">
-      {cardsArr.map((item, index) => (
-        <SimpleCard
-          cardTitle={item.cardTitle}
-          cardSubTitle={item.cardSubTitle}
-          cardContent={item.cardContent}
-          routePath={item.routePath}
-          imgPath={item.imgPath}
-          key={index}
-        />
-      ))}
+        {cardsArr.map((item, index) => (
+            <SimpleCard
+                cardTitle={item.cardTitle}
+                cardSubTitle={item.cardSubTitle}
+                cardContent={item.cardContent}
+                routePath={item.routePath}
+                imgPath={item.imgPath}
+                key={index}
+            />
+        ))}
     </div>
   );
 };

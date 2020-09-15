@@ -1,47 +1,50 @@
 import React from "react";
-import Typography from "@material-ui/core/Typography";
-import { withStyles } from "@material-ui/core/styles";
+import {withStyles} from "@material-ui/core/styles";
 import { Link } from '@material-ui/core'
+import Carasoul1 from "../../images/carasoul1.png";
 
 const styles = (theme) => ({
-  homePage: {
-    textAlign: "center",
-  },
-  homePageIntro: {
-    fontSize: "large",
-  },
   button: {
     margin: theme.spacing.unit,
   },
 });
 
-const LogInOrSignUp = () => {
-  return (
-    <div>
-        <div>
-        <Link
-            component="button"
-            variant="body2"
-            onClick={() => {
-                console.info("Sign Up with Email");
-            }}
-        >
-            Sign up with Email
-        </Link>
-        </div>
-        <div>
-        <Link
-            component="button"
-            variant="body2"
-            onClick={() => {
-                console.info("Sign Up with Email");
-            }}
-        >
-            Already have an account? Sign in
-        </Link>
-        </div>
-    </div>
-  );
+const LogInOrSignUp = (props) => {
+
+    const handleRoute = (route) => {
+        props.history.push(`/${route}`);
+    };
+
+    // const { active, updateWindow } = props
+    // if (active === true) {
+        return (
+            <div>
+                Let's open the gates to accessibility...
+                <div> <img src={Carasoul1} alt="Carasoul" height="400px" /> </div>
+                <div>
+                    <Link
+                        component="button"
+                        variant="body2"
+                        // onClick={() => updateWindow('SIGNUP')}
+                        onClick={() => handleRoute('signup')}
+                    >
+                        Sign Up with Email
+                    </Link>
+                </div>
+                <div>
+                    <Link
+                        component="button"
+                        variant="body2"
+                        // onClick={() => updateWindow('LOGIN')}
+                        onClick={() => handleRoute('login')}
+                    >
+                        Already have an account? Sign In
+                    </Link>
+                </div>
+            </div>
+        );
+    // } else
+    //     return null
 };
 
 export default withStyles(styles)(LogInOrSignUp);

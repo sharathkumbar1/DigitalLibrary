@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Helmet from "react-helmet";
-import { Route, Switch, withRouter } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import Drawer from "@material-ui/core/Drawer";
 import IconButton from "@material-ui/core/IconButton";
@@ -18,6 +18,8 @@ import AppHeader from "../Header/Header";
 /* ROUTE COMPONENTS */
 import HomePage from "./../HomePage/HomePage";
 import LogInOrSignUp from "./../Login/LogInOrSignUp";
+import LogIn from "./../Login/LogIn";
+import SignUp from "./../Login/SignUp";
 import SearchPage from "./../SearchPage/SearchPage";
 import BrowsePage from "./../BrowsePage/BrowsePage";
 import DisclaimerPage from "./../DisclaimerPage/DisclaimerPage";
@@ -205,8 +207,9 @@ const Layout = (props) => {
             <Grid item xs={12} style={{ marginTop: 60 }}>
               {/* routes */}
               <Switch>
-                <Route exact path="/" component={HomePage} />
-                <Route exact path="/login" component={LogInOrSignUp} />
+                <Route exact path="/" component={LogInOrSignUp} />
+                <Route exact path="/login" component={LogIn} />
+                <Route exact path="/signup" component={SignUp} />
                 <Route exact path="/search" component={SearchPage} />
                 <Route exact path="/browse" component={BrowsePage} />
                 <Route exact path="/disclaimer" component={DisclaimerPage} />
