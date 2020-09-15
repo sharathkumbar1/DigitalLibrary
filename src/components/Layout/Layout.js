@@ -17,6 +17,7 @@ import AppHeader from "../Header/Header";
 
 /* ROUTE COMPONENTS */
 import HomePage from "./../HomePage/HomePage";
+import LogInOrSignUp from "./../Login/LogInOrSignUp";
 import SearchPage from "./../SearchPage/SearchPage";
 import BrowsePage from "./../BrowsePage/BrowsePage";
 import DisclaimerPage from "./../DisclaimerPage/DisclaimerPage";
@@ -205,6 +206,7 @@ const Layout = (props) => {
               {/* routes */}
               <Switch>
                 <Route exact path="/" component={HomePage} />
+                <Route exact path="/login" component={LogInOrSignUp} />
                 <Route exact path="/search" component={SearchPage} />
                 <Route exact path="/browse" component={BrowsePage} />
                 <Route exact path="/disclaimer" component={DisclaimerPage} />
