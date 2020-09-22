@@ -1,74 +1,83 @@
 import React from "react";
-import SimpleCard from "./SimpleCard";
+import { makeStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
+import GridList from "@material-ui/core/GridList";
+import GridListTile from "@material-ui/core/GridListTile";
+import GridListTileBar from "@material-ui/core/GridListTileBar";
+import ListSubheader from "@material-ui/core/ListSubheader";
+import IconButton from "@material-ui/core/IconButton";
+import InfoIcon from "@material-ui/icons/Info";
+import tileData from "./tileData";
 import createIcon from "../../images/files-37-256.png";
 import parseIcon from "../../images/files-07-256.png";
 import uploadIcon from "../../images/files-49-256.png";
 import viewIcon from "../../images/files-44-256.png";
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "space-around",
+    overflow: "hidden",
+    backgroundColor: theme.palette.background.paper,
+  },
+  gridList: {
+    width: 1000,
+    height: 1000,
+  },
+  titleBar: {
+    background:
+      "linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)",
+  },
+  icon: {
+    color: "rgba(255, 255, 255, 0.54)",
+  },
+}));
+
 const HomePageContent = () => {
-  const cardsArr = [
-    {
-      cardTitle: "Personal Development",
-      cardSubTitle: "new template",
-      cardContent:
-        "Create new template by marking your own highlight areas on a pdf document and save it. So that next time you can do a bulk upload against that template.",
-      routePath: "personal-development",
-      imgPath: createIcon,
-    },
-    {
-      cardTitle: "Natural Sciences and Mathematics ",
-      cardSubTitle: "a document",
-      cardContent:
-        "It's always good to check the highlights in the template before you do a bulk uploading.",
-      routePath: "science-maths",
-      imgPath: parseIcon,
-    },
-    {
-      cardTitle: "Fiction",
-      cardSubTitle: "bulk documents",
-      cardContent: "Upload multiple documents against a template you choose.",
-      routePath: "fiction",
-      imgPath: uploadIcon,
-    },
-    {
-      cardTitle: "e-Books",
-      cardSubTitle: "all your documents",
-      cardContent:
-        "Once you uploaded the documents, you can view their status, preview, history at anytime",
-      routePath: "e-books",
-      imgPath: viewIcon,
-    },
-    {
-      cardTitle: "Audio Books",
-      cardSubTitle: "all your documents",
-      cardContent:
-          "Once you uploaded the documents, you can view their status, preview, history at anytime",
-      routePath: "e-books",
-      imgPath: viewIcon,
-    },
-    {
-      cardTitle: "Article",
-      cardSubTitle: "all your documents",
-      cardContent:
-          "Once you uploaded the documents, you can view their status, preview, history at anytime",
-      routePath: "e-books",
-      imgPath: viewIcon,
-    },
-  ];
+  const classes = useStyles();
 
   return (
-    <div className="home-content">
-        {cardsArr.map((item, index) => (
-            <SimpleCard
-                cardTitle={item.cardTitle}
-                cardSubTitle={item.cardSubTitle}
-                cardContent={item.cardContent}
-                routePath={item.routePath}
-                imgPath={item.imgPath}
-                key={index}
+    <div className={classes.root}>
+      <GridList cellHeight={300} spacing={30} className={classes.gridList}>
+        <GridListTile key="Subheader" cols={4} style={{ height: "auto" }}>
+          <ListSubheader component="div"></ListSubheader>
+        </GridListTile>
+        {tileData.map((tile) => (
+          <GridListTile key={tile.img}>
+            <span>{tile.category}</span>
+            <img src={tile.img} alt={tile.title} />
+
+            <GridListTileBar
+              title={tile.title}
+              actionIcon={
+                <>
+                  <IconButton
+                    aria-label={`info about ${tile.title}`}
+                    className={classes.icon}
+                  >
+                    <InfoIcon />
+                  </IconButton>
+                </>
+              }
             />
+          </GridListTile>
         ))}
+      </GridList>
     </div>
+
+    // <div className="home-content">
+    //     {cardsArr.map((item, index) => (
+    //         <SimpleCard
+    //             cardTitle={item.cardTitle}
+    //             cardSubTitle={item.cardSubTitle}
+    //             cardContent={item.cardContent}
+    //             routePath={item.routePath}
+    //             imgPath={item.imgPath}
+    //             key={index}
+    //         />
+    //     ))}
+    // </div>
   );
 };
 

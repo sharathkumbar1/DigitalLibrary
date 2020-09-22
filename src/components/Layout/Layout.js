@@ -207,7 +207,8 @@ const Layout = (props) => {
             <Grid item xs={12} style={{ marginTop: 60 }}>
               {/* routes */}
               <Switch>
-                <Route exact path="/" component={LogInOrSignUp} />
+                {/* <Route exact path="/" component={LogInOrSignUp} /> */}
+                <Route exact path="/" component={HomePage} />
                 <Route exact path="/login" component={LogIn} />
                 <Route exact path="/signup" component={SignUp} />
                 <Route exact path="/search" component={SearchPage} />
