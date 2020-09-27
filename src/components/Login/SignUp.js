@@ -1,15 +1,41 @@
 import React from "react";
-import { withStyles } from "@material-ui/core/styles";
-import { Button, Link, Checkbox, TextField, RadioGroup, FormControlLabel, Radio } from '@material-ui/core'
+import {withStyles} from "@material-ui/core/styles";
+import {
+    Button,
+    Checkbox,
+    FormControlLabel,
+    Grid,
+    Link,
+    Paper,
+    Radio,
+    RadioGroup,
+    TextField,
+    Typography
+} from '@material-ui/core'
 
 const styles = (theme) => ({
-  button: {
-    margin: theme.spacing.unit,
-  },
+    button: {
+        margin: theme.spacing.unit,
+    },
+
+    signupForm: {
+        justifyContent: "center",
+        minHeight: "90vh",
+    },
+
+    signupBackground: {
+        padding: "20px",
+        minHeight: "62vh",
+        maxWidth: "50vh",
+        justifyContent: "center",
+    },
+    genderRadioGroup: {
+        display: "block",
+    },
 });
 
 const SignUp = (props) => {
-    const preventDefault = (event) => event.preventDefault();
+    const { classes } = props;
 
     const handleRoute = (route) => {
         props.history.push(`/${route}`);
@@ -19,48 +45,120 @@ const SignUp = (props) => {
     // if (active === true) {
 
         return (
+
             <div>
-                Create your account
-                <div>
-                    <TextField id="firstname" label="First Name" variant="outlined"/>
-                </div>
-                <div>
-                    <TextField id="lastname" label="Last Name" variant="outlined"/>
-                </div>
-                <div>
-                    <TextField id="email" label="Email" variant="outlined"/>
-                </div>
-                <div>
-                    <TextField id="password" label="Password" variant="outlined"/>
-                </div>
-
-                <RadioGroup aria-label="gender" name="gender1">
-                    <FormControlLabel value="female" control={<Radio/>} label="Female"/>
-                    <FormControlLabel value="male" control={<Radio/>} label="Male"/>
-                </RadioGroup>
-
-                <Checkbox
-                    size="small"
-                    inputProps={{'aria-label': 'checkbox with small size'}}
-                />
-                I agree to Samarthanam {}
-                <Link href="https://www.samarthanam.org/terms-conditions/" onClick={preventDefault} color="inherit">
-                    Terms & Conditions
-                </Link>
-
-                <div>
-                    <Button variant="contained">Sign Up</Button>
-                </div>
-                <div>
-                    <Link
-                        component="button"
-                        variant="body2"
-                        // onClick={() => updateWindow('LOGIN')}
-                        onClick={() => handleRoute('login')}
-                    >
-                        Already have an account? Sign In
-                    </Link>
-                </div>
+                <Grid container spacing={0} justify="center" direction="row">
+                    <Grid item>
+                        <Grid
+                            container
+                            direction="column"
+                            justify="center"
+                            spacing={2}
+                            className={classes.signupForm}
+                        >
+                            <Paper
+                                variant="elevation"
+                                elevation={2}
+                                className={classes.signupBackground}
+                            >
+                                <Grid item>
+                                    <Typography component="h1" variant="h5">
+                                        Create your account
+                                    </Typography>
+                                </Grid>
+                                <Grid item>
+                                    <form >
+                                        <Grid container direction="column" spacing={1}>
+                                            <Grid item>
+                                                <TextField
+                                                    type="name"
+                                                    placeholder="First Name"
+                                                    fullWidth
+                                                    name="firstname"
+                                                    variant="outlined"
+                                                    required
+                                                    autoFocus
+                                                />
+                                            </Grid>
+                                            <Grid item>
+                                                <TextField
+                                                    type="name"
+                                                    placeholder="Last Name"
+                                                    fullWidth
+                                                    name="lastname"
+                                                    variant="outlined"
+                                                    required
+                                                />
+                                            </Grid>
+                                            <Grid item>
+                                                <TextField
+                                                    type="email"
+                                                    placeholder="Email"
+                                                    fullWidth
+                                                    name="username"
+                                                    variant="outlined"
+                                                    required
+                                                    autoFocus
+                                                />
+                                            </Grid>
+                                            <Grid item>
+                                                <TextField
+                                                    type="password"
+                                                    placeholder="Password"
+                                                    fullWidth
+                                                    name="password"
+                                                    variant="outlined"
+                                                    required
+                                                />
+                                            </Grid>
+                                            <Grid item>
+                                                <RadioGroup aria-label="gender"
+                                                            name="gender1"
+                                                            className={classes.genderRadioGroup}
+                                                >
+                                                    <FormControlLabel value="female" control={<Radio/>} label="Female"/>
+                                                    <FormControlLabel value="male" control={<Radio/>} label="Male"/>
+                                                </RadioGroup>
+                                            </Grid>
+                                            <Grid item>
+                                                <Checkbox
+                                                    style={{padding: "9px 9px 9px 0px"}}
+                                                    size="small"
+                                                    inputProps={{'aria-label': 'checkbox with small size'}}
+                                                />
+                                                I agree to Samarthanam {}
+                                                <Link href="https://www.samarthanam.org/terms-conditions/"
+                                                      color="inherit">
+                                                    Terms & Conditions
+                                                </Link>
+                                            </Grid>
+                                            <Grid item>
+                                                <Button
+                                                    variant="contained"
+                                                    color="primary"
+                                                    type="submit"
+                                                    className="button-block"
+                                                >
+                                                    Sign Up
+                                                </Button>
+                                            </Grid>
+                                        </Grid>
+                                    </form>
+                                </Grid>
+                                <Grid item>
+                                    <Link
+                                        component="button"
+                                        variant="body2"
+                                        // onClick={() => updateWindow('LOGIN')}
+                                        onClick={() => handleRoute('login')}
+                                    >
+                                        Already have an account? Sign In
+                                    </Link>
+                                </Grid>
+                            </Paper>
+                        </Grid>
+                    </Grid>
+                </Grid>
             </div>
         );
     // } else
