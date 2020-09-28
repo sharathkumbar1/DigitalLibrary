@@ -97,6 +97,11 @@ const LogIn = (props) => {
                   Forgot Password?
                 </Link>
               </Grid>
+              <Grid item>
+                <Link href="#" variant="body2">
+                  New to Library?  Sign Up
+                </Link>
+              </Grid>
             </Paper>
           </Grid>
         </Grid>
