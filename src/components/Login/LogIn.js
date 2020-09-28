@@ -28,6 +28,7 @@ const styles = (theme) => ({
 
 const LogIn = (props) => {
   const { classes } = props;
+
   const handleRoute = (route) => {
     props.history.push(`/${route}`);
   };
@@ -98,7 +99,11 @@ const LogIn = (props) => {
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link
+                    component="button"
+                    variant="body2"
+                    onClick={() => handleRoute('signup')}
+                >
                   New to Library?  Sign Up
                 </Link>
               </Grid>
