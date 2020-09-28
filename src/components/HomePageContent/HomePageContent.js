@@ -1,6 +1,5 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
 import GridList from "@material-ui/core/GridList";
 import GridListTile from "@material-ui/core/GridListTile";
 import GridListTileBar from "@material-ui/core/GridListTileBar";
@@ -8,10 +7,6 @@ import ListSubheader from "@material-ui/core/ListSubheader";
 import IconButton from "@material-ui/core/IconButton";
 import InfoIcon from "@material-ui/icons/Info";
 import tileData from "./tileData";
-import createIcon from "../../images/files-37-256.png";
-import parseIcon from "../../images/files-07-256.png";
-import uploadIcon from "../../images/files-49-256.png";
-import viewIcon from "../../images/files-44-256.png";
 
 const useStyles = makeStyles((theme) => ({
   root: {

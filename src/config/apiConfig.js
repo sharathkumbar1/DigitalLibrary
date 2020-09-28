@@ -11,120 +11,41 @@ const envConfigs = {
     auth: {
      
     },
-    fileTypes: {
-      url: 'data/fileTypes.json',
+    signup:{
+      key: 'b9ef4b57f852f9a3c886bd8b0da5447c23eacb65',
+      url: 'http://ec2-13-232-236-83.ap-south-1.compute.amazonaws.com:8080/user/signup',
     },
-    domains: {
-      url: 'data/domains.json',
-    },
-    vendors: {
-      url: 'data/vendors.json',
-    },
-    templates: {
-      url: 'data/templates.json',
-    },
-    saveTemplate: {
+  },
+  dev: {
+    auth: {
      
     },
-    templatesByVendorName: {
-      url: '',
-    },
-    pullValuesForSingleTemplate: {
-      url: '',
-    },
-    uploadBulkDocsToTemplate: {
-      url: '',
-    },
-    findDocsByUser: {
-      
-      url: '',
-    },
-    pullDocumentById: {
-      url: '',
-    },
-    documentFeedback: {
-      url: '',
+    signup:{
+      key: 'b9ef4b57f852f9a3c886bd8b0da5447c23eacb65',
+      url: 'http://ec2-13-232-236-83.ap-south-1.compute.amazonaws.com:8080/user/signup',
     },
   },
   stg: {
     auth: {
       
     },
-    fileTypes: {
-      url: 'data/fileTypes.json',
-    },
-    domains: {
-      url: 'data/domains.json',
-    },
-    vendors: {
-      url: 'data/vendors.json',
-    },
-    templates: {
-      url: 'data/templates.json',
-    },
-    saveTemplate: {
-      url: '',
-    },
-    templatesByVendorName: {
-      url: '',
-    },
-    pullValuesForSingleTemplate: {
-      url: '',
-    },
-    uploadBulkDocsToTemplate: {
-      url: '',
-    },
-    findDocsByUser: {
-      url: '',
-    },
-    pullDocumentById: {
-      url: '',
-    },
-    documentFeedback: {
-      url: '',
+    signup:{
+      key: 'b9ef4b57f852f9a3c886bd8b0da5447c23eacb65',
+      url: 'http://ec2-13-232-236-83.ap-south-1.compute.amazonaws.com:8080/user/signup',
     },
   },
   prod: {
     auth: {
     },
-    fileTypes: {
-      url: 'data/fileTypes.json',
-    },
-    domains: {
-      url: 'data/domains.json',
-    },
-    vendors: {
-      url: 'data/vendors.json',
-    },
-    templates: {
-      url: 'data/templates.json',
-    },
-    saveTemplate: {
-      url: '',
-    },
-    templatesByVendorName: {
-      url: '',
-    },
-    pullValuesForSingleTemplate: {
-      url: '',
-    },
-    uploadBulkDocsToTemplate: {
-      url: '',
-    },
-    findDocsByUser: {
-      url: '',
-    },
-    pullDocumentById: {
-      url: '',
-    },
-    documentFeedback: {
-      url: '',
+    signup:{
+      key: 'b9ef4b57f852f9a3c886bd8b0da5447c23eacb65',
+      url: 'http://ec2-13-232-236-83.ap-south-1.compute.amazonaws.com:8080/user/signup',
     },
   },
 }
 
 // env.js sets APP_ENV
-const appEnv = process.env.APP_ENV
+const appEnv = process.env.REACT_APP_ENV
 const config = envConfigs[appEnv]
 const apiConfig = merge(commonConfig, config)
 
