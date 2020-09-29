@@ -75,6 +75,7 @@ const SignUp = (props) => {
       mobileNumber: "1234455788",
       emailAddress: "hkhdkak@com",
       password: "1234567",
+      gender: "F",
     };
 
     dispatch(signUp(requestBody));
