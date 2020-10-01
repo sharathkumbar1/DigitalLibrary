@@ -62,7 +62,7 @@ const LogIn = (props) => {
   //
   const processRequest = () => {
     const requestBody = {
-      emailAddress: "Siva@gmail.com",
+      email: "Siva@gmail.com",
       password: "hello",
     };
 
