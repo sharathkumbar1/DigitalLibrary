@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import {
   Button,
@@ -39,6 +39,19 @@ const styles = (theme) => ({
 });
 
 const SignUp = (props) => {
+
+  const [allValues, setAllValues] = useState({
+    mobile: '',
+    firstname: '',
+    lastname: '',
+    email: '',
+    password: '',
+    gender: '',
+  });
+  const changeHandler = e => {
+    setAllValues({...allValues, [e.target.name]: e.target.value})
+  }
+
   const { classes } = props;
 
   const dispatch = useDispatch();
@@ -64,22 +77,28 @@ const SignUp = (props) => {
 
   //
   const signUpClicked = () => {
-    processRequest();
+
+      console.log(allValues);
+      processRequest();
   };
 
   //
   const processRequest = () => {
     const requestBody = {
-      firstName: "sharath",
-      lastName: "kumbar",
-      mobileNumber: "1234455788",
-      emailAddress: "hkhdkak@com",
-      password: "1234567",
-      gender: "F",
+      firstName: allValues.firstname,
+      lastName: allValues.lastname,
+      mobileNumber: allValues.mobile,
+      emailAddress: allValues.email,
+      password: allValues.password,
+      gender: allValues.gender,
     };
 
     dispatch(signUp(requestBody));
   };
+
+  // const updateFirstName = (value) => {
+  //
+  // }
 
   // const { active, updateWindow } = props
   // if (active === true) {
@@ -117,6 +136,7 @@ const SignUp = (props) => {
                         variant="outlined"
                         required
                         autoFocus
+                        onChange={changeHandler}
                       />
                     </Grid>
                     <Grid item>
@@ -127,6 +147,7 @@ const SignUp = (props) => {
                         name="lastname"
                         variant="outlined"
                         required
+                        onChange={changeHandler}
                       />
                     </Grid>
                     <Grid item>
@@ -134,10 +155,11 @@ const SignUp = (props) => {
                         type="email"
                         placeholder="Email"
                         fullWidth
-                        name="username"
+                        name="email"
                         variant="outlined"
                         required
                         autoFocus
+                        onChange={changeHandler}
                       />
                     </Grid>
                     <Grid item>
@@ -148,21 +170,23 @@ const SignUp = (props) => {
                         name="password"
                         variant="outlined"
                         required
+                        onChange={changeHandler}
                       />
                     </Grid>
                     <Grid item>
                       <RadioGroup
                         aria-label="gender"
-                        name="gender1"
+                        name="gender"
                         className={classes.genderRadioGroup}
+                        onChange={changeHandler}
                       >
                         <FormControlLabel
-                          value="female"
+                          value="F"
                           control={<Radio />}
                           label="Female"
                         />
                         <FormControlLabel
-                          value="male"
+                          value="M"
                           control={<Radio />}
                           label="Male"
                         />
