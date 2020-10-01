@@ -49,6 +49,8 @@ const SignUp = (props) => {
     gender: '',
   });
   const changeHandler = e => {
+    // console.log(e)
+    // console.log(e.target)
     setAllValues({...allValues, [e.target.name]: e.target.value})
   }
 
@@ -79,7 +81,10 @@ const SignUp = (props) => {
   const signUpClicked = () => {
 
       console.log(allValues);
+    if (allValues.firstname !== '' && allValues.lastname !== '' && allValues.email !== ''
+      && allValues.password !== '' && (allValues.gender === 'M' || allValues.gender === 'F')) {
       processRequest();
+    }
   };
 
   //
@@ -94,6 +99,7 @@ const SignUp = (props) => {
     };
 
     dispatch(signUp(requestBody));
+    handleRoute("login")
   };
 
   // const updateFirstName = (value) => {
