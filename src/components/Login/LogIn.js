@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import { withStyles } from "@material-ui/core/styles";
 import {
   Button,
@@ -31,6 +31,18 @@ const styles = (theme) => ({
 });
 
 const LogIn = (props) => {
+
+  const [allValues, setAllValues] = useState({
+    email: '',
+    password: '',
+  });
+
+  const changeHandler = e => {
+    console.log(e)
+    console.log(e.target)
+    setAllValues({...allValues, [e.target.name]: e.target.value})
+  }
+
   const { classes } = props;
 
   const dispatch = useDispatch();
@@ -56,17 +68,22 @@ const LogIn = (props) => {
 
   //
   const signInClicked = () => {
-    processRequest();
+
+    console.log(allValues);
+    if (allValues.email !== '' && allValues.password !== '') {
+      processRequest();
+    }
   };
 
   //
   const processRequest = () => {
     const requestBody = {
-      email: "Siva@gmail.com",
-      password: "hello",
+      email: allValues.email,
+      password: allValues.password,
     };
 
     dispatch(signIn(requestBody));
+    handleRoute("")
   };
 
   // const { active, updateWindow } = props
@@ -100,10 +117,11 @@ const LogIn = (props) => {
                             type="email"
                             placeholder="Email"
                             fullWidth
-                            name="username"
+                            name="email"
                             variant="outlined"
                             required
                             autoFocus
+                            onChange={changeHandler}
                         />
                       </Grid>
                       <Grid item>
@@ -114,6 +132,7 @@ const LogIn = (props) => {
                             name="password"
                             variant="outlined"
                             required
+                            onChange={changeHandler}
                         />
                       </Grid>
                       <Grid item>

@@ -41,13 +41,14 @@ const styles = (theme) => ({
 const SignUp = (props) => {
 
   const [allValues, setAllValues] = useState({
-    mobile: '',
+    mobile: '6876876',
     firstname: '',
     lastname: '',
     email: '',
     password: '',
     gender: '',
   });
+
   const changeHandler = e => {
     // console.log(e)
     // console.log(e.target)
@@ -80,7 +81,7 @@ const SignUp = (props) => {
   //
   const signUpClicked = () => {
 
-      console.log(allValues);
+    // console.log(allValues);
     if (allValues.firstname !== '' && allValues.lastname !== '' && allValues.email !== ''
       && allValues.password !== '' && (allValues.gender === 'M' || allValues.gender === 'F')) {
       processRequest();
