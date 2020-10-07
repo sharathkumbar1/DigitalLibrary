@@ -11,6 +11,7 @@ import {
   RadioGroup,
   TextField,
   Typography,
+  Snackbar
 } from "@material-ui/core";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -38,21 +39,31 @@ const styles = (theme) => ({
   },
 });
 
+const  initialState = {
+  firstname: '',
+  lastname: '',
+  email: '',
+  password: '',
+  gender: ''
+};
+
 const SignUp = (props) => {
 
-  const [allValues, setAllValues] = useState({
-    mobile: '6876876',
-    firstname: '',
-    lastname: '',
-    email: '',
-    password: '',
-    gender: '',
-  });
+  const [{
+    firstname,
+    lastname,
+    email,
+    password,
+    gender
+  }, setState] = useState(initialState);
+
+  const [verificationEmailPopup, setVerificationEmailPopup] = useState(false);
 
   const changeHandler = e => {
     // console.log(e)
     // console.log(e.target)
-    setAllValues({...allValues, [e.target.name]: e.target.value})
+    const { name, value} = e.target
+    setState(prevState => ({...prevState, [name]: value}))
   }
 
   const { classes } = props;
@@ -82,8 +93,8 @@ const SignUp = (props) => {
   const signUpClicked = () => {
 
     // console.log(allValues);
-    if (allValues.firstname !== '' && allValues.lastname !== '' && allValues.email !== ''
-      && allValues.password !== '' && (allValues.gender === 'M' || allValues.gender === 'F')) {
+    if (firstname !== '' && lastname !== '' && email !== ''
+      && password !== '' && (gender === 'M' || gender === 'F')) {
       processRequest();
     }
   };
@@ -91,21 +102,22 @@ const SignUp = (props) => {
   //
   const processRequest = () => {
     const requestBody = {
-      firstName: allValues.firstname,
-      lastName: allValues.lastname,
-      mobileNumber: allValues.mobile,
-      emailAddress: allValues.email,
-      password: allValues.password,
-      gender: allValues.gender,
+      firstName: firstname,
+      lastName: lastname,
+      emailAddress: email,
+      password: password,
+      gender: gender,
     };
 
     dispatch(signUp(requestBody));
+    setState({ ...initialState });
+    setVerificationEmailPopup(true)
+  };
+
+  const closeVerificationEmailPopup = () => {
     handleRoute("login")
   };
 
-  // const updateFirstName = (value) => {
-  //
-  // }
 
   // const { active, updateWindow } = props
   // if (active === true) {
@@ -143,6 +155,7 @@ const SignUp = (props) => {
                         variant="outlined"
                         required
                         autoFocus
+                        value={firstname}
                         onChange={changeHandler}
                       />
                     </Grid>
@@ -154,6 +167,7 @@ const SignUp = (props) => {
                         name="lastname"
                         variant="outlined"
                         required
+                        value={lastname}
                         onChange={changeHandler}
                       />
                     </Grid>
@@ -166,6 +180,7 @@ const SignUp = (props) => {
                         variant="outlined"
                         required
                         autoFocus
+                        value={email}
                         onChange={changeHandler}
                       />
                     </Grid>
@@ -177,6 +192,7 @@ const SignUp = (props) => {
                         name="password"
                         variant="outlined"
                         required
+                        value={password}
                         onChange={changeHandler}
                       />
                     </Grid>
@@ -243,6 +259,29 @@ const SignUp = (props) => {
           </Grid>
         </Grid>
       </Grid>
+      <Snackbar
+          key={'verify-email'}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'center',
+          }}
+          open={verificationEmailPopup}
+          autoHideDuration={6000}
+          // onClose={handleClose}
+          // onExited={handleExited}
+          message={'A verification link has been sent to your email'}
+          action={
+            <React.Fragment>
+              <Button
+                  color="secondary"
+                  size="small"
+                  onClick={() => closeVerificationEmailPopup()}
+              >
+                OK
+              </Button>
+            </React.Fragment>
+          }
+      />
     </div>
   );
   // } else
