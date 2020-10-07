@@ -150,8 +150,12 @@ const LogIn = (props) => {
                   </form>
                 </Grid>
                 <Grid item>
-                  <Link href="#" variant="body2">
-                    Forgot Password?
+                  <Link
+                      component="button"
+                      variant="body2"
+                      onClick={() => handleRoute('forgotpw')}
+                  >
+                    Forgot Password ?
                   </Link>
                 </Grid>
                 <Grid item>
