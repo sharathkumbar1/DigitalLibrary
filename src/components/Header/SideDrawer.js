@@ -19,6 +19,7 @@ import DisclaimerPage from "./../DisclaimerPage/DisclaimerPage";
 import About from "../About/About";
 import Sponsor from "../Sponsor/Sponsor";
 import Faq from "../Faq/Faq";
+import ForgotPw from "./../Login/ForgotPw";
 
 const history = createBrowserHistory();
 
@@ -149,6 +150,7 @@ const SideDrawer = (props) => {
         <Route exact path="/" component={HomePage} />
         <Route exact path="/login" component={LogIn} />
         <Route exact path="/signup" component={SignUp} />
+        <Route exact path="/forgotpw" component={ForgotPw} />
         <Route exact path="/search" component={SearchPage} />
         <Route exact path="/browse" component={BrowsePage} />
         <Route exact path="/disclaimer" component={DisclaimerPage} />

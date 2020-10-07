@@ -23,13 +23,9 @@ const styles = (theme) => ({
     },
 
     forgotpwBackground: {
-        padding: "20px",
-        minHeight: "62vh",
-        maxWidth: "50vh",
         justifyContent: "center",
-    },
-    genderRadioGroup: {
-        display: "block",
+        minHeight: "30vh",
+        padding: "50px",
     },
 });
 
@@ -117,7 +113,7 @@ const ForgotPw = (props) => {
                             </Grid>
                             <Grid item>
                                 <form>
-                                    <Grid container direction="column" spacing={1}>
+                                    <Grid container direction="column" spacing={2}>
                                         <Grid item>
                                             <TextField
                                                 type="email"
