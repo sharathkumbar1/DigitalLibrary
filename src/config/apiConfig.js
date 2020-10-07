@@ -19,6 +19,10 @@ const envConfigs = {
       key: 'b9ef4b57f852f9a3c886bd8b0da5447c23eacb65',
       url: 'http://ec2-13-232-236-83.ap-south-1.compute.amazonaws.com:8080/user/login',
     },
+    forgotpw:{
+      key: 'b9ef4b57f852f9a3c886bd8b0da5447c23eacb65',
+      url: 'http://ec2-13-232-236-83.ap-south-1.compute.amazonaws.com:8080/user/password/forgot',
+    },
   },
   dev: {
     auth: {
@@ -31,6 +35,10 @@ const envConfigs = {
     signin:{
       key: 'b9ef4b57f852f9a3c886bd8b0da5447c23eacb65',
       url: 'http://ec2-13-232-236-83.ap-south-1.compute.amazonaws.com:8080/user/login',
+    },
+    forgotpw:{
+      key: 'b9ef4b57f852f9a3c886bd8b0da5447c23eacb65',
+      url: 'http://ec2-13-232-236-83.ap-south-1.compute.amazonaws.com:8080/user/password/forgot',
     },
   },
   stg: {
@@ -45,6 +53,10 @@ const envConfigs = {
       key: 'b9ef4b57f852f9a3c886bd8b0da5447c23eacb65',
       url: 'http://ec2-13-232-236-83.ap-south-1.compute.amazonaws.com:8080/user/login',
     },
+    forgotpw:{
+      key: 'b9ef4b57f852f9a3c886bd8b0da5447c23eacb65',
+      url: 'http://ec2-13-232-236-83.ap-south-1.compute.amazonaws.com:8080/user/password/forgot',
+    },
   },
   prod: {
     auth: {
@@ -56,6 +68,10 @@ const envConfigs = {
     signin:{
       key: 'b9ef4b57f852f9a3c886bd8b0da5447c23eacb65',
       url: 'http://ec2-13-232-236-83.ap-south-1.compute.amazonaws.com:8080/user/login',
+    },
+    forgotpw:{
+      key: 'b9ef4b57f852f9a3c886bd8b0da5447c23eacb65',
+      url: 'http://ec2-13-232-236-83.ap-south-1.compute.amazonaws.com:8080/user/password/forgot',
     },
   },
 }
