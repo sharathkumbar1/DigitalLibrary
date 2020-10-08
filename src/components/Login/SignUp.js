@@ -11,12 +11,20 @@ import {
   RadioGroup,
   TextField,
   Typography,
-  Snackbar
 } from "@material-ui/core";
 
 import { useDispatch, useSelector } from "react-redux";
 
+import { SUCCESS_ON_SAVE } from "../../constants/errorConstants";
+
+import {
+  showNotificationError,
+  showNotificationSuccess,
+} from "../../store/notification/actionCreator";
 import { signUp } from "../../store/signup/actionCreator";
+
+import NotificationSuccess from "../Notifications/NotificationSuccess";
+import NotificationError from "../Notifications/NotificationError";
 
 const styles = (theme) => ({
   button: {
@@ -37,36 +45,30 @@ const styles = (theme) => ({
   genderRadioGroup: {
     display: "block",
   },
+  notificationContainer: {
+    position: "relative",
+  },
 });
 
-const  initialState = {
-  firstname: '',
-  lastname: '',
-  email: '',
-  password: '',
-  confirmPassword: '',
-  gender: ''
+const initialState = {
+  firstname: "",
+  lastname: "",
+  email: "",
+  password: "",
+  confirmPassword: "",
+  gender: "",
 };
 
 const SignUp = (props) => {
+  const [
+    { firstname, lastname, email, password, gender, confirmPassword },
+    setState,
+  ] = useState(initialState);
 
-  const [{
-    firstname,
-    lastname,
-    email,
-    password,
-    gender,
-    confirmPassword
-  }, setState] = useState(initialState);
-
-  const [verificationEmailPopup, setVerificationEmailPopup] = useState(false);
-
-  const changeHandler = e => {
-    // console.log(e)
-    // console.log(e.target)
-    const { name, value} = e.target
-    setState(prevState => ({...prevState, [name]: value}))
-  }
+  const changeHandler = (e) => {
+    const { name, value } = e.target;
+    setState((prevState) => ({ ...prevState, [name]: value }));
+  };
 
   const { classes } = props;
 
@@ -81,8 +83,10 @@ const SignUp = (props) => {
   useEffect(() => {
     if (signUpPostResponse) {
       console.log("--------------SUCCESS MESSAGE------------");
+      dispatch(showNotificationSuccess(true, SUCCESS_ON_SAVE));
     } else if (signUpPostErrResponse) {
       console.log("--------------ERROR MESSAGE------------");
+      dispatch(showNotificationError(true, signUpPostErrResponse.message));
     }
   }, [signUpPostResponse, signUpPostErrResponse]);
 
@@ -93,10 +97,15 @@ const SignUp = (props) => {
 
   //
   const signUpClicked = () => {
-
     // console.log(allValues);
-    if (firstname !== '' && lastname !== '' && email !== '' && password !== '' &&
-        password === confirmPassword && (gender === 'M' || gender === 'F')) {
+    if (
+      firstname !== "" &&
+      lastname !== "" &&
+      email !== "" &&
+      password !== "" &&
+      password === confirmPassword &&
+      (gender === "M" || gender === "F")
+    ) {
       processRequest();
     }
   };
@@ -113,13 +122,10 @@ const SignUp = (props) => {
 
     dispatch(signUp(requestBody));
     setState({ ...initialState });
-    setVerificationEmailPopup(true)
+    
   };
 
-  const closeVerificationEmailPopup = () => {
-    handleRoute("login")
-  };
-
+  
 
   // const { active, updateWindow } = props
   // if (active === true) {
@@ -199,14 +205,14 @@ const SignUp = (props) => {
                     </Grid>
                     <Grid item>
                       <TextField
-                          type="password"
-                          placeholder="Confirm Password"
-                          fullWidth
-                          name="confirmPassword"
-                          variant="outlined"
-                          required
-                          value={confirmPassword}
-                          onChange={changeHandler}
+                        type="password"
+                        placeholder="Confirm Password"
+                        fullWidth
+                        name="confirmPassword"
+                        variant="outlined"
+                        required
+                        value={confirmPassword}
+                        onChange={changeHandler}
                       />
                     </Grid>
                     <Grid item>
@@ -272,33 +278,13 @@ const SignUp = (props) => {
           </Grid>
         </Grid>
       </Grid>
-      <Snackbar
-          key={'verify-email'}
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'center',
-          }}
-          open={verificationEmailPopup}
-          // autoHideDuration={6000}
-          // onClose={handleClose}
-          // onExited={handleExited}
-          message={'A verification link has been sent to your email'}
-          action={
-            <React.Fragment>
-              <Button
-                  color="secondary"
-                  size="small"
-                  onClick={() => closeVerificationEmailPopup()}
-              >
-                OK
-              </Button>
-            </React.Fragment>
-          }
-      />
+
+      <div className={classes.notificationContainer}>
+        <NotificationError />
+        <NotificationSuccess />
+      </div>
     </div>
   );
-  // } else
-  //     return null
 };
 
 export default withStyles(styles)(SignUp);

@@ -1,0 +1,1 @@
+export const SUCCESS_ON_SAVE = 'A verification link has been sent to your email.'
