@@ -44,6 +44,7 @@ const  initialState = {
   lastname: '',
   email: '',
   password: '',
+  confirmPassword: '',
   gender: ''
 };
 
@@ -54,7 +55,8 @@ const SignUp = (props) => {
     lastname,
     email,
     password,
-    gender
+    gender,
+    confirmPassword
   }, setState] = useState(initialState);
 
   const [verificationEmailPopup, setVerificationEmailPopup] = useState(false);
@@ -93,8 +95,8 @@ const SignUp = (props) => {
   const signUpClicked = () => {
 
     // console.log(allValues);
-    if (firstname !== '' && lastname !== '' && email !== ''
-      && password !== '' && (gender === 'M' || gender === 'F')) {
+    if (firstname !== '' && lastname !== '' && email !== '' && password !== '' &&
+        password === confirmPassword && (gender === 'M' || gender === 'F')) {
       processRequest();
     }
   };
@@ -179,7 +181,6 @@ const SignUp = (props) => {
                         name="email"
                         variant="outlined"
                         required
-                        autoFocus
                         value={email}
                         onChange={changeHandler}
                       />
@@ -194,6 +195,18 @@ const SignUp = (props) => {
                         required
                         value={password}
                         onChange={changeHandler}
+                      />
+                    </Grid>
+                    <Grid item>
+                      <TextField
+                          type="password"
+                          placeholder="Confirm Password"
+                          fullWidth
+                          name="confirmPassword"
+                          variant="outlined"
+                          required
+                          value={confirmPassword}
+                          onChange={changeHandler}
                       />
                     </Grid>
                     <Grid item>
@@ -266,7 +279,7 @@ const SignUp = (props) => {
             horizontal: 'center',
           }}
           open={verificationEmailPopup}
-          autoHideDuration={6000}
+          // autoHideDuration={6000}
           // onClose={handleClose}
           // onExited={handleExited}
           message={'A verification link has been sent to your email'}
