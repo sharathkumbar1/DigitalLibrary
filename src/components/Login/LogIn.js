@@ -12,6 +12,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 
 import { signIn } from "../../store/signin/actionCreator";
+import FormDialog from '../ModelWindow/ResetPassWord'
 
 const styles = (theme) => ({
   button: {
@@ -32,19 +33,13 @@ const styles = (theme) => ({
 
 const LogIn = (props) => {
 
+  const { classes } = props;
   const [allValues, setAllValues] = useState({
     email: '',
     password: '',
   });
 
-  const changeHandler = e => {
-    console.log(e)
-    console.log(e.target)
-    setAllValues({...allValues, [e.target.name]: e.target.value})
-  }
-
-  const { classes } = props;
-
+  const [open, setOpen] = React.useState(false);
   const dispatch = useDispatch();
   const signInPostResponse = useSelector(
       (state) => state.signInReducer.signInPostResponse
@@ -53,6 +48,7 @@ const LogIn = (props) => {
       (state) => state.signInReducer.signInPostErrResponse
   );
 
+  //
   useEffect(() => {
     if (signInPostResponse) {
       console.log("--------------SUCCESS MESSAGE------------");
@@ -60,6 +56,11 @@ const LogIn = (props) => {
       console.log("--------------ERROR MESSAGE------------");
     }
   }, [signInPostResponse, signInPostErrResponse]);
+
+  //
+  const changeHandler = e => {
+    setAllValues({...allValues, [e.target.name]: e.target.value})
+  }
 
   //
   const handleRoute = (route) => {
@@ -85,6 +86,17 @@ const LogIn = (props) => {
     dispatch(signIn(requestBody));
     handleRoute("")
   };
+
+  //
+  const handleClickOpen = () => {
+    console.log("FORGOT PASSWORD!!!!")
+    setOpen(true)
+  }
+
+  //
+  const onCloseButtonClick = () => {
+    setOpen(false)
+  }
 
   // const { active, updateWindow } = props
   // if (active === true) {
@@ -153,7 +165,8 @@ const LogIn = (props) => {
                   <Link
                       component="button"
                       variant="body2"
-                      onClick={() => handleRoute('forgotpw')}
+                      //onClick={() => handleRoute('forgotpw')}
+                      onClick={handleClickOpen}
                   >
                     Forgot Password ?
                   </Link>
@@ -171,6 +184,13 @@ const LogIn = (props) => {
             </Grid>
           </Grid>
         </Grid>
+
+        <FormDialog
+        open={open}
+        onCloseButtonClick={onCloseButtonClick}
+        >
+          
+        </FormDialog>
       </div>
 
       // <div>
