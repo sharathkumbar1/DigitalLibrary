@@ -52,8 +52,10 @@ const LogIn = (props) => {
   useEffect(() => {
     if (signInPostResponse) {
       console.log("--------------SUCCESS MESSAGE------------");
+
     } else if (signInPostErrResponse) {
       console.log("--------------ERROR MESSAGE------------");
+
     }
   }, [signInPostResponse, signInPostErrResponse]);
 

@@ -5864,6 +5864,11 @@ jsx-ast-utils@^2.2.1, jsx-ast-utils@^2.2.3:
     array-includes "^3.1.1"
     object.assign "^4.1.0"
 
+jwt-decode@^3.0.0:
+  version "3.0.0"
+  resolved "https://binrepo.target.com/artifactory/api/npm/npms/jwt-decode/-/jwt-decode-3.0.0.tgz#d9a17ddf6d37c03bf037b0b27cf8756cfd01c5c7"
+  integrity sha1-2aF93203wDvwN7CyfPh1bP0Bxcc=
+
 killable@^1.0.1:
   version "1.0.1"
   resolved "https://binrepo.target.com/artifactory/api/npm/npms/killable/-/killable-1.0.1.tgz#4c8ce441187a061c7474fb87ca08e2a638194892"
