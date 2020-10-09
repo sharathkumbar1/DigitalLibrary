@@ -41,7 +41,7 @@ export default function FormDialog(props) {
                     className="button-block"
                     onClick={() => onCloseButtonClick()}
                     >
-                        Subscribe
+                        Reset
                     </Button>
                 </DialogActions>
             </Dialog>
