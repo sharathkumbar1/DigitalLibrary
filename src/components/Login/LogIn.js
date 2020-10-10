@@ -72,7 +72,7 @@ const LogIn = (props) => {
   //
   const signInClicked = () => {
 
-    console.log(allValues);
+    // console.log(allValues);
     if (allValues.email !== '' && allValues.password !== '') {
       processRequest();
     }

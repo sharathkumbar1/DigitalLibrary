@@ -1,4 +1,5 @@
 import { SIGN_IN_ERROR, SIGN_IN_SUCCESS } from "./actionType";
+import jwt from "jwt-decode";
 
 export const initialState = {
     data: null,
@@ -23,7 +24,7 @@ export default function signInReducer(state = initialState, action = {}) {
             const { record } = action;
             return {
                 ...state,
-                signInPostResponse: record.data,
+                signInPostResponse: record,
                 signInPostErrResponse: null,
             };
         }

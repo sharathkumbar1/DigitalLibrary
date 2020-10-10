@@ -1,6 +1,6 @@
 import { SIGN_IN_ERROR, SIGN_IN_SUCCESS } from "./actionType";
 import axios from "axios";
-import jwt from "jwt-decode";
+import jwt_decode  from "jwt-decode";
 import apiConfig from '../../config/apiConfig'
 
 export function signIn(requestBody) {
@@ -18,11 +18,12 @@ export function signIn(requestBody) {
         return axios
             .post(apiUrl, requestBody, requestConfig)
             .then((response) => {
-                const token = response.data.token;
-                const user = jwt(token); // decode your token here
-                console.log(user)
+                let token = response.data.token;
                 localStorage.setItem('token', token);
-                dispatch(handleSignInSuccess(response));
+
+                let user = jwt_decode(token); // decode your token here
+                // console.log(JSON.parse(user.payload))
+                dispatch(handleSignInSuccess(JSON.parse(user.payload)));
             })
             .catch((response) => {
                 dispatch(handleSignInError(response));
