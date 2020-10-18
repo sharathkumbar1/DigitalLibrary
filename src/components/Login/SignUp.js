@@ -1,27 +1,24 @@
-import React, { useState, useEffect } from "react";
-import { withStyles } from "@material-ui/core/styles";
+import React, {useEffect, useState} from "react";
+import {withStyles} from "@material-ui/core/styles";
 import {
-  Button,
-  Checkbox,
-  FormControlLabel,
-  Grid,
-  Link,
-  Paper,
-  Radio,
-  RadioGroup,
-  TextField,
-  Typography,
+    Button,
+    Checkbox,
+    FormControlLabel,
+    Grid,
+    Link,
+    Paper,
+    Radio,
+    RadioGroup,
+    TextField,
+    Typography,
 } from "@material-ui/core";
 
-import { useDispatch, useSelector } from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 
-import { SUCCESS_ON_SAVE } from "../../constants/errorConstants";
+import {SUCCESS_ON_SAVE} from "../../constants/errorConstants";
 
-import {
-  showNotificationError,
-  showNotificationSuccess,
-} from "../../store/notification/actionCreator";
-import { signUp } from "../../store/signup/actionCreator";
+import {showNotificationError, showNotificationSuccess,} from "../../store/notification/actionCreator";
+import {signUp} from "../../store/signup/actionCreator";
 
 import NotificationSuccess from "../Notifications/NotificationSuccess";
 import NotificationError from "../Notifications/NotificationError";
@@ -90,12 +87,10 @@ const SignUp = (props) => {
     }
   }, [signUpPostResponse, signUpPostErrResponse]);
 
-  //
   const handleRoute = (route) => {
     props.history.push(`/${route}`);
   };
 
-  //
   const signUpClicked = () => {
     // console.log(allValues);
     if (
@@ -110,7 +105,6 @@ const SignUp = (props) => {
     }
   };
 
-  //
   const processRequest = () => {
     const requestBody = {
       firstName: firstname,
@@ -250,19 +244,19 @@ const SignUp = (props) => {
                         Terms & Conditions
                       </Link>
                     </Grid>
-                    <Grid item>
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        type="submit"
-                        className="button-block"
-                        onClick={() => signUpClicked()}
-                      >
-                        Sign Up
-                      </Button>
-                    </Grid>
                   </Grid>
                 </form>
+                <Grid item>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    type="submit"
+                    className="button-block"
+                    onClick={() => signUpClicked()}
+                    >
+                    Sign Up
+                  </Button>
+                </Grid>
               </Grid>
               <Grid item>
                 <Link

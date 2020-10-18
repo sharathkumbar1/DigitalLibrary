@@ -48,10 +48,11 @@ const LogIn = (props) => {
       (state) => state.signInReducer.signInPostErrResponse
   );
 
-  //
+
   useEffect(() => {
     if (signInPostResponse) {
       console.log("--------------SUCCESS MESSAGE------------");
+      handleRoute("")
 
     } else if (signInPostErrResponse) {
       console.log("--------------ERROR MESSAGE------------");
@@ -59,17 +60,14 @@ const LogIn = (props) => {
     }
   }, [signInPostResponse, signInPostErrResponse]);
 
-  //
   const changeHandler = e => {
     setAllValues({...allValues, [e.target.name]: e.target.value})
   }
 
-  //
   const handleRoute = (route) => {
     props.history.push(`/${route}`);
   };
 
-  //
   const signInClicked = () => {
 
     // console.log(allValues);
@@ -78,7 +76,6 @@ const LogIn = (props) => {
     }
   };
 
-  //
   const processRequest = () => {
     const requestBody = {
       email: allValues.email,
@@ -86,16 +83,13 @@ const LogIn = (props) => {
     };
 
     dispatch(signIn(requestBody));
-    handleRoute("")
   };
 
-  //
   const handleClickOpen = () => {
     console.log("FORGOT PASSWORD!!!!")
     setOpen(true)
   }
 
-  //
   const onCloseButtonClick = () => {
     setOpen(false)
   }
@@ -149,19 +143,19 @@ const LogIn = (props) => {
                             onChange={changeHandler}
                         />
                       </Grid>
-                      <Grid item>
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            type="submit"
-                            className="button-block"
-                            onClick={() => signInClicked()}
-                        >
-                          Submit
-                        </Button>
-                      </Grid>
                     </Grid>
                   </form>
+                  <Grid item>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        type="submit"
+                        className="button-block"
+                        onClick={signInClicked}
+                    >
+                      Submit
+                    </Button>
+                  </Grid>
                 </Grid>
                 <Grid item>
                   <Link
