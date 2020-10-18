@@ -25,8 +25,8 @@ export function signIn(requestBody) {
                 // console.log(JSON.parse(user.payload))
                 dispatch(handleSignInSuccess(JSON.parse(user.payload)));
             })
-            .catch((response) => {
-                dispatch(handleSignInError(response));
+            .catch((error) => {
+                dispatch(handleSignInError(error));
             });
     };
 }

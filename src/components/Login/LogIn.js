@@ -13,6 +13,8 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { signIn } from "../../store/signin/actionCreator";
 import FormDialog from '../ModelWindow/ResetPassWord'
+import {showNotificationError} from "../../store/notification/actionCreator";
+import NotificationError from "../Notifications/NotificationError";
 
 const styles = (theme) => ({
   button: {
@@ -51,11 +53,11 @@ const LogIn = (props) => {
 
   useEffect(() => {
     if (signInPostResponse) {
-      console.log("--------------SUCCESS MESSAGE------------");
       handleRoute("")
 
     } else if (signInPostErrResponse) {
-      console.log("--------------ERROR MESSAGE------------");
+      console.log(signInPostErrResponse)
+      dispatch(showNotificationError(true, signInPostErrResponse));
 
     }
   }, [signInPostResponse, signInPostErrResponse]);
@@ -180,6 +182,10 @@ const LogIn = (props) => {
             </Grid>
           </Grid>
         </Grid>
+
+        <div className={classes.notificationContainer}>
+          <NotificationError />
+        </div>
 
         <FormDialog
         open={open}
