@@ -33,7 +33,8 @@ const styles = theme => ({
     overflowY: 'scroll',
   },
   message: {
-    paddingRight: 10,
+    paddingRight: '10px',
+    marginTop: '2px',
   },
   icon: {
     marginRight: '8px',
