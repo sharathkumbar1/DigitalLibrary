@@ -21,8 +21,8 @@ export function signUp(requestBody) {
       .then((response) => {
         dispatch(handleSignUpSuccess(response));
       })
-      .catch((response) => {
-        dispatch(handleSignUpError(response));
+      .catch((error) => {
+        dispatch(handleSignUpError(error));
       });
   };
 }

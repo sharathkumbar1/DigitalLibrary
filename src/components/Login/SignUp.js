@@ -79,11 +79,10 @@ const SignUp = (props) => {
 
   useEffect(() => {
     if (signUpPostResponse) {
-      console.log("--------------SUCCESS MESSAGE------------");
       dispatch(showNotificationSuccess(true, SUCCESS_ON_SAVE));
     } else if (signUpPostErrResponse) {
-      console.log("--------------ERROR MESSAGE------------");
-      dispatch(showNotificationError(true, signUpPostErrResponse.message));
+      console.log(signUpPostErrResponse)
+      dispatch(showNotificationError(true, signUpPostErrResponse));
     }
   }, [signUpPostResponse, signUpPostErrResponse]);
 
