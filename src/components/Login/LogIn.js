@@ -73,7 +73,14 @@ const LogIn = (props) => {
   const signInClicked = () => {
 
     // console.log(allValues);
-    if (allValues.email !== '' && allValues.password !== '') {
+    if (allValues.email === "") {
+      dispatch(showNotificationError(true, "Please fill in Email"));
+    }
+    else if (allValues.password === "") {
+      dispatch(showNotificationError(true, "Please fill in Password"));
+    }
+    else {
+      dispatch(showNotificationError(false, ""));
       processRequest();
     }
   };

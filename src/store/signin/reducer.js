@@ -12,7 +12,7 @@ export default function signInReducer(state = initialState, action = {}) {
         case SIGN_IN_ERROR: {
             const { record } = action;
 
-            console.log(record)
+            // console.log(record)
             return {
                 ...state,
                 signInPostErrResponse: record.response
@@ -24,7 +24,7 @@ export default function signInReducer(state = initialState, action = {}) {
         case SIGN_IN_SUCCESS: {
             const { record } = action;
 
-            console.log(record)
+            // console.log(record)
             return {
                 ...state,
                 signInPostResponse: record,
