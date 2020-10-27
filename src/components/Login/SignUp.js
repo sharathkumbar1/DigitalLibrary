@@ -54,17 +54,22 @@ const initialState = {
   password: "",
   confirmPassword: "",
   gender: "",
+  termsAndConditions: false,
 };
 
 const SignUp = (props) => {
   const [
-    { firstname, lastname, email, password, gender, confirmPassword },
+    { firstname, lastname, email, password, gender, confirmPassword, termsAndConditions },
     setState,
   ] = useState(initialState);
 
   const changeHandler = (e) => {
     const { name, value } = e.target;
     setState((prevState) => ({ ...prevState, [name]: value }));
+  };
+
+  const toggleTermsAndConditions = (e) => {
+    setState((prevState) => ({ ...prevState, 'termsAndConditions': !termsAndConditions }));
   };
 
   const { classes } = props;
@@ -91,15 +96,30 @@ const SignUp = (props) => {
   };
 
   const signUpClicked = () => {
-    // console.log(allValues);
-    if (
-      firstname !== "" &&
-      lastname !== "" &&
-      email !== "" &&
-      password !== "" &&
-      password === confirmPassword &&
-      (gender === "M" || gender === "F")
-    ) {
+    // console.log(termsAndConditions)
+    if (firstname === "") {
+      dispatch(showNotificationError(true, "Please fill in First Name"));
+    }
+    else if (lastname === "") {
+      dispatch(showNotificationError(true, "Please fill in Last Name"));
+    }
+    else if (email === "") {
+      dispatch(showNotificationError(true, "Please fill in Email"));
+    }
+    else if (password === "") {
+      dispatch(showNotificationError(true, "Please fill in Password"));
+    }
+    else if (password !== confirmPassword) {
+      dispatch(showNotificationError(true, "Confirm password is not same as password"));
+    }
+    else if (gender !== "M" && gender !== "F") {
+      dispatch(showNotificationError(true, "Please select gender"));
+    }
+    else if (!termsAndConditions) {
+      dispatch(showNotificationError(true, "Please accept Samarthanam Terms & Conditions"));
+    }
+    else {
+      dispatch(showNotificationError(false, ""));
       processRequest();
     }
   };
@@ -230,10 +250,13 @@ const SignUp = (props) => {
                     <Grid item>
                       <Checkbox
                         style={{ padding: "9px 9px 9px 0px" }}
+                        name="termsAndConditions"
                         size="small"
                         inputProps={{
                           "aria-label": "checkbox with small size",
                         }}
+                        onChange={toggleTermsAndConditions}
+                        checked={termsAndConditions}
                       />
                       I agree to Samarthanam {}
                       <Link
