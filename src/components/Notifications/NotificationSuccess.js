@@ -38,9 +38,7 @@ const NotificationSuccess = (props) => {
   const dispatch = useDispatch();
 
   const handleRequestClose = () => {
-    console.log("I'm there !!!")
-    dispatch(showNotificationSuccess(false));
-    props.resetReduxStore()
+    props.resetReduxStoreAndHideNotifications()
   };
 
   return (

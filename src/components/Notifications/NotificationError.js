@@ -49,8 +49,7 @@ const NotificationError = props => {
   const dispatch = useDispatch()
 
   const handleRequestClose = (event, reason) => {
-    dispatch(showNotificationError(false))
-    props.resetReduxStore()
+    props.resetReduxStoreAndHideNotifications()
   }
 
   const createMarkup = str => {

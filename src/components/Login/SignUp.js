@@ -82,10 +82,12 @@ const SignUp = (props) => {
     (state) => state.signUpReducer.signUpPostErrResponse
   );
 
-  const resetReduxStore = () => {
+  const resetReduxStoreAndHideNotifications = () => {
     console.log("resetting")
     dispatch(handleSignUpSuccess({data: null}))
     dispatch(handleSignUpError(null))
+    dispatch(showNotificationError(false, ""));
+    dispatch(showNotificationSuccess(false, ""));
   }
 
   useEffect(() => {
@@ -97,8 +99,9 @@ const SignUp = (props) => {
     }
   }, [signUpPostResponse, signUpPostErrResponse]);
 
-  const handleRoute = (route) => {
-    props.history.push(`/${route}`);
+  const gotoSignIn = () => {
+    resetReduxStoreAndHideNotifications()
+    props.history.push('/login');
   };
 
   const signUpClicked = () => {
@@ -291,7 +294,7 @@ const SignUp = (props) => {
                   component="button"
                   variant="body2"
                   // onClick={() => updateWindow('LOGIN')}
-                  onClick={() => handleRoute("login")}
+                  onClick={() => gotoSignIn()}
                 >
                   Already have an account? Sign In
                 </Link>
@@ -302,8 +305,8 @@ const SignUp = (props) => {
       </Grid>
 
       <div className={classes.notificationContainer}>
-        <NotificationError resetReduxStore={resetReduxStore} />
-        <NotificationSuccess resetReduxStore={resetReduxStore} />
+        <NotificationError resetReduxStoreAndHideNotifications={resetReduxStoreAndHideNotifications} />
+        <NotificationSuccess resetReduxStoreAndHideNotifications={resetReduxStoreAndHideNotifications} />
       </div>
     </div>
   );
