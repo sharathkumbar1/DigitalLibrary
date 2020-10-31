@@ -17,9 +17,11 @@ export default function signUpReducer(state = initialState, action = {}) {
       // console.log(record.response.data.errorMessage)
       return {
         ...state,
-        signUpPostErrResponse: record.response
-          ? record.response.data.errorMessage
-          : record,
+        signUpPostErrResponse: record ?
+          record.response
+            ? record.response.data.errorMessage
+            : record
+          : null,
         signUpPostResponse: null,
       };
     }

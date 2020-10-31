@@ -18,7 +18,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {SUCCESS_ON_SAVE} from "../../constants/errorConstants";
 
 import {showNotificationError, showNotificationSuccess,} from "../../store/notification/actionCreator";
-import {signUp} from "../../store/signup/actionCreator";
+import {signUp, handleSignUpError, handleSignUpSuccess} from "../../store/signup/actionCreator";
 
 import NotificationSuccess from "../Notifications/NotificationSuccess";
 import NotificationError from "../Notifications/NotificationError";
@@ -81,6 +81,12 @@ const SignUp = (props) => {
   const signUpPostErrResponse = useSelector(
     (state) => state.signUpReducer.signUpPostErrResponse
   );
+
+  const resetReduxStore = () => {
+    console.log("resetting")
+    dispatch(handleSignUpSuccess({data: null}))
+    dispatch(handleSignUpError(null))
+  }
 
   useEffect(() => {
     if (signUpPostResponse) {
@@ -296,8 +302,8 @@ const SignUp = (props) => {
       </Grid>
 
       <div className={classes.notificationContainer}>
-        <NotificationError />
-        <NotificationSuccess />
+        <NotificationError resetReduxStore={resetReduxStore} />
+        <NotificationSuccess resetReduxStore={resetReduxStore} />
       </div>
     </div>
   );

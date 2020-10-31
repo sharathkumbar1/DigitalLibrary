@@ -49,10 +49,8 @@ const NotificationError = props => {
   const dispatch = useDispatch()
 
   const handleRequestClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return
-    }
     dispatch(showNotificationError(false))
+    props.resetReduxStore()
   }
 
   const createMarkup = str => {

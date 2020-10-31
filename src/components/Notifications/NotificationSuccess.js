@@ -37,11 +37,10 @@ const NotificationSuccess = (props) => {
   );
   const dispatch = useDispatch();
 
-  const handleRequestClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
+  const handleRequestClose = () => {
+    console.log("I'm there !!!")
     dispatch(showNotificationSuccess(false));
+    props.resetReduxStore()
   };
 
   return (
@@ -54,7 +53,11 @@ const NotificationSuccess = (props) => {
             {notificationMessage}
           </span>
 
-          <Button component={Link} to="/login">
+          <Button
+            component={Link}
+            to="/login"
+            onClick={handleRequestClose}
+          >
             OK
           </Button>
         </>
