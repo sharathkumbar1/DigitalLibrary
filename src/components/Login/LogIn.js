@@ -11,7 +11,7 @@ import {
 
 import { useDispatch, useSelector } from "react-redux";
 
-import { signIn } from "../../store/signin/actionCreator";
+import { signIn, handleSignInError, handleSignInSuccess } from "../../store/signin/actionCreator";
 import FormDialog from '../ModelWindow/ResetPassWord'
 import {showNotificationError} from "../../store/notification/actionCreator";
 import NotificationError from "../Notifications/NotificationError";
@@ -70,6 +70,18 @@ const LogIn = (props) => {
     props.history.push(`/${route}`);
   };
 
+  const resetReduxStoreAndHideNotifications = () => {
+    console.log("resetting")
+    dispatch(handleSignInSuccess(null))
+    dispatch(handleSignInError(null))
+    dispatch(showNotificationError(false, ""));
+  }
+
+  const gotoSignUp = () => {
+    resetReduxStoreAndHideNotifications()
+    handleRoute("signup")
+  }
+
   const signInClicked = () => {
 
     // console.log(allValues);
@@ -96,6 +108,7 @@ const LogIn = (props) => {
 
   const handleClickOpen = () => {
     console.log("FORGOT PASSWORD!!!!")
+    resetReduxStoreAndHideNotifications()
     setOpen(true)
   }
 
@@ -180,7 +193,7 @@ const LogIn = (props) => {
                   <Link
                       component="button"
                       variant="body2"
-                      onClick={() => handleRoute('signup')}
+                      onClick={() => gotoSignUp()}
                   >
                     New to Library?  Sign Up
                   </Link>

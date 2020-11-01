@@ -15,9 +15,11 @@ export default function signInReducer(state = initialState, action = {}) {
             // console.log(record)
             return {
                 ...state,
-                signInPostErrResponse: record.response
-                    ? record.response.data.errorMessage
-                    : record,
+                signInPostErrResponse: record ?
+                record.response
+                  ? record.response.data.errorMessage
+                  : record
+                : null,
                 signInPostResponse: null,
             };
         }
