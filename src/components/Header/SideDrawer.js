@@ -20,6 +20,7 @@ import About from "../About/About";
 import Sponsor from "../Sponsor/Sponsor";
 import Faq from "../Faq/Faq";
 import ForgotPw from "./../Login/ForgotPw";
+import AudioBook from "./../AudioBook/AudioBook";
 
 const history = createBrowserHistory();
 
@@ -157,6 +158,7 @@ const SideDrawer = (props) => {
         <Route exact path="/about" component={About} />
         <Route exact path="/sponsor" component={Sponsor} />
         <Route exact path="/faq" component={Faq} />
+        <Route exact path="/audiobook" component={AudioBook} />
         {/* <Route component={NotFound} /> */}
       </main>
     </Router>
