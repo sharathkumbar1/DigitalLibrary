@@ -7,6 +7,8 @@ import ListSubheader from "@material-ui/core/ListSubheader";
 import IconButton from "@material-ui/core/IconButton";
 import InfoIcon from "@material-ui/icons/Info";
 import tileData from "./tileData";
+import PDFBookCover from "../../images/PDFBookCover.jpg";
+import AudioBookCover from "../../images/AudioBookCover.jpg";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,7 +31,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const HomePageContent = () => {
+const HomePageContent = (props) => {
+
+  const handleRoute = (route) => {
+    props.history.push(`/${route}`);
+  };
+
   const classes = useStyles();
 
   return (
@@ -37,6 +44,48 @@ const HomePageContent = () => {
       <GridList cellHeight={300} spacing={30} className={classes.gridList}>
         <GridListTile key="Subheader" cols={4} style={{ height: "auto" }}>
           <ListSubheader component="div"></ListSubheader>
+        </GridListTile>
+        <GridListTile
+          key="PDFBook"
+          onClick={() => handleRoute('')}
+        >
+          <span>PDF Book</span>
+          <img src={PDFBookCover} alt="Book Cover" />
+
+          <GridListTileBar
+            title="PDF Book"
+            actionIcon={
+              <>
+                <IconButton
+                  aria-label={`info about PDF Book`}
+                  className={classes.icon}
+                >
+                  <InfoIcon />
+                </IconButton>
+              </>
+            }
+          />
+        </GridListTile>
+        <GridListTile
+          key="AudioBook"
+          onClick={() => handleRoute('audiobook')}
+        >
+          <span>Audio Book</span>
+          <img src={AudioBookCover} alt="Book Cover" />
+
+          <GridListTileBar
+            title="Audio Book"
+            actionIcon={
+              <>
+                <IconButton
+                  aria-label={`info about Audio Book`}
+                  className={classes.icon}
+                >
+                  <InfoIcon />
+                </IconButton>
+              </>
+            }
+          />
         </GridListTile>
         {tileData.map((tile) => (
           <GridListTile key={tile.img}>
