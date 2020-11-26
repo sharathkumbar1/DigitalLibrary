@@ -2,7 +2,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import AudioPlayer from 'react-h5-audio-player';
 import 'react-h5-audio-player/lib/styles.css';
-import AudioBookCover from "../../images/AudioBookCover.jpg";
+import AudioBookCover from "../../images/Alice_in_Wonderland.jpg";
 import GridList from "@material-ui/core/GridList";
 import GridListTile from "@material-ui/core/GridListTile";
 
@@ -12,12 +12,11 @@ const useStyles = makeStyles((theme) => ({
       padding: "1%",
       flexWrap: "wrap",
       justifyContent: "space-around",
-      overflow: "scroll",
       backgroundColor: theme.palette.background.paper,
       margin: "0px !important",
     },
     coverPage: {
-        height:"350px !important",
+        height:"300px !important",
         width:"100% !important",
         textAlign: "center",
     },
@@ -52,7 +51,8 @@ const AudioBook = () => {
                 >
                     <AudioPlayer
                         // src="http://devsharedstellentcontentsivr.target.com/target-com/flashvoicefiles/english/test1.mp3"
-                        src="http://samarthanamcloudservices-env.eba-qe6ed46a.ap-south-1.elasticbeanstalk.com/downloadAudio?file=file_example_MP3_700KB.mp3"
+                        // src="http://samarthanamcloudservices-env.eba-qe6ed46a.ap-south-1.elasticbeanstalk.com/downloadAudio?file=file_example_MP3_700KB.mp3"
+                        src="https://etc.usf.edu/lit2go/audio/mp3/alices-adventures-in-wonderland-001-chapter-i-down-the-rabbit-hole.1.mp3"
                         onPlay={e => console.log("onPlay")}
                         progressJumpStep="10000" // 10 seconds
                         autoPlayAfterSrcChange={false}
