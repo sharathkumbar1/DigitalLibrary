@@ -1,4 +1,5 @@
 import React from "react";
+import { useHistory } from "react-router-dom";  
 import { makeStyles } from "@material-ui/core/styles";
 import GridList from "@material-ui/core/GridList";
 import GridListTile from "@material-ui/core/GridListTile";
@@ -12,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
     flexWrap: "wrap",
-    justifyContent: "space-around",
+    justifyContent: "space-around", 
     overflow: "hidden",
     backgroundColor: theme.palette.background.paper,
   },
@@ -29,8 +30,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const HomePageContent = () => {
+const HomePageContent = (props) => {
   const classes = useStyles();
+  const history = useHistory();
+
+  const onImageClick = (id) => {
+    console.log("onIMageClick ")
+    history.push("/personaldev/"+id);
+  };
 
   return (
     <div className={classes.root}>
@@ -40,11 +47,15 @@ const HomePageContent = () => {
         </GridListTile>
         {tileData.map((tile) => (
           <GridListTile key={tile.img}>
-            <span>{tile.category}</span>
-            <img src={tile.img} alt={tile.title} />
+           
+            <img
+              src={tile.img}
+              alt={tile.title}
+              onClick={()=>onImageClick(tile.id)}
+            />
 
             <GridListTileBar
-              title={tile.title}
+              title={tile.category}
               actionIcon={
                 <>
                   <IconButton

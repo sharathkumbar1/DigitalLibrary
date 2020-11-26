@@ -10,6 +10,7 @@ function App() {
       <BrowserRouter>
         <Switch>
           <Route path="/" component={Layout} />
+          
         </Switch>
       </BrowserRouter>
     </MuiThemeProvider>
