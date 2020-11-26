@@ -9,7 +9,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import { createBrowserHistory } from "history";
 
 /* ROUTE COMPONENTS */
-import HomePage from "./../HomePage/HomePage";
+import HomePageContent from "./../HomePageContent/HomePageContent";
 import LogInOrSignUp from "./../Login/LogInOrSignUp";
 import LogIn from "./../Login/LogIn";
 import SignUp from "./../Login/SignUp";
@@ -149,7 +149,7 @@ const SideDrawer = (props) => {
       </Drawer>
       <main className={classes.content}>
         {/* <Route exact path="/" component={LogInOrSignUp} /> */}
-        <Route exact path="/" component={HomePage} />
+        <Route exact path="/" component={HomePageContent} />
         <Route exact path="/login" component={LogIn} />
         <Route exact path="/signup" component={SignUp} />
         <Route exact path="/forgotpw" component={ForgotPw} />
