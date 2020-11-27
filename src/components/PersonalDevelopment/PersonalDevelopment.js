@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+
 import { MobilePDFReader } from "reactjs-pdf-reader";
 import { makeStyles } from "@material-ui/core/styles";
 import tileData from "./../HomePageContent/tileData";
@@ -78,28 +79,36 @@ const PersonalDevelopment = (props) => {
   const readClicked = (pdfLink) => {
     console.log(pdfLink);
     setShowPDFViewer(true);
-    setPdfPath(pdfLink)
+    setPdfPath(pdfLink);
   };
 
   return (
     <div>
       <h1>{tileData[id - 1].category}</h1>
-      
 
-      {!showPDFViewer && (
-        <div>
-          {populateBooksData()}
-        </div>
-      )}
+      {!showPDFViewer && <div>{populateBooksData()}</div>}
 
       {showPDFViewer && (
         <div>
-          <div style={{ overflow: "scroll", height: 600, backgroundColor:"#CC0000", width:"100%" }}>
+          <div
+            style={{
+              overflow: "scroll",
+              height: "100%",
+              backgroundColor: "rgba(0,0,0,0.8)",
+              width: "100%",
+              top: "0",
+              left: "0",
+              right: "0",
+              bottom: "0",
+              position:"fixed",
+              zIndex: "2",
+              cursor: "pointer",
+            }}
+          >
             <MobilePDFReader url={pdfPath} />
           </div>
         </div>
       )}
-
     </div>
   );
 };

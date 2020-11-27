@@ -1,5 +1,6 @@
-import React from "react";
-import { useHistory } from "react-router-dom";  
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import GridList from "@material-ui/core/GridList";
 import GridListTile from "@material-ui/core/GridListTile";
@@ -8,6 +9,7 @@ import ListSubheader from "@material-ui/core/ListSubheader";
 import IconButton from "@material-ui/core/IconButton";
 import InfoIcon from "@material-ui/icons/Info";
 import tileData from "./tileData";
+import { setBackToComponent } from "../../store/header/actionCreator";
 import PDFBookCover from "../../images/PDFBookCover.jpg";
 import AudioBookCover from "../../images/Alice_in_Wonderland.jpg";
 
@@ -15,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
     flexWrap: "wrap",
-    justifyContent: "space-around", 
+    justifyContent: "space-around",
     overflow: "hidden",
     backgroundColor: theme.palette.background.paper,
   },
@@ -45,21 +47,25 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const HomePageContent = (props) => {
+  const dispatch = useDispatch();
+  const classes = useStyles();
+  const history = useHistory();
+
+  useEffect(() => {
+    //dispatch(setBackToComponent(null));
+  });
 
   const handleRoute = (route) => {
     props.history.push(`/${route}`);
   };
 
-  const classes = useStyles();
-  const history = useHistory();
-
   const onImageClick = (id) => {
-    console.log("onIMageClick ")
-    history.push("/personaldev/"+id);
+    console.log("onIMageClick ");
+    dispatch(setBackToComponent("/personaldev/" + id));
+    history.push("/personaldev/" + id);
   };
 
   return (
-
     <div className={classes.root}>
       <GridList cellHeight={300} spacing={30} className={classes.gridList}>
         <GridListTile key="Subheader" cols={4} style={{ height: "auto" }}>
@@ -67,11 +73,10 @@ const HomePageContent = (props) => {
         </GridListTile>
         {tileData.map((tile) => (
           <GridListTile key={tile.img}>
-           
             <img
               src={tile.img}
               alt={tile.title}
-              onClick={()=>onImageClick(tile.id)}
+              onClick={() => onImageClick(tile.id)}
             />
 
             <GridListTileBar
@@ -126,7 +131,7 @@ const HomePageContent = (props) => {
     //         subtitle={<span>By: Lewis Carroll</span>}
     //       />
     //     </GridListTile>
-        
+
     //   </GridList>
     // </div>
   );
