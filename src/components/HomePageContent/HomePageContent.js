@@ -65,75 +65,81 @@ const HomePageContent = (props) => {
     history.push("/personaldev/" + id);
   };
 
-  return (
-    <div className={classes.root}>
-      <GridList cellHeight={300} spacing={30} className={classes.gridList}>
-        <GridListTile key="Subheader" cols={4} style={{ height: "auto" }}>
-          <ListSubheader component="div"></ListSubheader>
-        </GridListTile>
-        {tileData.map((tile) => (
-          <GridListTile key={tile.img}>
-            <img
-              src={tile.img}
-              alt={tile.title}
-              onClick={() => onImageClick(tile.id)}
-            />
+  const onImageClick1 = () => {
+    console.log("onIMageClick1");
+    dispatch(setBackToComponent("/personaldev/" + 1));
+    history.push("/personaldev/" + 1);
+  };
 
-            <GridListTileBar
-              title={tile.category}
-              actionIcon={
-                <>
-                  <IconButton
-                    aria-label={`info about ${tile.title}`}
-                    className={classes.icon}
-                  >
-                    <InfoIcon />
-                  </IconButton>
-                </>
-              }
-            />
-          </GridListTile>
-        ))}
-      </GridList>
-    </div>
+  return (
     // <div className={classes.root}>
     //   <GridList cellHeight={300} spacing={30} className={classes.gridList}>
     //     <GridListTile key="Subheader" cols={4} style={{ height: "auto" }}>
     //       <ListSubheader component="div"></ListSubheader>
     //     </GridListTile>
-    //     <GridListTile
-    //       key="PDFBook"
-    //       onClick={() => handleRoute('')}
-    //       className={classes.gridTile}
-    //     >
-    //       <img src={PDFBookCover}
-    //         alt="Book Cover"
-    //         className={classes.coverPageImage}
-    //       />
+    //     {tileData.map((tile) => (
+    //       <GridListTile key={tile.img}>
+    //         <img
+    //           src={tile.img}
+    //           alt={tile.title}
+    //           onClick={() => onImageClick(tile.id)}
+    //         />
 
-    //       <GridListTileBar
-    //         title="PDF Book"
-    //         subtitle={<span>By: Author</span>}
-    //       />
-    //     </GridListTile>
-    //     <GridListTile
-    //       key="AudioBook"
-    //       onClick={() => handleRoute('audiobook')}
-    //       className={classes.gridTile}
-    //     >
-    //       <img src={AudioBookCover}
-    //         alt="Book Cover"
-    //         className={classes.coverPageImage}
-    //       />
-
-    //       <GridListTileBar
-    //         title="Alice's Adventures in Wonderland"
-    //         subtitle={<span>By: Lewis Carroll</span>}
-    //       />
-    //     </GridListTile>
-
+    //         <GridListTileBar
+    //           title={tile.category}
+    //           actionIcon={
+    //             <>
+    //               <IconButton
+    //                 aria-label={`info about ${tile.title}`}
+    //                 className={classes.icon}
+    //               >
+    //                 <InfoIcon />
+    //               </IconButton>
+    //             </>
+    //           }
+    //         />
+    //       </GridListTile>
+    //     ))}
     //   </GridList>
     // </div>
+    <div className={classes.root}>
+      <GridList cellHeight={300} spacing={30} className={classes.gridList}>
+        <GridListTile key="Subheader" cols={4} style={{ height: "auto" }}>
+          <ListSubheader component="div"></ListSubheader>
+        </GridListTile>
+        <GridListTile
+          key="PDFBooks"
+          onClick={() => onImageClick1()}
+          className={classes.gridTile}
+        >
+          <img src={PDFBookCover}
+            alt="Book Cover"
+            className={classes.coverPageImage}
+          />
+
+          <GridListTileBar
+            title="PDF Books"
+            subtitle={<span>By: Author</span>}
+          />
+        </GridListTile>
+        <GridListTile
+          key="AudioBook"
+          onClick={() => handleRoute('audiobook')}
+          className={classes.gridTile}
+        >
+          <img src={AudioBookCover}
+            alt="Book Cover"
+            className={classes.coverPageImage}
+          />
+
+          <GridListTileBar
+            title="Alice's Adventures in Wonderland"
+            subtitle={<span>By: Lewis Carroll</span>}
+          />
+        </GridListTile>
+
+      </GridList>
+    </div>
   );
 };
 
