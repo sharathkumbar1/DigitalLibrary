@@ -25,13 +25,27 @@ const useStyles = makeStyles((theme) => ({
         width: "inherit",
     },
     audioPlayer: {
-        height:"125px !important",
+        height:"110px !important",
         width:"100% !important",
+        padding: "15px 15px 0px 15px !important",
+    },
+    bookDetails: {
+        width: "100% !important",
+        height: "fit-content !important",
+        padding: "0px 15px !important",
     }
   }));
 
 const AudioBook = () => {
     const classes = useStyles();
+
+    const bookDetails = {
+        "title": "Alice's Adventures in Wonderland",
+        "published_date": "26 November 1865",
+        "author": "Lewis Carroll",
+        "publisher": "Macmillan Publishers",
+        "genres": "Fairy tale",
+    }
 
     return (
         <div>
@@ -61,6 +75,18 @@ const AudioBook = () => {
                         customAdditionalControls={[]}
                     />
                 </GridListTile>
+                {/* <GridListTile
+                    key="BookDetails"
+                    // className={classes.audioPlayer}
+                > */}
+                <div className={classes.bookDetails}>
+                    <p><b>Alice's Adventures in Wonderland</b></p>
+                    <p><b>Originally published: </b>26 November 1865</p>
+                    <p><b>Author: </b>Lewis Carroll</p>
+                    <p><b>Publisher: </b>Macmillan Publishers</p>
+                    <p><b>Genres: </b>Fairy tale</p>
+                </div>
+{/* </GridListTile> */}
             </GridList>
         </div>
     );
