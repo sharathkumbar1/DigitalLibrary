@@ -91,9 +91,6 @@ const PersonalDevelopment = () => {
     history.push("/pdfviewer");
   };
 
-  const downLoadClicked = (pdfLink) => {
-    //Download code goes here
-  }
 
   return (
     <div>
