@@ -53,7 +53,12 @@ const Header = (props) => {
 
   const onBackBtnClicked = () => {
     history.goBack()
-    // dispatch(setBackToComponent())
+    const locPath = window.location.href;
+    if(locPath.indexOf("personaldev") == -1 ){
+      //Do nothing
+    }else {
+      dispatch(setBackToComponent(""))
+    }
   }
 
   const handleHeaderButton = () => {
