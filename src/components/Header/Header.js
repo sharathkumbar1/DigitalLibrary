@@ -11,6 +11,7 @@ import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import { useDispatch, useSelector } from "react-redux";
 import { setBackToComponent } from "../../store/header/actionCreator";
+import { useHistory } from 'react-router-dom'
 
 const drawerWidth = 240;
 
@@ -41,6 +42,7 @@ const styles = (theme) => ({
 const Header = (props) => {
   const { classes, title, onMenuClick } = props;
   const dispatch = useDispatch();
+  const history = useHistory()
   const backToComponentResponse = useSelector(
     (state) => state.headerReducer.backToComponent
   );
@@ -48,6 +50,11 @@ const Header = (props) => {
   useEffect(() => {
     //dispatch(setBackToComponent());
   });
+
+  const onBackBtnClicked = () => {
+    history.goBack()
+    // dispatch(setBackToComponent())
+  }
 
   const handleHeaderButton = () => {
     if(backToComponentResponse){
@@ -57,6 +64,7 @@ const Header = (props) => {
             className={classes.backButton}
             aria-label="Back"
             data-cy="backBtn"
+            onClick={onBackBtnClicked}
           >
             <ArrowBack />
           </IconButton>

@@ -1,14 +1,13 @@
-import React, { useState } from "react";
-
-import { MobilePDFReader } from "reactjs-pdf-reader";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import tileData from "./../HomePageContent/tileData";
-
-import Card from "@material-ui/core/Card";
-import CardActions from "@material-ui/core/CardActions";
-import CardContent from "@material-ui/core/CardContent";
-import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
+import { setPdfURL } from "../../store/personalDevelopment/actionCreator";
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { Grid, IconButton, ListItem } from "@material-ui/core";
+import CloudDownloadOutlinedIcon from "@material-ui/icons/CloudDownloadOutlined";
+import ImportContactsOutlinedIcon from "@material-ui/icons/ImportContactsOutlined";
 
 const useStyles = makeStyles({
   root: {
@@ -22,12 +21,11 @@ const useStyles = makeStyles({
   },
 });
 
-const PersonalDevelopment = (props) => {
+const PersonalDevelopment = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const history = useHistory();
   const id = window.location.pathname.split("/")[2];
-
-  const [showPDFViewer, setShowPDFViewer] = useState(false);
-  const [pdfPath, setPdfPath] = useState("");
 
   const populateBooksData = () => {
     const arr = [];
@@ -47,28 +45,40 @@ const PersonalDevelopment = (props) => {
     ibooks.books.forEach((booksData) => {
       arr1.push(
         <div>
-          <Card className={classes.root}>
-            <CardContent>
-              <Typography
-                className={classes.title}
-                color="textPrimary"
-                gutterBottom
-              >
-                {booksData.bookName}
-              </Typography>
-            </CardContent>
-            <CardActions>
-              <Button
-                variant="contained"
-                color="primary"
-                type="submit"
-                className="button-block"
-                onClick={() => readClicked(booksData.pdflink)}
-              >
-                Read
-              </Button>
-            </CardActions>
-          </Card>
+          <ListItem className={classes.individualShift}>
+            <Grid container spacing={1}>
+              <Grid item xs={8} spacing={3}>
+                <Grid container spacing={1}>
+                  <Typography
+                    className={classes.title}
+                    color="textPrimary"
+                    gutterBottom
+                  >
+                    Book: <b>{booksData.bookName}</b>
+                  </Typography>
+                </Grid>
+                <Grid>
+                  <Typography
+                    className={classes.title}
+                    color="textSecondary"
+                    gutterBottom
+                  >
+                    Author: <b>{booksData.Author}</b>
+                  </Typography>
+                </Grid>
+              </Grid>
+              <Grid item xs={2} spacing={3}>
+                <IconButton aria-label="delete">
+                  <ImportContactsOutlinedIcon onClick={() => readClicked(booksData.pdflink)} />
+                </IconButton>
+              </Grid>
+              <Grid item xs={2} spacing={3}>
+                <IconButton aria-label="delete">
+                  <a href={booksData.pdflink} download="My_File.pdf"><CloudDownloadOutlinedIcon /></a>
+                </IconButton>
+              </Grid>
+            </Grid>
+          </ListItem>
         </div>
       );
     });
@@ -77,38 +87,17 @@ const PersonalDevelopment = (props) => {
   };
 
   const readClicked = (pdfLink) => {
-    console.log(pdfLink);
-    setShowPDFViewer(true);
-    setPdfPath(pdfLink);
+    dispatch(setPdfURL(pdfLink));
+    history.push("/pdfviewer");
   };
+
+  const downLoadClicked = (pdfLink) => {
+    //Download code goes here
+  }
 
   return (
     <div>
-      <h1>{tileData[id - 1].category}</h1>
-
-      {!showPDFViewer && <div>{populateBooksData()}</div>}
-
-      {showPDFViewer && (
-        <div>
-          <div
-            style={{
-              overflow: "scroll",
-              height: "100%",
-              backgroundColor: "rgba(0,0,0,0.8)",
-              width: "100%",
-              top: "0",
-              left: "0",
-              right: "0",
-              bottom: "0",
-              position:"fixed",
-              zIndex: "2",
-              cursor: "pointer",
-            }}
-          >
-            <MobilePDFReader url={pdfPath} />
-          </div>
-        </div>
-      )}
+      <div>{populateBooksData()}</div>
     </div>
   );
 };
