@@ -17,12 +17,13 @@ const styles = () => ({
     justifyContent: "center",
   },
   message: {
-    display: "flex",
+    // display: "flex",
     alignItems: "center",
     textAlign: "center",
   },
   icon: {
     marginRight: "8px",
+    verticalAlign: "middle",
     color: "#43a047",
   },
 });

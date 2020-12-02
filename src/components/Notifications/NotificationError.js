@@ -18,7 +18,7 @@ const styles = theme => ({
   snackbarContent: {
     flexWrap: 'nowrap',
     alignItems: 'flex-start',
-    padding: '6px 10px',
+    padding: '0px 6px',
   },
   snackbarAction: {
     paddingLeft: '8px',

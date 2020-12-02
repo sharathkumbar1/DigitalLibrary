@@ -204,12 +204,12 @@ const LogIn = (props) => {
         </Grid>
 
         <div className={classes.notificationContainer}>
-          <NotificationError />
+          <NotificationError resetReduxStoreAndHideNotifications={resetReduxStoreAndHideNotifications}/>
         </div>
 
         <FormDialog
-        open={open}
-        onCloseButtonClick={onCloseButtonClick}
+          open={open}
+          onCloseButtonClick={onCloseButtonClick}
         >
           
         </FormDialog>
