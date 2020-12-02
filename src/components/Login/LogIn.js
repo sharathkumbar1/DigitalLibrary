@@ -92,7 +92,8 @@ const LogIn = (props) => {
       dispatch(showNotificationError(true, "Please fill in Password"));
     }
     else {
-      dispatch(showNotificationError(false, ""));
+      // dispatch(showNotificationError(false, ""));
+      resetReduxStoreAndHideNotifications()
       processRequest();
     }
   };
@@ -173,7 +174,7 @@ const LogIn = (props) => {
                         color="primary"
                         type="submit"
                         className="button-block"
-                        onClick={signInClicked}
+                        onClick={() => signInClicked()}
                     >
                       Submit
                     </Button>

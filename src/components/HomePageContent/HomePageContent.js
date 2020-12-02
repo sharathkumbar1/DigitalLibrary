@@ -119,7 +119,7 @@ const HomePageContent = (props) => {
 
           <GridListTileBar
             title="PDF Books"
-            subtitle={<span>By: Author</span>}
+            // subtitle={<span>By: Author</span>}
           />
         </GridListTile>
         <GridListTile
@@ -133,8 +133,8 @@ const HomePageContent = (props) => {
           />
 
           <GridListTileBar
-            title="Alice's Adventures in Wonderland"
-            subtitle={<span>By: Lewis Carroll</span>}
+            title="Audio Book"
+            // subtitle={<span>By: Lewis Carroll</span>}
           />
         </GridListTile>
 
