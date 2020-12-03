@@ -17,7 +17,11 @@ export function forgotPw(requestBody) {
         return axios
             .post(apiUrl, requestBody, requestConfig)
             .then((response) => {
-                dispatch(handleForgotPwSuccess(response));
+                console.log(response);
+               // console.log(JSON.parse(response.data));
+                console.log(response.data.message);
+
+                dispatch(handleForgotPwSuccess(response.data.message));
             })
             .catch((response) => {
                 dispatch(handleForgotPwError(response));

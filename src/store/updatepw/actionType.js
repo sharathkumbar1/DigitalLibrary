@@ -1,0 +1,2 @@
+export const UPDATE_PW_ERROR = 'UPDATE_PW_ERROR'
+export const UPDATE_PW_SUCCESS = 'UPDATE_PW_SUCCESS'

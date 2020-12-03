@@ -23,6 +23,7 @@ import ForgotPw from "./../Login/ForgotPw";
 import AudioBook from "./../AudioBook/AudioBook";
 import PersonalDevelopment from "../PersonalDevelopment/PersonalDevelopment"
 import PDFViewer from "../PDFViewer/PDFViewer";
+import UpdatePw from "../Login/UpdatePw";
 
 const history = createBrowserHistory();
 
@@ -163,6 +164,7 @@ const SideDrawer = (props) => {
         <Route exact path="/audiobook" component={AudioBook} />
         <Route path="/personaldev" component={PersonalDevelopment} />
         <Route path="/pdfviewer" component={PDFViewer} />
+        <Route exact path="/updatepw" component={UpdatePw} />
         {/* <Route component={NotFound} /> */}
       </main>
     </Router>

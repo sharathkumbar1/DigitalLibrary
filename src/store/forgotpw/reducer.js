@@ -23,7 +23,7 @@ export default function forgotPwReducer(state = initialState, action = {}) {
             const { record } = action;
             return {
                 ...state,
-                forgotPwPostResponse: record.data,
+                forgotPwPostResponse: record,
                 forgotPwPostErrResponse: null,
             };
         }

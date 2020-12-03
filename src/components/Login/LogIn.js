@@ -15,6 +15,7 @@ import { signIn, handleSignInError, handleSignInSuccess } from "../../store/sign
 import FormDialog from '../ModelWindow/ResetPassWord'
 import {showNotificationError} from "../../store/notification/actionCreator";
 import NotificationError from "../Notifications/NotificationError";
+import NotificationSuccess from "../Notifications/NotificationSuccess";
 
 const styles = (theme) => ({
   button: {
@@ -206,6 +207,7 @@ const LogIn = (props) => {
 
         <div className={classes.notificationContainer}>
           <NotificationError resetReduxStoreAndHideNotifications={resetReduxStoreAndHideNotifications}/>
+          <NotificationSuccess resetReduxStoreAndHideNotifications={resetReduxStoreAndHideNotifications} />
         </div>
 
         <FormDialog

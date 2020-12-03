@@ -5,6 +5,7 @@ import forgotPwReducer from "./forgotpw/reducer";
 import notification from './notification/reducer'
 import headerReducer from './header/reducer';
 import personalDevelopment from './personalDevelopment/reducer';
+import updatePwReducer from "./updatepw/reducer";
 
 const rootReducer = combineReducers({
   signUpReducer,
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   notification,
   headerReducer,
   personalDevelopment,
+  updatePwReducer,
 });
 
 export default rootReducer;
