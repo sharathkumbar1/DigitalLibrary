@@ -61,11 +61,11 @@ const AudioBook = () => {
         "author": "Lewis Carroll",
         "publisher": "Macmillan Publishers",
         "genres": "Fairy tale",
-        "url": "https://etc.usf.edu/lit2go/audio/mp3/alices-adventures-in-wonderland-001-chapter-i-down-the-rabbit-hole.1.mp3",
+        "url": "http://samarthanamcloudservices-env.eba-qe6ed46a.ap-south-1.elasticbeanstalk.com/downloadAudio?file=alices-adventures-in-wonderland-001-chapter-i-down-the-rabbit-hole.1.mp3",
     }
 
     // const downloadFile = () => {
-    //       window.location.href = "http://samarthanamcloudservices-env.eba-qe6ed46a.ap-south-1.elasticbeanstalk.com/downloadAudio?file=file_example_MP3_700KB.mp3"
+    //       window.location.href = bookDetails.url
     // }
     
     return (
@@ -85,8 +85,6 @@ const AudioBook = () => {
                     className={classes.audioPlayer}
                 >
                     <AudioPlayer
-                        // src="http://devsharedstellentcontentsivr.target.com/target-com/flashvoicefiles/english/test1.mp3"
-                        // src="http://samarthanamcloudservices-env.eba-qe6ed46a.ap-south-1.elasticbeanstalk.com/downloadAudio?file=file_example_MP3_700KB.mp3"
                         src={bookDetails.url}
                         onPlay={e => console.log("onPlay")}
                         progressJumpStep="10000" // 10 seconds
@@ -94,10 +92,10 @@ const AudioBook = () => {
                         defaultCurrentTime="00:00"
                         defaultDuration="loading..."
                         customAdditionalControls={[
-                            <a href="http://localhost:3000/data/mp3/Alice's Adventures in Wonderland.mp3"
-                                download="Alice's Adventures in Wonderland.mp3"
+                            <a href={bookDetails.url}
+                                // download="Alice's Adventures in Wonderland.mp3"
                             >
-                            <Download /*onClick={() => downloadFile()}*/ className={classes.download} />
+                            <Download className={classes.download} />
                             </a>
                         ]}
                     />
