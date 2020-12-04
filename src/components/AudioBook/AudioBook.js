@@ -36,6 +36,9 @@ const useStyles = makeStyles((theme) => ({
         height: "fit-content !important",
         padding: "0px 15px !important",
     },
+    bookTitle: {
+        color: "darkgreen",
+    },
     download: {
 
         height: "48px",
@@ -91,9 +94,8 @@ const AudioBook = () => {
                         defaultCurrentTime="00:00"
                         defaultDuration="loading..."
                         customAdditionalControls={[
-                            <a
-                                href="http://samarthanamcloudservices-env.eba-qe6ed46a.ap-south-1.elasticbeanstalk.com/downloadAudio?file=file_example_MP3_700KB.mp3"
-                                download={"aa"}
+                            <a href="http://localhost:3000/data/mp3/Alice's Adventures in Wonderland.mp3"
+                                download="Alice's Adventures in Wonderland.mp3"
                             >
                             <Download /*onClick={() => downloadFile()}*/ className={classes.download} />
                             </a>
@@ -101,7 +103,7 @@ const AudioBook = () => {
                     />
                 </GridListTile>
                 <div className={classes.bookDetails}>
-                    <Typography variant="h6">
+                    <Typography variant="h6" className={classes.bookTitle}>
                         {bookDetails.title}
                     </Typography> 
                     <p><b>Originally published: </b>{bookDetails.published_date}</p>
