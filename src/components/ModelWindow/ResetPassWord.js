@@ -41,7 +41,7 @@ export default function FormDialog(props) {
 
     useEffect(() => {
         if (forgotPwPostResponse) {
-            dispatch(showNotificationSuccess(true, SUCCESS_ON_SAVE));
+            dispatch(showNotificationError(true, SUCCESS_ON_SAVE));
         } else if (forgotPwPostErrResponse) {
             console.log(forgotPwPostErrResponse)
             dispatch(showNotificationError(true, forgotPwPostErrResponse));
