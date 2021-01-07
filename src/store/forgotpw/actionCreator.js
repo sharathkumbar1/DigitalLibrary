@@ -21,7 +21,7 @@ export function forgotPw(requestBody) {
                // console.log(JSON.parse(response.data));
                 console.log(response.data.message);
 
-                dispatch(handleForgotPwSuccess(response.data.message));
+                dispatch(handleForgotPwSuccess(response));
             })
             .catch((response) => {
                 dispatch(handleForgotPwError(response));
