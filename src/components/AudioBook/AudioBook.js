@@ -103,7 +103,7 @@ class AudioBook extends React.Component {
                     const downloadUrl = window.URL.createObjectURL(new Blob([data]));
                     const link = document.createElement('a');
                     link.href = downloadUrl;
-                    link.setAttribute('download', 'file.mp3'); //any other extension
+                    link.setAttribute('download', bookDetails.file_name); //any other extension
                     document.body.appendChild(link);
                     link.click();
                     link.remove();
