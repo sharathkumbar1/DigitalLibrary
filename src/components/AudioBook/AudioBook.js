@@ -6,21 +6,21 @@ import AudioBookCover from "../../images/Alice_in_Wonderland.jpg";
 import GridList from "@material-ui/core/GridList";
 import GridListTile from "@material-ui/core/GridListTile";
 import Typography from "@material-ui/core/Typography";
-import {ReactComponent as Download} from '../../images/download.svg'
+import { ReactComponent as Download } from '../../images/download.svg'
 import axios from "axios";
 
 const styles = theme => ({
     gridList: {
-      display: "block",
-      padding: "1%",
-      flexWrap: "wrap",
-      justifyContent: "space-around",
-      backgroundColor: theme.palette.background.paper,
-      margin: "0px !important",
+        display: "block",
+        padding: "1%",
+        flexWrap: "wrap",
+        justifyContent: "space-around",
+        backgroundColor: theme.palette.background.paper,
+        margin: "0px !important",
     },
     coverPage: {
-        height:"300px !important",
-        width:"100% !important",
+        height: "300px !important",
+        width: "100% !important",
         textAlign: "center",
     },
     coverPageImage: {
@@ -28,8 +28,8 @@ const styles = theme => ({
         width: "inherit",
     },
     audioPlayer: {
-        height:"110px !important",
-        width:"100% !important",
+        height: "110px !important",
+        width: "100% !important",
         padding: "15px 15px 0px 15px !important",
     },
     bookDetails: {
@@ -45,10 +45,10 @@ const styles = theme => ({
         height: "48px",
         width: "28px",
         fill: "#00000090",
-      
+
         '&:active': {
-          fill: "black",
-          cursor: "pointer",
+            fill: "black",
+            cursor: "pointer",
         }
     }
 })
@@ -65,7 +65,7 @@ const bookDetails = {
     "download_url": ""
 };
 
-class AudioBook extends React.Component  {
+class AudioBook extends React.Component {
     constructor(props) {
         super(props)
 
@@ -76,14 +76,39 @@ class AudioBook extends React.Component  {
 
     componentDidMount() {
         axios
-        .get(apiUrl + bookDetails.file_name)
-        .then((response) => {
-            // console.log(response)
-            this.setState({"download_url" : response.data})
-        })
-        .catch((error) => {
-            console.log(error);
-        });
+            .get(apiUrl + bookDetails.file_name)
+            .then((response) => {
+                this.setState({ "download_url": response.data })
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
+
+    downloadAudio = (values) => {
+        return (dispatch) => {
+            const method = 'GET';
+            const url = this.state.download_url;
+            axios
+                .request({
+                    url,
+                    method,
+                    responseType: 'blob',
+                    mode: 'no-cors',
+                    headers: {
+                        'Access-Control-Allow-Origin': '*',
+                    },
+                })
+                .then(({ data }) => {
+                    const downloadUrl = window.URL.createObjectURL(new Blob([data]));
+                    const link = document.createElement('a');
+                    link.href = downloadUrl;
+                    link.setAttribute('download', 'file.mp3'); //any other extension
+                    document.body.appendChild(link);
+                    link.click();
+                    link.remove();
+                });
+        };
     }
 
     render() {
@@ -114,10 +139,10 @@ class AudioBook extends React.Component  {
                             defaultCurrentTime="00:00"
                             defaultDuration="loading..."
                             customAdditionalControls={[
-                                <a href={this.state.download_url} download /*target="_blank" rel="noopener noreferrer"*/
-                                    // download="Alice's Adventures in Wonderland.mp3"
+                                <a onClick={this.downloadAudio()}  /*target="_blank" rel="noopener noreferrer"*/
+                                // download="Alice's Adventures in Wonderland.mp3"
                                 >
-                                <Download /*onClick={() => downloadFile()}*/ className={classes.download} />
+                                    <Download /*onClick={() => downloadFile()}*/ className={classes.download} />
                                 </a>
                             ]}
                         />
@@ -125,7 +150,7 @@ class AudioBook extends React.Component  {
                     <div className={classes.bookDetails}>
                         <Typography variant="h6" className={classes.bookTitle}>
                             {bookDetails.title}
-                        </Typography> 
+                        </Typography>
                         <p><b>Originally published: </b>{bookDetails.published_date}</p>
                         <p><b>Author: </b>{bookDetails.author}</p>
                         <p><b>Publisher: </b>{bookDetails.publisher}</p>
