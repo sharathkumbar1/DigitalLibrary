@@ -1,7 +1,7 @@
 import { SET_PDF_URL } from './actionType'
 
 const initialState = {
-    pdfUrl: 'http://localhost:3000/data/pdf/sample1.pdf',
+    pdfUrl: "../../data/pdf/sample1.pdf",
 }
 
 export default function personalDevelopmentReducer(state = initialState, action) {

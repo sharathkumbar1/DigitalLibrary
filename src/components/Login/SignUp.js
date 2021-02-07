@@ -135,9 +135,9 @@ const SignUp = (props) => {
 
   const processRequest = () => {
     const requestBody = {
-      firstName: firstname,
-      lastName: lastname,
-      emailAddress: email,
+      first_name: firstname,
+      last_name: lastname,
+      email_address: email,
       password: password,
       gender: gender,
     };

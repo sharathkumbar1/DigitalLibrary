@@ -74,7 +74,7 @@ const PersonalDevelopment = () => {
               </Grid>
               <Grid item xs={2} spacing={3}>
                 <IconButton aria-label="delete">
-                  <a href={booksData.pdflink} download="The Wall.pdf"><CloudDownloadOutlinedIcon /></a>
+                  <a href={booksData.pdflink} download={booksData.bookName}><CloudDownloadOutlinedIcon /></a>
                 </IconButton>
               </Grid>
             </Grid>
