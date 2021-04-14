@@ -214,8 +214,29 @@ const HomePDFBooks = () => {
               </Button>
         </Grid>
 
-        <GridList cellHeight={200} className={classes.gridList} cols={3}>
+        <GridList cellHeight='200' className={classes.gridList} cols={3}>
           {homePageBooksRA.map((item) => (
+
+            // <Card >
+            // <Grid container spacing={3}>
+            // <Grid item xs={12} className={classes.pap}>
+
+            //   <img  className={classes.image} src={item.thumbnail_url} alt={item.title} 
+            //     onError={(e)=>{e.target.onerror = null; e.target.src= carasoul1}}
+            //     onClick={() => readClicked(item.pdflink)} />
+
+            //   <CardContent className={classes.cardcontent}>
+            // <Typography gutterBottom variant="subtitle1">
+            //           {item.title}
+            //         </Typography>
+            //         <Typography variant="body2" gutterBottom>
+            //           Author: {item.author}
+            //         </Typography>
+            // </CardContent>
+            // </Grid>
+            // </Grid>
+            // </Card>
+
             <GridListTile className={classes.gridListTile}>
               <img src={item.thumbnail_url} alt={item.title}
                 onError={(e) => { e.target.onerror = null; e.target.src = carasoul1 }}

@@ -10,6 +10,8 @@ import CloudDownloadOutlinedIcon from "@material-ui/icons/CloudDownloadOutlined"
 import { IconButton} from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import { setPdfURL } from "../../store/personalDevelopment/actionCreator";
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import carasoul1 from '../../images/carasoul1.png'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -46,6 +48,7 @@ function BookMarkedAudio() {
     const [bookMarkedAudioBooks, setBookMarkAudioBooks] = useState([]);
     const [error, setError] = useState(null);
     const classes = useStyles();
+    const history = useHistory();
    
  
 
@@ -66,10 +69,16 @@ function BookMarkedAudio() {
        }, [])
 
        
+       const handleRoute = (route) => {
+        history.push(`${route}`)
+      };
 
      
        return(
         <div>
+           <IconButton className={classes.backArrow} aria-label="delete">
+                  <ArrowBackIcon onClick={() => handleRoute('/')} />
+                </IconButton>
         <text className={classes.fonts}>Book Marked Audio Books</text> 
          <Divider variant="middle" />
          <ul>
@@ -80,7 +89,13 @@ function BookMarkedAudio() {
      <Grid item xs={12} sm container>
        <Grid item>
          <ButtonBase className={classes.image}>
-           <img className={classes.img} alt="complex" src={item.book.thumbnail_url} />
+           <img className={classes.img} alt="complex" src={item.book.thumbnail_url}
+           onError={(e)=>{e.target.onerror = null; e.target.src= carasoul1}}
+           onClick={
+             () => 
+             handleRoute(`/audiobook/${item.book.file_name}/${item.book.title}`)
+                 
+          } />
          </ButtonBase>
        </Grid>
      
