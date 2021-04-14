@@ -9,7 +9,7 @@ const PDFViewer = () => {
     useEffect(() => {
         sePdfPath(pdfUrl)
       }, [pdfUrl])
-
+console.log("pdf url "+pdfUrl)
     return(
         <MobilePDFReader url={pdfPath} />
     )

@@ -54,7 +54,7 @@ const LogIn = (props) => {
 
   useEffect(() => {
     if (signInPostResponse) {
-      handleRoute("")
+      handleRoute("home")
 
     } else if (signInPostErrResponse) {
       console.log(signInPostErrResponse)
@@ -68,6 +68,7 @@ const LogIn = (props) => {
   }
 
   const handleRoute = (route) => {
+    console.log("route mmm "+route)
     props.history.push(`/${route}`);
   };
 
