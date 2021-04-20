@@ -87,6 +87,7 @@ const PersonalDevelopment = () => {
   };
 
   const readClicked = (pdfLink) => {
+    console.log("pdfLink "+pdfLink);
     dispatch(setPdfURL(pdfLink));
     history.push("/pdfviewer");
   };

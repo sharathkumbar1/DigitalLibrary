@@ -86,7 +86,7 @@ const Layout = (props) => {
 
   return (
     <div>
-      <Helmet defaultTitle="Digital Library" titleTemplate="Digital Library" />
+      {/* <Helmet defaultTitle="Digital Library" titleTemplate="Digital Library" /> */}
       <div>
         <CssBaseline />
 

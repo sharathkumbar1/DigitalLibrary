@@ -3,6 +3,7 @@ import { MuiThemeProvider } from '@material-ui/core/styles'
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Layout from "./Layout/Layout";
 import praxisTheme from "../config/themeConfig";
+import Footer from "../components/HomePageContent/Footer"
 
 function App() {
   return (
@@ -13,8 +14,9 @@ function App() {
           
         </Switch>
       </BrowserRouter>
+      <Footer/>
     </MuiThemeProvider>
   );
 }
 
-export default App;
+export default App

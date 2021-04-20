@@ -25,6 +25,16 @@ import PersonalDevelopment from "../PersonalDevelopment/PersonalDevelopment"
 import PDFViewer from "../PDFViewer/PDFViewer";
 import UpdatePw from "../Login/UpdatePw";
 import AccountVf from "../Login/AccountVf";
+import RecentlyAdded from "../HomePageContent/RecentlyAdded"
+import BookMarked from "../HomePageContent/BookMarked"
+import RecentlyAddedAudio from "../HomePageContent/RecentlyAddedAudio"
+import BookMarkedAudio from "../HomePageContent/BookMarkedAudio";
+import RecentlyViewed from "../HomePageContent/RecentlyViewed"
+import HomeAudioBooks from "../HomePageContent/HomeAudioBooks"
+import HomePDFBooks from "../HomePageContent/HomePDFBooks"
+import ViewedAudio from "../HomePageContent/ViewedAudio"
+
+
 
 const history = createBrowserHistory();
 
@@ -72,7 +82,7 @@ const SideDrawer = (props) => {
             button
             key={"Home"}
             component={Link}
-            to="/"
+            to="/home"
             onClick={onItemClick("home")}
           >
             <ListItemText>Home</ListItemText>
@@ -82,7 +92,7 @@ const SideDrawer = (props) => {
             button
             key={"Log-In"}
             component={Link}
-            to="/login"
+            to="/"
             onClick={onItemClick("login")}
             //onClick={() => props.onItemClick("login")}
           >
@@ -152,8 +162,14 @@ const SideDrawer = (props) => {
       </Drawer>
       <main className={classes.content}>
         {/* <Route exact path="/" component={LogInOrSignUp} /> */}
-        <Route exact path="/" component={HomePageContent} />
-        <Route exact path="/login" component={LogIn} />
+        <Route exact path="/home" component={HomePageContent} />
+        <Route exact path="/recently_added_books" component={RecentlyAdded}/>
+        <Route exact path="/book_marked_books" component={BookMarked} />
+        <Route exact path="/recently_viewed_books" component={RecentlyViewed} />
+        <Route exact path="/recently_added_audiobooks" component={RecentlyAddedAudio}/>
+        <Route exact path="/book_marked_audiobooks" component={BookMarkedAudio}/>
+        <Route exact path="/viewed_audiobooks" component={ViewedAudio}/>
+        <Route exact path="/" component={LogIn} />
         <Route exact path="/signup" component={SignUp} />
         <Route exact path="/forgotpw" component={ForgotPw} />
         <Route exact path="/search" component={SearchPage} />
@@ -162,7 +178,7 @@ const SideDrawer = (props) => {
         <Route exact path="/about" component={About} />
         <Route exact path="/sponsor" component={Sponsor} />
         <Route exact path="/faq" component={Faq} />
-        <Route exact path="/audiobook" component={AudioBook} />
+        <Route exact path="/audiobook/:file_name/:title" component={AudioBook} />
         <Route path="/personaldev" component={PersonalDevelopment} />
         <Route path="/pdfviewer" component={PDFViewer} />
         <Route exact path="/updatepw" component={UpdatePw} />
