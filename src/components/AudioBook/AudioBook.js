@@ -1,16 +1,13 @@
-import React, {useState, useEffect} from "react";
+import React, { } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import AudioPlayer from 'react-h5-audio-player';
 import 'react-h5-audio-player/lib/styles.css';
-import AudioBookCover from "../../images/Alice_in_Wonderland.jpg";
 import GridList from "@material-ui/core/GridList";
 import GridListTile from "@material-ui/core/GridListTile";
 import Typography from "@material-ui/core/Typography";
 import { ReactComponent as Download } from '../../images/download.svg'
 import axios from "axios";
-import RecentlyAddedAudio from "../HomePageContent/RecentlyAddedAudio"
-import props from 'prop-types';
-import CloudDownloadOutlinedIcon from '@material-ui/icons/CloudDownloadOutlined'
+import SaveIcon from '@material-ui/icons/Save';
 
 const styles = theme => ({
     gridList: {
@@ -53,41 +50,42 @@ const styles = theme => ({
             fill: "black",
             cursor: "pointer",
         }
-    }
+    },
+    save: {
+        width: "48px",
+        display: "inline",
+        height: "48px",
+        paddingLeft: "20px",
+        fill: "#00000090",
+        "&:active": {
+            fill: "black",
+            cursor: "pointer",
+        }
+    },
 })
 
 const apiUrl = "http://ec2-13-232-236-83.ap-south-1.compute.amazonaws.com:8080/download_url?file_name=";
 const bookUrl = "http://ec2-13-232-236-83.ap-south-1.compute.amazonaws.com:8080/search?bookType=Audio_Book&book_name="
 
-const bookDetails = {
-    "title": "Alice's Adventures in Wonderland",
-    "file_name": "alices-adventures-in-wonderland-001-chapter-i-down-the-rabbit-hole.1.mp3",
-    // "file_name": "Break-Out.mp3",
-    "published_date": "26 November 1865",
-    "author": "Lewis Carroll",
-    "publisher": "Macmillan Publishers",
-    "genres": "Fairy tale",
-    "download_url": ""
-};
 
 class AudioBook extends React.Component {
     constructor(props) {
         super(props)
-        
-           
+
+
         this.state = {
-            file__name :this.props.match.params.file_name,
-            title_ : this.props.match.params.title,
+            file__name: this.props.match.params.file_name,
+            title_: this.props.match.params.title,
             download_url: "",
             full_data: [],
-           
+
         }
     }
 
 
     componentDidMount() {
         console.log("file-name" + this.state.file__name)
-       axios
+        axios
             .get(apiUrl + this.state.file__name)
             .then((response) => {
                 this.setState({ "download_url": response.data })
@@ -97,22 +95,51 @@ class AudioBook extends React.Component {
                 console.log(error);
             })
 
-         axios.get(bookUrl + this.state.title_)
+        axios.get(bookUrl + this.state.title_)
             .then((res) => {
-                 this.setState({"full_data": res.data })
-                 console.log(this.state.full_data)
-                
+                this.setState({ "full_data": res.data })
+                console.log(this.state.full_data)
+
             })
-            .catch((err2)=>{
+            .catch((err2) => {
                 console.log(err2)
             })
-           
+
     }
 
-     downloadAudio = (values) => {
-        
-        return (dispatch) => {
-            
+    saveAudio = (isbn) => {
+        console.log("saving .... " + isbn)
+
+        const requestConfig = {
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+            },
+        };
+        let apiUrl = "http://ec2-13-232-236-83.ap-south-1.compute.amazonaws.com:8080/bookmarked_books";
+        let requestBody = {
+            "isbn": isbn,
+            "user_id": 33
+        }
+
+        return axios
+            .post(apiUrl, requestBody, requestConfig)
+            .then((response) => {
+                console.log(response);
+                // console.log(JSON.parse(response.data));
+                console.log(response.data.message);
+
+
+            })
+            .catch((response) => {
+                console.log(response);
+            });
+    }
+
+    downloadAudio = () => {
+
+        return () => {
+
             const method = 'GET';
             const url = this.state.download_url;
             axios
@@ -139,69 +166,59 @@ class AudioBook extends React.Component {
 
     render() {
         const { classes } = this.props
-        
+
         console.log(this.state.download_url)
-    
+
 
         return (
             <div>
-                 {this.state.full_data.map(item => (
-                <GridList cellHeight={300} spacing={30} className={classes.gridList}>
-                    <GridListTile
-                        key="BookCover"
-                        className={classes.coverPage}
-                    >
-                        <img src={item.thumbnail_url}
-                            alt="Book Cover"
-                            className={classes.coverPageImage}
-                        />
-                    </GridListTile>
-                    <GridListTile
-                        key="AudioPlayer"
-                        className={classes.audioPlayer}
-                    >
-//                         <AudioPlayer
-                            src={this.state.download_url}
-                            onPlay={e => console.log("onPlay")}
-                            progressJumpStep="10000" // 10 seconds
-                            autoPlayAfterSrcChange={false}
-                            defaultCurrentTime="00:00"
-                            defaultDuration="loading..."
-                            customAdditionalControls={[
-                                <a /*href={this.state.download_url} download={this.state.download_url}*/ onClick={this.downloadAudio()}
-                                 /*target="_blank" rel="noopener noreferrer"*/
-                                // download="Alice's Adventures in Wonderland.mp3"
-                                >
-                              <Download /*onClick={() => downloadFile()}*/ className={classes.download} />
-                                </a>
-                            ]}
-                        />
-                    </GridListTile>
-                    {/* <div className={classes.bookDetails}>
-                        <Typography variant="h6" className={classes.bookTitle}>
-                            {this.state.title_}
-                        </Typography>
-                        <p><b>Originally published: </b>{bookDetails.published_date}</p>
-                        <p><b>Author: </b>{bookDetails.author}</p>
-                        <p><b>Publisher: </b>{bookDetails.publisher}</p>
-                        <p><b>Genres: </b>{bookDetails.genres}</p>
-                    </div> */}
-                   
+                {this.state.full_data.map(item => (
+                    <GridList cellHeight={300} spacing={30} className={classes.gridList}>
+                        <GridListTile
+                            key="BookCover"
+                            className={classes.coverPage}
+                        >
+                            <img src={item.thumbnail_url}
+                                alt="Book Cover"
+                                className={classes.coverPageImage}
+                            />
+                        </GridListTile>
+                        <GridListTile
+                            key="AudioPlayer"
+                            className={classes.audioPlayer}
+                        >
+                            <AudioPlayer
+                                src={this.state.download_url}
+                                onPlay={() => console.log("onPlay")}
+                                progressJumpStep="10000" // 10 seconds
+                                autoPlayAfterSrcChange={false}
+                                defaultCurrentTime="00:00"
+                                defaultDuration="loading..."
+                                customAdditionalControls={[
+                                    <a /*href={this.state.download_url} download={this.state.download_url}*/ onClick={this.downloadAudio()}
+                                    >
+                                        <Download /*onClick={() => downloadFile()}*/ className={classes.download} />
+                                        <SaveIcon className={classes.save} onClick={() => this.saveAudio(item.isbn)} />
+                                    </a>
+                                ]}
+                            />
+                        </GridListTile>
+
                         <div className={classes.bookDetails}>
-                             <Typography variant="h6" className={classes.bookTitle}>
-                            {this.state.title_}
-                        </Typography><br/>
-                        <Typography variant="body2" gutterBottom>
-                      Author: {item.author}
-                    </Typography>
-                    <Typography variant="body2" gutterBottom>
-                      Category: {item.category}
-                    </Typography>
+                            <Typography variant="h6" className={classes.bookTitle}>
+                                {this.state.title_}
+                            </Typography><br />
+                            <Typography variant="body2" gutterBottom>
+                                Author: {item.author}
+                            </Typography>
+                            <Typography variant="body2" gutterBottom>
+                                Category: {item.category}
+                            </Typography>
                         </div>
-                   
-                   
-                </GridList>
-                 ))}
+
+
+                    </GridList>
+                ))}
             </div>
         );
     }
@@ -211,6 +228,5 @@ export default withStyles(styles)(AudioBook);
 
 
 
-  
-       
-                   
+
+

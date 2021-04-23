@@ -101,7 +101,8 @@ const SignUp = (props) => {
 
   const gotoSignIn = () => {
     resetReduxStoreAndHideNotifications()
-    props.history.push('/login');
+    console.log("ok button clicked")
+    props.history.push('/');
   };
 
   const signUpClicked = () => {

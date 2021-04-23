@@ -10,7 +10,6 @@ import { createBrowserHistory } from "history";
 
 /* ROUTE COMPONENTS */
 import HomePageContent from "./../HomePageContent/HomePageContent";
-import LogInOrSignUp from "./../Login/LogInOrSignUp";
 import LogIn from "./../Login/LogIn";
 import SignUp from "./../Login/SignUp";
 import SearchPage from "./../SearchPage/SearchPage";
@@ -30,8 +29,6 @@ import BookMarked from "../HomePageContent/BookMarked"
 import RecentlyAddedAudio from "../HomePageContent/RecentlyAddedAudio"
 import BookMarkedAudio from "../HomePageContent/BookMarkedAudio";
 import RecentlyViewed from "../HomePageContent/RecentlyViewed"
-import HomeAudioBooks from "../HomePageContent/HomeAudioBooks"
-import HomePDFBooks from "../HomePageContent/HomePDFBooks"
 import ViewedAudio from "../HomePageContent/ViewedAudio"
 
 
