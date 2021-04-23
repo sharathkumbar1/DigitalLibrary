@@ -286,3 +286,7 @@ a.pure-button-primary {
   }
 }
 
+.mobile__pdf__container #viewerContainer {
+  top: 140px !important;
+}
+

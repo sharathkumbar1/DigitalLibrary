@@ -20,6 +20,8 @@ const useStyles = theme => ({
             cursor: "pointer",
         }
     },
+
+    
 })
 
 
@@ -74,13 +76,11 @@ const PDFViewer = () => {
                 <IconButton aria-label="delete">
                     <a href={pdfUrl} download={pdfUrl} target="_blank"><CloudDownloadOutlinedIcon /></a>
                 </IconButton>
-                <div>
                 <SaveIcon className={classes.save} onClick={() => saveBook(126)} />
-                </div>
                 <Divider variant="middle" />
             </div>
             <div>
-                <MobilePDFReader style={{ paddingTop: '180px' }}url={pdfPath} />
+                <MobilePDFReader  url={pdfPath} />
             </div>
            
         </div>
