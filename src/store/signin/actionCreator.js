@@ -1,7 +1,6 @@
 import { SIGN_IN_ERROR, SIGN_IN_SUCCESS } from "./actionType";
 import axios from "axios";
 import jwt_decode  from "jwt-decode";
-import apiConfig from '../../config/apiConfig'
 
 export function signIn(requestBody) {
     const requestConfig = {

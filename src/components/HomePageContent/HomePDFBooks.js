@@ -1,68 +1,33 @@
-
 import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
-
-import { setBackToComponent } from "../../store/header/actionCreator";
-import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import PersonalDevelopment from '../PersonalDevelopment/PersonalDevelopment';
-import axios from 'axios';
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import { FormatAlignLeft, FormatAlignRight } from '@material-ui/icons';
-import * as ReactDOM from 'react-dom';
-import { Link, useHistory, NavLink } from "react-router-dom";
-import SimpleCard from './SimpleCard';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardMedia from '@material-ui/core/CardMedia';
-import PDFBookCover from '../../images/PDFBookCover.jpg';
+import { useHistory } from "react-router-dom";
 import carasoul1 from '../../images/carasoul1.png'
 import GridList from '@material-ui/core/GridList';
-import GridListTile from '@material-ui/core/GridListTile';
-import GridListTileBar from '@material-ui/core/GridListTileBar';
-import ListSubheader from '@material-ui/core/ListSubheader';
-import IconButton from '@material-ui/core/IconButton';
-import InfoIcon from '@material-ui/icons/Info';
-import tileData from './tileData';
+import Box from '@material-ui/core/Box';
 import { setPdfURL } from "../../store/personalDevelopment/actionCreator";
-
-// const theme = createMuiTheme({
-//   overrides: {
-//     // Style sheet name :atom_symbol:
-//     MuiButton: {
-//       // Name of the rule
-//       text: {
-//         // Some CSS
-//         color: 'gray',
-//         height: 48,
-//         padding: '0 30px',
-//       },
-//     },
-//   },
-// });
+import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    backgroundColor: theme.palette.background.paper,
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'space-around',
-    overflow: 'hidden',
-    backgroundColor: theme.palette.background.paper,
-  },
+  // root: {
+  //   backgroundColor: theme.palette.background.paper,
+  //   display: 'flex',
+  //   flexWrap: 'wrap',
+  //   justifyContent: 'space-around',
+  //   overflow: 'hidden',
+  //   backgroundColor: theme.palette.background.paper,
+  // },
   root: {
     flexGrow: 1,
   },
   overrides: {
-    // Style sheet name :atom_symbol:
     MuiButton: {
-      // Name of the rule
       text: {
-        // Some CSS
         color: 'gray',
         height: 48,
         padding: '0 30px',
@@ -99,6 +64,9 @@ const useStyles = makeStyles((theme) => ({
   image: {
     width: 128,
     height: 128,
+
+    margin: 'auto',
+    padding: '1px 12px 0px 20px'
   },
 
   fonts: {
@@ -110,12 +78,10 @@ const useStyles = makeStyles((theme) => ({
   grid: {
     display: 'flex'
   },
-  gridList: {
-    width: '400px',
-    height: '200px',
-    padding: '10px 0px 20px 10px',
-    marginBottom: '10px',
-    overflow: 'hidden'
+
+  cardcontent: {
+    width: 150,
+    textAlign: 'left'
   },
   btnAlignRight: {
     marginLeft: '100px',
@@ -127,7 +93,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const apiUrl = "http://ec2-13-232-236-83.ap-south-1.compute.amazonaws.com:8080/download_url?file_name=";
 
 const HomePDFBooks = () => {
   const classes = useStyles();
@@ -189,17 +154,31 @@ const HomePDFBooks = () => {
     handleRoute("/recently_viewed_books")
   }
 
-  const readClicked = (pdfLink) => {
-    dispatch(setPdfURL(pdfLink));
-    console.log("book opened")
-    dispatch(setPdfURL("../../data/pdf/sample1.pdf"));
-    history.push("/pdfviewer");
+  // const readClicked = (pdfLink) => {
+  //   dispatch(setPdfURL(pdfLink));
+  //   console.log("book opened")
+  //   dispatch(setPdfURL("../../data/pdf/sample1.pdf"));
+  //   history.push("/pdfviewer");
 
-  }
+  // }
 
-  //   defaultImg(ev){
-  //     ev.target.src = '../../images/PDFBookCover.jpg'
-  //   }
+  const readClicked = (file_name) => {
+    console.log("from recently added pdf file_name " + file_name);
+
+    const apiUrl = "http://ec2-13-232-236-83.ap-south-1.compute.amazonaws.com:8080/download_url?file_name=";
+    let pdfLink = "";
+    axios
+      .get(apiUrl + file_name)
+      .then((response) => {
+        pdfLink = response.data;
+        console.log("response data" + response.data)
+        dispatch(setPdfURL(pdfLink));
+        history.push("/pdfviewer");
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+  };
 
   return (
 
@@ -208,90 +187,108 @@ const HomePDFBooks = () => {
       <Grid container spacing={3}>
 
         <Grid item xs={12} className={classes.grid}>
-            <Typography className={classes.fonts}> Recently Added Books</Typography>
-              <Button  variant="text" className={classes.btnAlignRight} onClick={recentlyAddedBooks}> 
-              more &gt;
+          <Typography className={classes.fonts}> Recently Added Books              </Typography>
+          <Button variant="text" className={classes.btnAlignRight} onClick={recentlyAddedBooks}>
+            more &gt;
               </Button>
         </Grid>
 
-        <GridList cellHeight='200' className={classes.gridList} cols={3}>
-          {homePageBooksRA.map((item) => (
+        <GridList cellHeight='auto' className={classes.gridList} cols={3}>
+          {homePageBooksRA.slice(0, 3).map((item) => (
+            <Card >
+              <Grid container spacing={3} >
+                <Grid item xs={6} className={classes.pap}>
 
-            // <Card >
-            // <Grid container spacing={3}>
-            // <Grid item xs={12} className={classes.pap}>
+                  <img className={classes.image} src={item.thumbnail_url} alt={item.title}
+                    onError={(e) => { e.target.onerror = null; e.target.src = carasoul1 }}
+                    onClick={() => readClicked(item.file_name)} />
 
-            //   <img  className={classes.image} src={item.thumbnail_url} alt={item.title} 
-            //     onError={(e)=>{e.target.onerror = null; e.target.src= carasoul1}}
-            //     onClick={() => readClicked(item.pdflink)} />
+                  <CardContent className={classes.cardcontent}>
+                    <Typography gutterBottom variant="subtitle1" >
+                      <Box whiteSpace="nowrap" component="div" textOverflow="ellipsis" overflow="hidden">
+                        {item.title}
+                      </Box>
+                    </Typography>
+                    <Typography variant="body2" gutterBottom>
+                      {item.author}
+                    </Typography>
+                  </CardContent>
+                </Grid>
+              </Grid>
+            </Card>
 
-            //   <CardContent className={classes.cardcontent}>
-            // <Typography gutterBottom variant="subtitle1">
-            //           {item.title}
-            //         </Typography>
-            //         <Typography variant="body2" gutterBottom>
-            //           Author: {item.author}
-            //         </Typography>
-            // </CardContent>
-            // </Grid>
-            // </Grid>
-            // </Card>
+          ))
 
-            <GridListTile className={classes.gridListTile}>
-              <img src={item.thumbnail_url} alt={item.title}
-                onError={(e) => { e.target.onerror = null; e.target.src = carasoul1 }}
-                onClick={() => readClicked(item.pdflink)} />
-              <GridListTileBar
-                title={item.title}
-                subtitle={<span>by: {item.author}</span>}
-              />
-            </GridListTile>
-          ))}
+          }
         </GridList>
 
         <Grid item xs={12} className={classes.grid}>
-          
-            <Typography className={classes.fonts}>Book Marked Books</Typography> 
-             <Button variant="text" className={classes.btnAlignRight} onClick={bookMarked}>more &gt; </Button>
-            </Grid>
 
-          <GridList cellHeight={200} className={classes.gridList} cols={3}>
-            {homePageBooksBM.map((item) => (
-              <GridListTile>
-                <img src={item.book.thumbnail_url} alt={item.title}
-                  onError={(e) => { e.target.onerror = null; e.target.src = carasoul1 }}
-                  onClick={() => readClicked(item.pdflink)} />
-                <GridListTileBar
-                  title={item.book.title}
-                  subtitle={<span>by: {item.book.author}</span>}
-                />
-              </GridListTile>
-            ))}
-          </GridList>
-        
-
-        <Grid item xs={12} className={classes.grid}>
-          
-            <Typography className={classes.fonts}>Recently Viewed Books</Typography> 
-            <Button variant="text" className={classes.btnAlignRight} onClick={recentlyViewed}>more &gt; </Button>
+          <Typography className={classes.fonts}>Saved Books</Typography>
+          <Button variant="text" style={{ marginLeft: '180px' }} className={classes.btnAlignRight} onClick={bookMarked}>more &gt; </Button>
         </Grid>
 
-          <GridList cellHeight={200} className={classes.gridList} cols={3}>
+        <GridList cellHeight='auto' className={classes.gridList} cols={3}>
+          {homePageBooksBM.slice(0, 3).map((item) => (
+            <Card >
+              <Grid container spacing={3}>
+                <Grid item xs={6} className={classes.pap}>
 
-            {homePageBooksRV.map((item) => (
-              <GridListTile>
-                <img src={item.book.thumbnail_url} alt={item.title}
-                  onError={(e) => { e.target.onerror = null; e.target.src = carasoul1 }}
-                  onClick={() => readClicked(item.pdflink)} />
-                <GridListTileBar
-                  title={item.book.title}
-                  subtitle={<span>by: {item.book.author}</span>}
-                />
-              </GridListTile>
-            ))}
+                  <img className={classes.image} src={item.book.thumbnail_url} alt={item.book.title}
+                    onError={(e) => { e.target.onerror = null; e.target.src = carasoul1 }}
+                    onClick={() => readClicked(item.book.file_name)} />
 
-          </GridList>
-        
+                  <CardContent className={classes.cardcontent}>
+                    <Typography gutterBottom variant="subtitle1" >
+                      <Box whiteSpace="nowrap" component="div" textOverflow="ellipsis" overflow="hidden">
+                        {item.book.title}
+                      </Box>
+                    </Typography>
+                    <Typography variant="body2" gutterBottom>
+                      {item.book.author}
+                    </Typography>
+                  </CardContent>
+                </Grid>
+              </Grid>
+            </Card>
+          ))}
+        </GridList>
+
+
+        <Grid item xs={12} className={classes.grid}>
+
+          <Typography className={classes.fonts}>Recently Viewed Books</Typography>
+          <Button variant="text" className={classes.btnAlignRight} onClick={recentlyViewed}>more &gt; </Button>
+        </Grid>
+
+        <GridList cellHeight={270} className={classes.gridList} cols={3}>
+
+          {homePageBooksRV.slice(0, 3).map((item) => (
+            <Card >
+              <Grid container spacing={3}>
+                <Grid item xs={6} className={classes.pap}>
+
+                  <img className={classes.image} src={item.book.thumbnail_url} alt={item.book.title}
+                    onError={(e) => { e.target.onerror = null; e.target.src = carasoul1 }}
+                    onClick={() => readClicked(item.book.file_name)} />
+
+                  <CardContent className={classes.cardcontent}>
+                    <Typography gutterBottom variant="subtitle1" >
+                      <Box whiteSpace="nowrap" component="div" textOverflow="ellipsis" overflow="hidden">
+                        {item.book.title}
+                      </Box>
+                    </Typography>
+                    <Typography variant="body2" gutterBottom>
+                      {item.book.author}
+                    </Typography>
+                  </CardContent>
+                </Grid>
+              </Grid>
+            </Card>
+          ))}
+
+        </GridList>
+
       </Grid>
     </div>
 
@@ -303,6 +300,13 @@ const HomePDFBooks = () => {
 
 
 export default HomePDFBooks
+
+
+
+
+
+
+
 
 
 

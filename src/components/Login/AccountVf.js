@@ -94,7 +94,7 @@ const AccountVf = (props) => {
 
     const gotoSignIn = () => {
         resetReduxStoreAndHideNotifications()
-        props.history.push('/login');
+        props.history.push('/');
     };
 
     const accountVfClicked = () => {
