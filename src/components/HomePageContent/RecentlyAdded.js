@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Divider from '@material-ui/core/Divider';
 import { useHistory } from "react-router-dom";
-import { setPdfURL } from "../../store/personalDevelopment/actionCreator";
+import { setPdfURL, setPdfISBN } from "../../store/personalDevelopment/actionCreator";
 import { useDispatch } from "react-redux";
 import carasoul1 from '../../images/carasoul1.png'
 import axios from "axios";
@@ -68,7 +68,7 @@ function RecentlyAdded() {
 
   }, [])
 
-  const readClicked = (file_name) => {
+  const readClicked = (file_name, isbn) => {
     console.log("from recently added pdf file_name " + file_name);
 
     const apiUrl = "http://ec2-13-232-236-83.ap-south-1.compute.amazonaws.com:8080/download_url?file_name=";
@@ -79,6 +79,7 @@ function RecentlyAdded() {
         pdfLink = response.data;
         console.log("response data" + response.data)
         dispatch(setPdfURL(pdfLink));
+        dispatch(setPdfISBN(isbn));
         history.push("/pdfviewer");
       })
       .catch((error) => {
@@ -106,7 +107,7 @@ function RecentlyAdded() {
               <Grid container spacing={2}>
                 <Grid item xs={12} sm container>
                   <Grid item>
-                    <ButtonBase className={classes.image} onClick={() => readClicked(item.file_name)}>
+                    <ButtonBase className={classes.image} onClick={() => readClicked(item.file_name, item.isbn)}>
                       <img className={classes.img} alt="complex" src={item.thumbnail_url}
                         onError={(e) => { e.target.onerror = null; e.target.src = carasoul1 }}
                       />

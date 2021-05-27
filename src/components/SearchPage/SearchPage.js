@@ -17,7 +17,7 @@ import FormGroup from '@material-ui/core/FormGroup';
 import Checkbox from '@material-ui/core/Checkbox';
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setPdfURL } from "../../store/personalDevelopment/actionCreator";
+import { setPdfURL, setPdfISBN } from "../../store/personalDevelopment/actionCreator";
 import RefreshIcon from '@material-ui/icons/Refresh';
 
 const useStyles = makeStyles((theme) => ({
@@ -154,7 +154,7 @@ export default function SearchPage() {
     setHideCheckbox(false)
   }
 
-  const readClicked = (file_name) => {
+  const readClicked = (file_name, isbn) => {
     console.log("from recently added pdf file_name " + file_name);
 
     const apiUrl = "http://ec2-13-232-236-83.ap-south-1.compute.amazonaws.com:8080/download_url?file_name=";
@@ -165,6 +165,7 @@ export default function SearchPage() {
         pdfLink = response.data;
         console.log("response data" + response.data)
         dispatch(setPdfURL(pdfLink));
+        dispatch(setPdfISBN(isbn));
         history.push("/pdfviewer");
       })
       .catch((error) => {
@@ -279,7 +280,7 @@ export default function SearchPage() {
                             handleRoute(`/audiobook/${item.file_name}/${item.title}`)
                           }
                           else {
-                            readClicked(item.file_name)
+                            readClicked(item.file_name, item.isbn)
                           }
                         }
                         }

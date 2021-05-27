@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
@@ -13,15 +14,6 @@ import Box from '@material-ui/core/Box';
 import Tooltip from '@material-ui/core/Tooltip';
 
 const useStyles = makeStyles((theme) => ({
-  // root: {
-  //   backgroundColor: theme.palette.background.paper,
-  //   width: 2000,
-  //   display: 'flex',
-  //   flexWrap: 'wrap',
-  //   justifyContent: 'space-around',
-  //   overflow: 'hidden',
-  //   backgroundColor: theme.palette.background.paper,
-  // },
   root: {
     flexGrow: 1,
   },
@@ -101,9 +93,13 @@ const HomeAudioBooks = () => {
   const [homeAudioBooksRV, setHomeAudioBooksRV] = useState([]);
   const [error, setError] = useState(null);
   let history = useHistory();
+  const userdata = useSelector(state => state.signInReducer);
   
   useEffect(() => {
-    fetch("http://ec2-13-232-236-83.ap-south-1.compute.amazonaws.com:8080/home_page_books?user_id=23&per_page=1&book_type=AUDIO_BOOK")
+    let currentUserId = userdata.signInPostResponse.userSequenceId;
+    console.log(" user id ", currentUserId)
+
+    fetch("http://ec2-13-232-236-83.ap-south-1.compute.amazonaws.com:8080/home_page_books?user_id="+currentUserId+"&per_page=3&book_type=AUDIO_BOOK")
       .then(res => res.json())
       .then(
         (result) => {

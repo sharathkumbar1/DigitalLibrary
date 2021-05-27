@@ -68,8 +68,11 @@ const LogIn = (props) => {
   }
 
   const handleRoute = (route) => {
+    ///userID = "23";
+    
     console.log("route mmm "+route)
     props.history.push(`/${route}`);
+
   };
 
   const resetReduxStoreAndHideNotifications = () => {

@@ -1,4 +1,5 @@
 import React, { } from "react";
+import { connect } from 'react-redux';
 import { withStyles } from "@material-ui/core/styles";
 import AudioPlayer from 'react-h5-audio-player';
 import 'react-h5-audio-player/lib/styles.css';
@@ -78,34 +79,13 @@ class AudioBook extends React.Component {
             title_: this.props.match.params.title,
             download_url: "",
             full_data: [],
+            userData: this.props.userData
 
         }
     }
 
 
-    componentDidMount() {
-        console.log("file-name" + this.state.file__name)
-        axios
-            .get(apiUrl + this.state.file__name)
-            .then((response) => {
-                this.setState({ "download_url": response.data })
-                console.log("response data" + response.data)
-            })
-            .catch((error) => {
-                console.log(error);
-            })
 
-        axios.get(bookUrl + this.state.title_)
-            .then((res) => {
-                this.setState({ "full_data": res.data })
-                console.log(this.state.full_data)
-
-            })
-            .catch((err2) => {
-                console.log(err2)
-            })
-
-    }
 
     saveAudio = (isbn) => {
         console.log("saving .... " + isbn)
@@ -119,7 +99,39 @@ class AudioBook extends React.Component {
         let apiUrl = "http://ec2-13-232-236-83.ap-south-1.compute.amazonaws.com:8080/bookmarked_books";
         let requestBody = {
             "isbn": isbn,
-            "user_id": 33
+            "user_id": this.state.userData.signInPostResponse.userSequenceId
+            // "user_id": 23
+        }
+        console.log('Hello User', requestBody)
+
+        return axios
+            .post(apiUrl, requestBody, requestConfig)
+            .then((response) => {
+                console.log(response);
+                // console.log(JSON.parse(response.data));
+                console.log(response.data.message);
+
+
+            })
+            .catch((response) => {
+                console.log(response);
+            });
+    }
+
+    recentlyViewedAudio = (isbn) => {
+        console.log("recentlyViewedAudio .... " + isbn)
+
+        const requestConfig = {
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+            },
+        };
+        let apiUrl = "http://ec2-13-232-236-83.ap-south-1.compute.amazonaws.com:8080/recently_viewed_books";
+        let requestBody = {
+            "current_page": 0,
+            "isbn": isbn,
+            "user_id": this.state.userData.signInPostResponse.userSequenceId
         }
 
         return axios
@@ -135,6 +147,36 @@ class AudioBook extends React.Component {
                 console.log(response);
             });
     }
+
+    componentDidMount() {
+
+        console.log("file-name" + this.state.file__name)
+        axios
+            .get(apiUrl + this.state.file__name)
+            .then((response) => {
+                this.setState({ "download_url": response.data })
+                console.log("response data" + response.data)
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+
+        axios.get(bookUrl + this.state.title_)
+            .then((res) => {
+                this.recentlyViewedAudio(res.data[0].isbn);
+                console.log("isbn full data ", res.data[0].isbn)
+                this.setState({ "full_data": res.data })
+
+
+            })
+            .catch((err2) => {
+                console.log("errorrr in audio book")
+                console.log(err2)
+            })
+
+    }
+
+
 
     downloadAudio = () => {
 
@@ -166,6 +208,7 @@ class AudioBook extends React.Component {
 
     render() {
         const { classes } = this.props
+
 
         console.log(this.state.download_url)
 
@@ -224,7 +267,20 @@ class AudioBook extends React.Component {
     }
 }
 
-export default withStyles(styles)(AudioBook);
+const mapStateToProps = state => {
+    return {
+        userData: state.signInReducer
+    };
+}
+const mapDispatchToProps = dispatch => {
+    return;
+}
+
+//export default withStyles(styles)(AudioBook);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(withStyles(styles)(AudioBook))
 
 
 

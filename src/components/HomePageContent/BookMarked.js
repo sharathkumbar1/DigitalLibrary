@@ -6,8 +6,8 @@ import Typography from '@material-ui/core/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Divider from '@material-ui/core/Divider';
 import { useHistory } from "react-router-dom";
-import { setPdfURL } from "../../store/personalDevelopment/actionCreator";
-import { useDispatch } from "react-redux";
+import { setPdfURL, setPdfISBN } from "../../store/personalDevelopment/actionCreator";
+import { useDispatch, useSelector } from "react-redux";
 import carasoul1 from '../../images/carasoul1.png'
 import axios from 'axios';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
@@ -50,10 +50,13 @@ function BookMarked() {
   const classes = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();
-
+  const userdata = useSelector(state => state.signInReducer);
 
   useEffect(() => {
-    fetch("http://ec2-13-232-236-83.ap-south-1.compute.amazonaws.com:8080/users/23/bookmarked_books?book_type=PDF")
+    let currentUserId = userdata.signInPostResponse.userSequenceId;
+    console.log(" user id ", currentUserId)
+
+    fetch("http://ec2-13-232-236-83.ap-south-1.compute.amazonaws.com:8080/users/"+currentUserId+"/bookmarked_books?book_type=PDF")
       .then(res => res.json())
       .then(
         (result) => {
@@ -68,7 +71,7 @@ function BookMarked() {
 
   }, [])
 
-  const readClicked = (file_name) => {
+  const readClicked = (file_name, isbn) => {
     console.log("from book mark file_name " + file_name);
 
     const apiUrl = "http://ec2-13-232-236-83.ap-south-1.compute.amazonaws.com:8080/download_url?file_name=";
@@ -79,6 +82,7 @@ function BookMarked() {
         pdfLink = response.data;
         console.log("response data" + response.data)
         dispatch(setPdfURL(pdfLink));
+        dispatch(setPdfISBN(isbn));
         history.push("/pdfviewer");
       })
       .catch((error) => {
@@ -105,7 +109,7 @@ function BookMarked() {
               <Grid container spacing={2}>
                 <Grid item xs={12} sm container>
                   <Grid item>
-                    <ButtonBase className={classes.image} onClick={() => readClicked(item.book.file_name)}>
+                    <ButtonBase className={classes.image} onClick={() => readClicked(item.book.file_name, item.book.isbn)}>
                       <img className={classes.img} alt="complex" src={item.book.thumbnail_url}
                         onError={(e) => { e.target.onerror = null; e.target.src = carasoul1 }}
                       />
