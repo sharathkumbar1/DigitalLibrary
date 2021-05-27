@@ -166,7 +166,7 @@ const AdminPage = props => {
         [name]: value
     })
     setBookDetailsAudio({
-      ...bookDetails,
+      ...bookDetailsAudio,
       [name]: value
   })
 }
@@ -180,7 +180,7 @@ const handleInputChangeNum = e => {
       [name]: Number(value)
   })
   setBookDetailsAudio({
-    ...bookDetails,
+    ...bookDetailsAudio,
     [name]: Number(value)
 })
 }
@@ -220,7 +220,7 @@ const addBook= () => {
   else if (pages && bookDetails.total_pages === '') {
     dispatch(showNotificationError(true, "Please fill in number of pages"));
   }
-  else if (time && bookDetails.total_audio_time === '') {
+  else if (time && bookDetailsAudio.total_audio_time === '') {
     dispatch(showNotificationError(true, "Please fill in the audio time"));
   }
   else if(pages && bookDetails.total_pages !== ''){
@@ -228,7 +228,7 @@ const addBook= () => {
     console.log("page is true")
       processRequest();
   }
-  else if(time && bookDetails.total_audio_time !== ''){
+  else if(time && bookDetailsAudio.total_audio_time !== ''){
 
     dispatch(showNotificationError(false, ""));
     console.log("time is true")
@@ -312,6 +312,7 @@ const resetForm = () =>{
                 id="author"
                 name="author"
                 value={bookDetails.title}
+               
                 variant="outlined"
                 size="small"
               />
@@ -325,7 +326,7 @@ const resetForm = () =>{
                  Author
                </Typography>
               
-              <Autocomplete
+               <Autocomplete
             value={bookDetails.author}
             onChange={(event, newValue) => {
               if (typeof newValue === 'string') {
@@ -381,7 +382,8 @@ const resetForm = () =>{
                 left: "36px"}} 
                 size='small'/>
             )}
-          />
+          /> 
+         
         
               </div>
       
@@ -399,7 +401,8 @@ const resetForm = () =>{
                 required
                 id="isbn"
                 name="isbn"
-                value={bookDetails.isbn}
+                value={bookDetails.isbn , bookDetailsAudio.isbn}
+                
                 variant="outlined"
                 size="small"
               />
@@ -656,7 +659,7 @@ const resetForm = () =>{
           name="title"
           variant="outlined"
           size="small"                 
-          value={bookDetails.title}
+          value={bookDetails.title, bookDetailsAudio.title}
           onChange={handleInputChange}                                                       
         />
         </div>
@@ -741,7 +744,7 @@ const resetForm = () =>{
           label="Required"
           variant="outlined"
           size="small"
-          value={bookDetails.author_name}
+          value={bookDetails.author_name, bookDetailsAudio.author_name}
         onChange={handleInputChange} 
         />
         </div>
@@ -763,7 +766,7 @@ const resetForm = () =>{
           label="123"
           variant="outlined"
           size="small"
-          value={bookDetails.isbn}
+          value={bookDetails.isbn, bookDetailsAudio.isbn}
           onChange={handleInputChangeNum} 
         />
         </div>  
@@ -785,7 +788,7 @@ const resetForm = () =>{
           variant="outlined"
           size="small"
           name="file_name"
-          value={bookDetails.file_name}
+          value={bookDetails.file_name, bookDetailsAudio.file_name}
           onChange={handleInputChange} 
         />
         </div>   
@@ -865,7 +868,7 @@ const resetForm = () =>{
            variant="outlined"
            size="small"
            name="total_audio_time"
-          value={bookDetails.total_audio_time}
+          value={bookDetails.total_audio_time, bookDetailsAudio.total_audio_time}
           onChange={handleInputChange} 
          />
          </div>  : '' }
@@ -932,7 +935,7 @@ const resetForm = () =>{
         <TextField {...params} label="Required" variant="outlined" required
         id="category_id"
         name="category_id"
-          value={bookDetails.category_id}
+          value={bookDetails.category_id, bookDetailsAudio.category_id}
           onChange={handleInputChangeNum} 
         style={{
         position:'relative',
@@ -961,7 +964,7 @@ const resetForm = () =>{
           variant="outlined"
           size="small"
           name="country_of_origin"
-          value={bookDetails.country_of_origin}
+          value={bookDetails.country_of_origin, bookDetailsAudio.country_of_origin}
           onChange={handleInputChange} 
         />
         </div>
@@ -983,7 +986,7 @@ const resetForm = () =>{
           variant="outlined"
           size="small"
           name="edition_version"
-          value={bookDetails.edition_version}
+          value={bookDetails.edition_version, bookDetailsAudio.edition_version}
           onChange={handleInputChange} 
         />
         </div>
@@ -1005,7 +1008,7 @@ const resetForm = () =>{
           variant="outlined"
           size="small"
           name="year"
-          value={bookDetails.year}
+          value={bookDetails.year, bookDetailsAudio.year}
           onChange={handleInputChange} 
         />
         </div>

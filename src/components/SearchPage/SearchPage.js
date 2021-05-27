@@ -122,7 +122,7 @@ const [hideCheckbox, setHideCheckbox ] = useState(false)
 const dispatch = useDispatch();
 const [openPopup, setOpenPopup]= useState(false)
 const [recordsForEdit, setRecordsForEdit] = useState(null)
-
+const [admin, setAdmin]= useState('')
 
     const searchValue = useSelector(
         (state) => state.searchReducer.searchValue
@@ -130,6 +130,19 @@ const [recordsForEdit, setRecordsForEdit] = useState(null)
     const searchRetainList = useSelector(
       (state) => state.searchReducer.searchList
     )
+
+    const signInPostResponse = useSelector(
+      (state) => state.signInReducer.signInPostResponse
+  );
+
+  useEffect(() => {
+    if(signInPostResponse){
+      console.log(signInPostResponse)
+      const {isAdmin} = signInPostResponse
+      setAdmin(isAdmin)
+    }
+    
+  }, [signInPostResponse])
 
     useEffect(() =>{
       !isEmpty(searchValue) ? setIsOnSelect(true) : setIsOnSelect(false)
@@ -380,7 +393,7 @@ searchList.map(item =>
         </ButtonBase>
       </Grid>
     
-        <Grid item xs container direction="column" spacing={2}>
+     <Grid item xs container direction="column" spacing={2}>
           <Grid item xs>
             <Typography gutterBottom variant="subtitle1">
               {item.title}
@@ -389,15 +402,15 @@ searchList.map(item =>
               Author: {item.author}
               <br/> {item.book_type}
             </Typography>
-            <Button variant="text" style={{position: "relative",
+         {admin ?   <Button variant="text" style={{position: "relative",
     left: "230px",
     bottom: "30px",}}
     onClick={()=> openInPopup(item)}>
               edit
-            </Button>
+            </Button> : ''}
           </Grid>
           
-        </Grid>
+        </Grid> 
       </Grid>
     </Grid>
   </Paper>
