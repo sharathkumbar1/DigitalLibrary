@@ -1,0 +1,1 @@
+export const SET_PDF_URL = 'SET_PDF_URL'
