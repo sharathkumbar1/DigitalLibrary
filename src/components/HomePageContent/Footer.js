@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -9,6 +9,9 @@ import HomeIcon from '@material-ui/icons/Home';
 import BookmarkIcon from '@material-ui/icons/Bookmark';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { useHistory } from 'react-router';
+import {  useSelector } from 'react-redux'
+import isEmpty from 'lodash'
+
 const useStyles = makeStyles((theme) => ({
   root: {
     width: 400,
@@ -35,10 +38,24 @@ export default function Footer() {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
   const history = useHistory()
+  const [admin, setAdmin]= useState('')
 
   const handleBottomMenuItemClick = page => {
     history.push(page)
   }
+
+  const signInPostResponse = useSelector(
+    (state) => state.signInReducer.signInPostResponse
+);
+
+useEffect(() => {
+  if(signInPostResponse){
+    console.log(signInPostResponse)
+    const {isAdmin} = signInPostResponse
+    setAdmin(isAdmin)
+  }
+  
+}, [signInPostResponse])
 
   return (
     <React.Fragment>
@@ -56,10 +73,15 @@ export default function Footer() {
           <IconButton color="inherit" onClick={() => handleBottomMenuItemClick('/book_marked_books')} >
             <BookmarkIcon />
           </IconButton>
-          <div className={classes.grow2} />
+          {/* <div className={classes.grow2} />
           <IconButton color="inherit" onClick={() => handleBottomMenuItemClick('/')}>
             <AccountCircleIcon />
+          </IconButton> */}
+          {admin ?  <div className={classes.grow2}>
+          <IconButton  color="inherit" onClick={() => handleBottomMenuItemClick('/admin')}>
+            <AccountCircleIcon />
           </IconButton>
+          </div> : ''}
         </Toolbar>
       </AppBar>
     </React.Fragment>

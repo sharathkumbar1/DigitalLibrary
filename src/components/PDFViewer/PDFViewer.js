@@ -93,8 +93,12 @@ const PDFViewer = () => {
     
       }, [])
 
-    const saveBook = (isbn) => {
+    const saveBook = (isbn, aa, bb) => {
         console.log("saving .... " + isbn)
+        // console.log("current page ", MobilePDFReader.current_page)
+        // console.log("current page111 ", MobilePDFReader.getPageNumber)
+        console.log("aa  ", aa)
+        console.log("bb ", bb)
 
         let requestBody = {
             "isbn": isbn,
@@ -158,7 +162,7 @@ const PDFViewer = () => {
                             
                         </IconButton>
                         <div className={classes.grow} />
-                        <SaveIcon  onClick={() => saveBook(pdfIsbn)} />
+                        <SaveIcon  onClick={() => saveBook(pdfIsbn, MobilePDFReader.current_page, MobilePDFReader.getPageNumber)} />
                         <div className={classes.grow1} />
 
                     </Toolbar>

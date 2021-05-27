@@ -12,7 +12,7 @@ import LogIn from "./../Login/LogIn";
 import SignUp from "./../Login/SignUp";
 import SearchPage from "./../SearchPage/SearchPage";
 import BrowsePage from "./../BrowsePage/BrowsePage";
-import DisclaimerPage from "./../DisclaimerPage/DisclaimerPage";
+import AdminPage from "../AdminPage/AdminPage";
 import About from "../About/About";
 import Sponsor from "../Sponsor/Sponsor";
 import Faq from "../Faq/Faq";
@@ -157,7 +157,7 @@ const Layout = (props) => {
             <Route exact path="/forgotpw" component={ForgotPw} />
             <Route exact path="/search" component={SearchPage} />
             <Route exact path="/browse" component={BrowsePage} />
-            <Route exact path="/disclaimer" component={DisclaimerPage} />
+            <Route exact path="/admin" component={AdminPage} />
             <Route exact path="/about" component={About} />
             <Route exact path="/sponsor" component={Sponsor} />
             <Route exact path="/faq" component={Faq} />

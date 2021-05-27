@@ -7,6 +7,7 @@ import headerReducer from './header/reducer';
 import personalDevelopment from './personalDevelopment/reducer';
 import updatePwReducer from "./updatepw/reducer";
 import accountVfReducer from "./accountvf/reducer";
+import searchReducer from "./search/reducer";
 
 const rootReducer = combineReducers({
   signUpReducer,
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   personalDevelopment,
   updatePwReducer,
   accountVfReducer,
+  searchReducer,
 });
 
 export default rootReducer;
