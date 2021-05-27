@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
@@ -46,11 +47,16 @@ function BookMarkedAudio() {
   const [setError] = useState(null);
   const classes = useStyles();
   const history = useHistory();
+  const userdata = useSelector(state => state.signInReducer);
 
 
 
   useEffect(() => {
-    fetch("http://ec2-13-232-236-83.ap-south-1.compute.amazonaws.com:8080/users/23/bookmarked_books?book_type=AUDIO_BOOK")
+    
+    let currentUserId = userdata.signInPostResponse.userSequenceId;
+    console.log(" user id ", currentUserId)
+
+    fetch("http://ec2-13-232-236-83.ap-south-1.compute.amazonaws.com:8080/users/"+currentUserId+"/bookmarked_books?book_type=AUDIO_BOOK")
       .then(res => res.json())
       .then(
         (result) => {
