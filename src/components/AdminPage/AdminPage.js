@@ -13,6 +13,7 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete';
+import MenuItem from '@material-ui/core/MenuItem';
 // import { showNotificationError, showNotificationSuccess } from "../../store/notification/actionCreator";
 import axios from 'axios'
 import {useDispatch} from "react-redux";
@@ -24,6 +25,7 @@ import {signUp, handleSignUpError, handleSignUpSuccess} from "../../store/signup
 
 import NotificationSuccess from "../Notifications/NotificationSuccess";
 import NotificationError from "../Notifications/NotificationError";
+import { Category, ReplyTwoTone } from "@material-ui/icons";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -60,9 +62,9 @@ const AdminPage = props => {
   const {recordsForEdit} = props
   const [pages, setPages] =  useState(false)
   const [time, setTime] = useState(false)
-  const [state, setState] = React.useState({ 
-    category: '',  
-  });
+  // const [state, setState] = React.useState({ 
+  //   category: '',  
+  // });
   const [value, setValue]= useState(null)
   const [value1, setValue1]= useState(null)
   const [authors, setAuthors] = useState([]);
@@ -74,29 +76,29 @@ const AdminPage = props => {
   const initialFValues =  {
     author_name: '',
     book_type: '',
-    category_id: '',
+    category_id: 0,
     country_of_origin: '',
     edition_version:'',
     file_name: '',
-    isbn: '' ,
+    isbn: 0 ,
     title: '',
-    total_pages:'',
+    total_pages:0,
     year: '',
-    author_id: '', 
+    author_id: 0, 
   } 
 
   const initialFValuesAudio ={
     author_name: '',
     book_type: '',
-    category_id: '',
+    category_id: 0,
     country_of_origin: '',
     edition_version:'',
     file_name: '',
-    isbn: '',
+    isbn: 0,
     title: '',
     total_audio_time:'',
     year: '',
-    author_id: '',
+    author_id: 0,
   }
   const [bookDetails, setBookDetails] = useState(initialFValues)
   const [bookDetailsAudio, setBookDetailsAudio] = useState(initialFValuesAudio)
@@ -173,27 +175,27 @@ const AdminPage = props => {
 
 
 
-const handleInputChangeNum = e => {
-  const { name, value } = e.target
-  setBookDetails({
-      ...bookDetails,
-      [name]: Number(value)
-  })
-  setBookDetailsAudio({
-    ...bookDetailsAudio,
-    [name]: Number(value)
-})
-}
+// const handleInputChangeNum = e => {
+//   const { name, value } = e.target
+//   setBookDetails({
+//       ...bookDetails,
+//       [name]: Number(value)
+//   })
+//   setBookDetailsAudio({
+//     ...bookDetailsAudio,
+//     [name]: Number(value)
+// })
+// }
 
 const addBook= () => {
-  // console.log(termsAndConditions)
+  
   if (bookDetails.title === "") {
     dispatch(showNotificationError(true, "Please fill in Book Name"));
   }
-  else if (bookDetails.author_name === "") {
+  else if (bookDetails.author_id === "" ) {
     dispatch(showNotificationError(true, "Please fill in Author Name"));
   }
-  else if (bookDetails.isbn === "" ) {
+  else if (bookDetails.isbn === "" || bookDetails.isbn === 0) {
     dispatch(showNotificationError(true, "Please fill in ISBN"));
   }
   else if (bookDetails.file_name === "") {
@@ -202,7 +204,7 @@ const addBook= () => {
   else if (bookDetails.book_type !== "PDF" && bookDetails.book_type!=="AUDIO_BOOK") {
     dispatch(showNotificationError(true, "Please select Book type"));
   }
-  else if (bookDetails.category_id === '') {
+  else if (bookDetails.category_id === '' && bookDetails.category_id === 0) {
     dispatch(showNotificationError(true, "Please fill in category "));
   }
   else if (bookDetails.country_of_origin === '') {
@@ -214,9 +216,9 @@ const addBook= () => {
   else if (bookDetails.year === '') {
     dispatch(showNotificationError(true, "Please fill in Year"));
   }
-  else if (bookDetails.author_id === '') {
-    dispatch(showNotificationError(true, "Please fill in Author Id "));
-  }
+  // else if (bookDetails.author_id === '') {
+  //   dispatch(showNotificationError(true, "Please fill in Author Id "));
+  // }
   else if (pages && bookDetails.total_pages === '') {
     dispatch(showNotificationError(true, "Please fill in number of pages"));
   }
@@ -225,11 +227,18 @@ const addBook= () => {
   }
   else if(pages && bookDetails.total_pages !== ''){
     dispatch(showNotificationError(false, ""));
+    {authors.map(author => {
+      return(
+      author.author_id === bookDetails.author_id ? bookDetails.author_name = author.name : '')
+    })} 
     console.log("page is true")
       processRequest();
   }
   else if(time && bookDetailsAudio.total_audio_time !== ''){
-
+    {authors.map(author => {
+      return(
+      author.author_id === bookDetailsAudio.author_id ? bookDetailsAudio.author_name = author.name : '')
+    })} 
     dispatch(showNotificationError(false, ""));
     console.log("time is true")
       processRequestAudio();
@@ -244,14 +253,15 @@ const processRequest = () =>{
     },
   };
   
+   
   const apiUrl="http://ec2-13-232-236-83.ap-south-1.compute.amazonaws.com:8080/books" 
-
+  
     return axios
   .post(apiUrl, bookDetails, requestConfig)
   .then((response) => {
     console.log(response)
     dispatch(showNotificationError(true, "Book is uploaded successfully"));
-  
+    resetForm()
   })
   .catch((err) => {
     dispatch(showNotificationError(true, err.response.data.error_message));
@@ -274,7 +284,7 @@ const processRequestAudio = () =>{
   .then((response) => {
     console.log(response)
     dispatch(showNotificationError(true, "Audio Book is uploaded successfully"));
-    
+    resetForm()
   })
   .catch((err) => {
     dispatch(showNotificationError(true, err.response.data.error_message));
@@ -289,6 +299,8 @@ const resetForm = () =>{
   setTime(false)
   //window.location.reload();
 }
+
+
 
   return (
     <div>
@@ -460,7 +472,7 @@ const resetForm = () =>{
         <Typography style={{position: "relative",
           top: "50px",
           left: "0px"}}>
-                Page No.
+                No. of pages
                </Typography>
               <TextField
                 style={{position: "relative",
@@ -556,6 +568,9 @@ const resetForm = () =>{
             freeSolo
             renderInput={(params) => (
               <TextField {...params} label="Required" variant="outlined" required
+              value={bookDetails.category_id}
+              name="category_id"
+              id="category_id"
               style={{
               position:'relative',
               top:'40px',
@@ -671,82 +686,33 @@ const resetForm = () =>{
     left: "45px"}}>
            Author
          </Typography>
-        
-        {/* <Autocomplete
-      value={value}
-      onChange={(event, newValue) => {
-        if (typeof newValue === 'string') {
-          setValue({
-            name: newValue,
-          });
-        } else if (newValue && newValue.inputValue) {
-          // Create a new value from the user input
-          setValue({
-            name: newValue.inputValue,
-          });
-        } else {
-          setValue(newValue);
-        }
-      }}
-      filterOptions={(options, params) => {
-        const filtered = filter(options, params);
 
-        // Suggest the creation of a new value
-        if (params.inputValue !== '') {
-          filtered.push({
-            inputValue: params.inputValue,
-            name: `Add "${params.inputValue}"`,
-          });
-        }
+<FormControl variant="outlined" className={classes.formControl} size="small">
 
-        return filtered;
-      }}
-      selectOnFocus
-      clearOnBlur
-      handleHomeEndKeys
-      id="free-solo-with-text-demo"
-      options={authors}
-      getOptionLabel={(option) => {
-        // Value selected with enter, right from the input
-        if (typeof option === 'string') {
-          return option;
-        }
-        // Add "xxx" option created dynamically
-        if (option.inputValue) {
-          return option.inputValue;
-        }
-        // Regular option
-        return option.name;
-      }}
-      renderOption={(option) => option.name}
-      style={{ width: 300 }}
-      freeSolo
-      renderInput={(params) => (
-        <TextField {...params} label="Required" variant="outlined" required
-        id="author_name"
-        name="author_name"
-        value={bookDetails.author_name}
-        onChange={handleInputChange} 
-        style={{position: "relative",
-          top: "25px",
-          left: "72px"}}
-          size='small'/>
+        <Select
+          labelId="demo-simple-select-outlined-label"
+          id="author_id"
+          name="author_id"
+          value={bookDetails.author_id, bookDetailsAudio.author_id}
+          onChange={handleInputChange}
+          style={{
+            position:'relative',
+            bottom:'13px',
+            left:'20px',}}
+       
+        >
+                  
+          {authors.map(author =>{
+            return(
+            <MenuItem value={author.author_id} >{author.name}</MenuItem>
+            )
+          })}
           
-      )}
-    /> */}
-  <TextField
-         style={{position: "relative",
-         top: "25px",
-         left: "72px"}}
-          required
-          id="author_name"
-          name="author_name"
-          label="Required"
-          variant="outlined"
-          size="small"
-          value={bookDetails.author_name, bookDetailsAudio.author_name}
-        onChange={handleInputChange} 
-        />
+        </Select>
+        
+      </FormControl>
+
+
         </div>
 
          <div style={{display:"flex",
@@ -767,7 +733,7 @@ const resetForm = () =>{
           variant="outlined"
           size="small"
           value={bookDetails.isbn, bookDetailsAudio.isbn}
-          onChange={handleInputChangeNum} 
+          onChange={handleInputChange} 
         />
         </div>  
 
@@ -784,7 +750,7 @@ const resetForm = () =>{
           left: "45px"}}
           required
           id="file_name"
-          label="filename.pdf/mp3"
+          label="filename"
           variant="outlined"
           size="small"
           name="file_name"
@@ -814,7 +780,7 @@ const resetForm = () =>{
           label="PDF"
           labelPlacement="End"
           onClick={pdfPages}
-         
+          checked={pages ? true : false}
         />
          <FormControlLabel
           value="AUDIO_BOOK"
@@ -822,7 +788,7 @@ const resetForm = () =>{
           label="Audio"
           labelPlacement="End"
           onClick={audioTime}
-         
+          checked={time ? true : false}
         
         />
           </RadioGroup>
@@ -832,13 +798,13 @@ const resetForm = () =>{
      }}>
   <Typography style={{position: "relative",
     top: "50px",
-    left: "35px"}}>
-          Page No.
+    left: "10px"}}>
+          No. of pages
          </Typography>
         <TextField
           style={{position: "relative",
           top: "40px",
-          left: "51px"}}
+          left: "30px"}}
           required
           id="total_pages"
           label="Required"
@@ -846,7 +812,7 @@ const resetForm = () =>{
           size="small"
           name="total_pages"
           value={bookDetails.total_pages}
-          onChange={handleInputChangeNum} 
+          onChange={handleInputChange} 
         />
         </div> : ''
         } 
@@ -868,8 +834,9 @@ const resetForm = () =>{
            variant="outlined"
            size="small"
            name="total_audio_time"
-          value={bookDetails.total_audio_time, bookDetailsAudio.total_audio_time}
+          value={bookDetailsAudio.total_audio_time}
           onChange={handleInputChange} 
+          
          />
          </div>  : '' }
 
@@ -881,69 +848,31 @@ const resetForm = () =>{
      left: "30px"}}>
          Category
           </Typography>
-        
- <Autocomplete
-      value={value1}
-      onChange={(event, newValue1) => {
-        if (typeof newValue1 === 'string') {
-          setValue1({
-            category_name: newValue1,
-          });
-        } else if (newValue1 && newValue1.inputValue) {
-          // Create a new value from the user input
-          setValue1({
-            category_name: newValue1.inputValue,
-          });
-        } else {
-          setValue1(newValue1);
-        }
-      }}
-      filterOptions={(options, params) => {
-        const filtered = filter(options, params);
 
-        // Suggest the creation of a new value
-        if (params.inputValue !== '') {
-          filtered.push({
-            inputValue: params.inputValue,
-            category_name: `Add "${params.inputValue}"`,
-          });
-        }
-
-        return filtered;
-      }}
-      selectOnFocus
-      clearOnBlur
-      handleHomeEndKeys
-      id="free-solo-with-text-demo"
-      options={category}
-      getOptionLabel={(option) => {
-        // Value selected with enter, right from the input
-        if (typeof option === 'string') {
-          return option;
-        }
-        // Add "xxx" option created dynamically
-        if (option.inputValue) {
-          return option.inputValue;
-        }
-        // Regular option
-        return option.category_name;
-      }}
-      renderOption={(option) => option.category_name}
-      style={{ width: 300 }}
-      freeSolo
-      renderInput={(params) => (
-        <TextField {...params} label="Required" variant="outlined" required
-        id="category_id"
-        name="category_id"
+<FormControl variant="outlined" className={classes.formControl} size="small">
+       
+        <Select
+          labelId="demo-simple-select-outlined-label"
+          id="category_id"
+          name="category_id"
           value={bookDetails.category_id, bookDetailsAudio.category_id}
-          onChange={handleInputChangeNum} 
-        style={{
-        position:'relative',
-        top:'40px',
-        left:'52px',}}
-          size='small'/>
-      )}
-    />
+          onChange={handleInputChange}
+         
+          style={{
+            position:'relative',
+            top:'0px',
+            left:'2px',}}
+        >
+          
+         
+          {category.map(cat =>{
+            return(
+            <MenuItem value={cat.category_id} >{cat.category_name}</MenuItem>
+            )
+          })}
+        </Select>
+        
+      </FormControl>
 
         </div>
 
@@ -1013,28 +942,7 @@ const resetForm = () =>{
         />
         </div>
 
-        <div style={{display:"flex",
-     }}>
-  <Typography style={{position: "relative",
-    top: "70px",
-    left: "49px"}}>
-          Author id
-         </Typography>
-        <TextField
-          style={{position: "relative",
-          top: "70px",
-          left: "84px"}}
-          required
-          id="author_id"
-          label="yyyy"
-          variant="outlined"
-          size="small"
-          name="author_id"
-          value={bookDetails.author_id}
-          onChange={handleInputChangeNum} 
-          
-        />
-        </div>
+        
 
       <div className={classes.root1}>
       
