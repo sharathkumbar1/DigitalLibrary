@@ -19,7 +19,7 @@ import Faq from "../Faq/Faq";
 import ForgotPw from "./../Login/ForgotPw";
 import AudioBook from "./../AudioBook/AudioBook";
 import PersonalDevelopment from "../PersonalDevelopment/PersonalDevelopment"
-import PDFViewer from "../PDFViewer/PDFViewer";
+import MobilePDFViewer from "../PDFViewer/MobilePDFViewer";
 import UpdatePw from "../Login/UpdatePw";
 import AccountVf from "../Login/AccountVf";
 import RecentlyAdded from "../HomePageContent/RecentlyAdded"
@@ -163,7 +163,7 @@ const Layout = (props) => {
             <Route exact path="/faq" component={Faq} />
             <Route exact path="/audiobook/:file_name/:title" component={AudioBook} />
             <Route path="/personaldev" component={PersonalDevelopment} />
-            <Route path="/pdfviewer" component={PDFViewer} />
+            <Route path="/pdfviewer" component={MobilePDFViewer} />
             <Route exact path="/updatepw" component={UpdatePw} />
             <Route exact path="/accountvf" component={AccountVf} />
             {/* <Route component={NotFound} /> */}
