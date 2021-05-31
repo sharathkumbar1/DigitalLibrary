@@ -60,11 +60,21 @@ const filter = createFilterOptions();
 const AdminPage = props => {
   const classes = useStyles();
   const {recordsForEdit} = props
+
   const [pages, setPages] =  useState(false)
   const [time, setTime] = useState(false)
   // const [state, setState] = React.useState({ 
   //   category: '',  
   // });
+
+
+ 
+
+
+
+  const [state, setState] = React.useState({ 
+    category: '',  
+  });
   const [value, setValue]= useState(null)
   const [value1, setValue1]= useState(null)
   const [authors, setAuthors] = useState([]);
@@ -102,6 +112,9 @@ const AdminPage = props => {
   }
   const [bookDetails, setBookDetails] = useState(initialFValues)
   const [bookDetailsAudio, setBookDetailsAudio] = useState(initialFValuesAudio)
+
+
+
 
   useEffect(() => {
     fetch("http://ec2-13-232-236-83.ap-south-1.compute.amazonaws.com:8080/authors")
@@ -163,6 +176,9 @@ const AdminPage = props => {
 
   const handleInputChange = e => {
     const { name, value } = e.target
+    // console.log("name ", name)
+    // console.log("value ", value)
+    
     setBookDetails({
         ...bookDetails,
         [name]: value
@@ -301,6 +317,11 @@ const resetForm = () =>{
 }
 
 
+
+// const radioChangeHandler = (event) => {
+//   console.log("cccc ", event.target.value)
+//   setValueRadio(event.target.value);
+// };
 
   return (
     <div>
@@ -447,7 +468,7 @@ const resetForm = () =>{
           left: "0px"}}>
                 Book Type
                </Typography>
-              <RadioGroup row aria-label="position" name="position" style={{position: "relative",
+              <RadioGroup row aria-label="position" name="bookType" style={{position: "relative",
           top: "40px",
           left: "40px"}} >
               <FormControlLabel
@@ -456,6 +477,7 @@ const resetForm = () =>{
                 label="PDF"
                 labelPlacement="End"
                 onClick={pdfPages}
+                
               />
                <FormControlLabel
                 value="Audio"
@@ -756,6 +778,7 @@ const resetForm = () =>{
           name="file_name"
           value={bookDetails.file_name, bookDetailsAudio.file_name}
           onChange={handleInputChange} 
+         
         />
         </div>   
 
@@ -769,8 +792,11 @@ const resetForm = () =>{
         <RadioGroup row aria-label="position" 
         id="book_type"
           name="book_type"
-         onChange={handleInputChange}
-          // value={bookDetails.book_type} 
+
+          //value={valueRadio} 
+          // onChange={radioChangeHandler}
+          onChange={handleInputChange}
+          value={bookDetails.book_type} 
           style={{position: "relative",
     top: "40px",
     left: "90px"}} >
@@ -971,4 +997,4 @@ const resetForm = () =>{
 };
 
 
-export default withStyles(useStyles)(AdminPage);
+export default AdminPage;
