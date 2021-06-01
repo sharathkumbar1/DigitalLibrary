@@ -47,10 +47,6 @@ const Header = (props) => {
     (state) => state.headerReducer.backToComponent
   );
 
-  useEffect(() => {
-    //dispatch(setBackToComponent());
-  });
-
   const onBackBtnClicked = () => {
     history.goBack()
     const locPath = window.location.href;
@@ -94,14 +90,6 @@ const Header = (props) => {
       <AppBar className={classes.aboveDrawer}>
         <Toolbar>
           {handleHeaderButton()}
-          {/* <IconButton
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="Menu"
-            onClick={onMenuClick}
-          >
-            <MenuIcon />
-          </IconButton>*/}
           <Typography variant="h6" color="inherit" className={classes.flex}>
             {title}
           </Typography> 

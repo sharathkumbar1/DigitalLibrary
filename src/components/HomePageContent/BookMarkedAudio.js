@@ -37,10 +37,8 @@ const useStyles = makeStyles((theme) => ({
     align: 'left',
     fontWeight: 'bold',
     color: 'darkgreen'
-
   },
 }));
-
 
 function BookMarkedAudio() {
   const [bookMarkedAudioBooks, setBookMarkAudioBooks] = useState([]);
@@ -49,10 +47,7 @@ function BookMarkedAudio() {
   const history = useHistory();
   const userdata = useSelector(state => state.signInReducer);
 
-
-
   useEffect(() => {
-    
     let currentUserId = userdata.signInPostResponse.userSequenceId;
     console.log(" user id ", currentUserId)
 
@@ -60,7 +55,6 @@ function BookMarkedAudio() {
       .then(res => res.json())
       .then(
         (result) => {
-
           setBookMarkAudioBooks(result);
           console.log(result)
         },
@@ -68,14 +62,11 @@ function BookMarkedAudio() {
           setError(error);
         }
       )
-
   }, [])
-
 
   const handleRoute = (route) => {
     history.push(`${route}`)
   };
-
 
   return (
     <div>
@@ -97,7 +88,6 @@ function BookMarkedAudio() {
                         onClick={
                           () =>
                             handleRoute(`/audiobook/${item.book.file_name}/${item.book.title}`)
-
                         } />
                     </ButtonBase>
                   </Grid>
@@ -116,21 +106,16 @@ function BookMarkedAudio() {
                       </Typography>
                     </Grid>
                     <Grid item>
-                     
                     </Grid>
                   </Grid>
                 </Grid>
               </Grid>
             </Paper>
           </div>
-
         ))}
       </ul>
-
     </div>
   )
-
-
 }
 
 export default BookMarkedAudio

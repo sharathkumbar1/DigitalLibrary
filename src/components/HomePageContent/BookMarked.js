@@ -60,7 +60,6 @@ function BookMarked() {
       .then(res => res.json())
       .then(
         (result) => {
-
           setBookMarkBooks(result);
           console.log(result)
         },
@@ -68,7 +67,6 @@ function BookMarked() {
           setError(error);
         }
       )
-
   }, [])
 
   const readClicked = (file_name, isbn) => {
@@ -93,7 +91,6 @@ function BookMarked() {
   const handleRoute = (route) => {
     history.push(`${route}`)
   };
-
 
   return (
     <div>
@@ -135,14 +132,10 @@ function BookMarked() {
               </Grid>
             </Paper>
           </div>
-
         ))}
       </ul>
-
     </div>
   )
-
-
 }
 
 export default BookMarked

@@ -11,10 +11,6 @@ export default function signUpReducer(state = initialState, action = {}) {
   switch (action.type) {
     case SIGN_UP_ERROR: {
       const { record } = action;
-
-      // console.log(record.response.status)
-      // console.log(record.response.data)
-      // console.log(record.response.data.errorMessage)
       return {
         ...state,
         signUpPostErrResponse: record ?

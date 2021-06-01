@@ -68,11 +68,9 @@ const styles = theme => ({
 const apiUrl = "http://ec2-13-232-236-83.ap-south-1.compute.amazonaws.com:8080/download_url?file_name=";
 const bookUrl = "http://ec2-13-232-236-83.ap-south-1.compute.amazonaws.com:8080/search?bookType=Audio_Book&book_name="
 
-
 class AudioBook extends React.Component {
     constructor(props) {
         super(props)
-
 
         this.state = {
             file__name: this.props.match.params.file_name,
@@ -80,12 +78,8 @@ class AudioBook extends React.Component {
             download_url: "",
             full_data: [],
             userData: this.props.userData
-
         }
     }
-
-
-
 
     saveAudio = (isbn) => {
         console.log("saving .... " + isbn)
@@ -100,18 +94,13 @@ class AudioBook extends React.Component {
         let requestBody = {
             "isbn": isbn,
             "user_id": this.state.userData.signInPostResponse.userSequenceId
-            // "user_id": 23
         }
         console.log('Hello User', requestBody)
 
         return axios
             .post(apiUrl, requestBody, requestConfig)
             .then((response) => {
-                console.log(response);
-                // console.log(JSON.parse(response.data));
                 console.log(response.data.message);
-
-
             })
             .catch((response) => {
                 console.log(response);
@@ -137,11 +126,7 @@ class AudioBook extends React.Component {
         return axios
             .post(apiUrl, requestBody, requestConfig)
             .then((response) => {
-                console.log(response);
-                // console.log(JSON.parse(response.data));
                 console.log(response.data.message);
-
-
             })
             .catch((response) => {
                 console.log(response);
@@ -149,7 +134,6 @@ class AudioBook extends React.Component {
     }
 
     componentDidMount() {
-
         console.log("file-name" + this.state.file__name)
         axios
             .get(apiUrl + this.state.file__name)
@@ -173,15 +157,10 @@ class AudioBook extends React.Component {
                 console.log("errorrr in audio book")
                 console.log(err2)
             })
-
     }
 
-
-
     downloadAudio = () => {
-
         return () => {
-
             const method = 'GET';
             const url = this.state.download_url;
             axios
@@ -208,10 +187,7 @@ class AudioBook extends React.Component {
 
     render() {
         const { classes } = this.props
-
-
         console.log(this.state.download_url)
-
 
         return (
             <div>
@@ -258,8 +234,6 @@ class AudioBook extends React.Component {
                                 Category: {item.category}
                             </Typography>
                         </div>
-
-
                     </GridList>
                 ))}
             </div>
@@ -281,8 +255,3 @@ export default connect(
     mapStateToProps,
     mapDispatchToProps
 )(withStyles(styles)(AudioBook))
-
-
-
-
-

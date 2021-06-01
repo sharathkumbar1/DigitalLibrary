@@ -9,7 +9,6 @@ import Box from '@material-ui/core/Box';
 import HomePDFBooks from './HomePDFBooks';
 import HomeAudioBooks from './HomeAudioBooks'
 
-
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -60,13 +59,9 @@ export default function HomePageContent() {
   const classes = useStyles();
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
-
-
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-
-
 
   return (
     <div className={classes.root}>
@@ -79,13 +74,8 @@ export default function HomePageContent() {
           variant="fullWidth"
           aria-label="full width tabs example"
         >
-
           <Tab label="PDF Books" {...a11yProps(0)} />
-
           <Tab label="Audio Books" {...a11yProps(1)} />
-
-
-
         </Tabs>
       </AppBar>
       
@@ -95,8 +85,6 @@ export default function HomePageContent() {
       <TabPanel value={value} index={1} dir={theme.direction} >
         <HomeAudioBooks />
       </TabPanel>
-      
-
     </div>
   );
 }

@@ -37,10 +37,8 @@ const useStyles = makeStyles((theme) => ({
     align: 'left',
     fontWeight: 'bold',
     color: 'darkgreen'
-
   },
 }));
-
 
 function ViewedAudio() {
   const [viewedAudio, setViewedAudio] = useState([]);
@@ -49,16 +47,13 @@ function ViewedAudio() {
   const history = useHistory();
   const userdata = useSelector(state => state.signInReducer);
 
-
   useEffect(() => {
     let currentUserId = userdata.signInPostResponse.userSequenceId;
-    console.log(" user id ", currentUserId)
 
     fetch("http://ec2-13-232-236-83.ap-south-1.compute.amazonaws.com:8080/users/"+currentUserId+"/recently_viewed_books?book_type=AUDIO_BOOK")
       .then(res => res.json())
       .then(
         (result) => {
-
           setViewedAudio(result);
           console.log(result)
         },
@@ -66,16 +61,13 @@ function ViewedAudio() {
           setError(error);
         }
       )
-
   }, [])
 
   const handleRoute = (route) => {
     history.push(`${route}`)
   };
 
-
   return (
-
     <div>
       <IconButton className={classes.backArrow} aria-label="delete">
         <ArrowBackIcon onClick={() => handleRoute('/home')} />
@@ -95,7 +87,6 @@ function ViewedAudio() {
                         onClick={
                           () =>
                             handleRoute(`/audiobook/${item.book.file_name}/${item.book.title}`)
-
                         } />
                     </ButtonBase>
                   </Grid>
@@ -119,14 +110,10 @@ function ViewedAudio() {
               </Grid>
             </Paper>
           </div>
-
         ))}
       </ul>
-
     </div>
   )
-
-
 }
 
 export default ViewedAudio

@@ -114,8 +114,6 @@ const HomeAudioBooks = () => {
       )
   }, [])
 
-
-
   const handleRoute = (route) => {
     history.push(`${route}`);
   };
@@ -124,26 +122,16 @@ const HomeAudioBooks = () => {
     handleRoute("/recently_added_audiobooks")
   }
 
-
-
   const bookMarkedAudio = () => {
     handleRoute("/book_marked_audiobooks")
   }
 
   const recentlyViewed = () => {
-    // axios.get('http://ec2-13-232-236-83.ap-south-1.compute.amazonaws.com:8080/users/23/recently_viewed_books').then(
-    //     (res) => {
-    //         var RVB = res.data
-    //         console.log(RVB)
-    //     }
-    // )
     handleRoute("/viewed_audiobooks")
   }
 
   return (
-
     <div className={classes.root}>
-
       <Grid container spacing={3}>
         <Grid item xs={12} className={classes.grid}>
           <Typography className={classes.fonts}> Recently Added Audio Books</Typography>
@@ -153,7 +141,6 @@ const HomeAudioBooks = () => {
         </Grid>
 
         <GridList cellHeight='auto' className={classes.gridList} cols={3}>
-
           {homeAudioBooksRA.slice(0, 3).map((item) => (
             <Card >
               <Grid container spacing={6}>
@@ -167,39 +154,30 @@ const HomeAudioBooks = () => {
                   <CardContent className={classes.cardcontent}>
                     <Tooltip title={item.title}>
                       <Typography gutterBottom variant="subtitle1" >
-
                         <Box whiteSpace="nowrap" component="div" textOverflow="ellipsis" overflow="hidden">
                           {item.title}
                         </Box>
-
                       </Typography>
                     </Tooltip>
                     <Typography variant="body2" gutterBottom>
                       {item.author}
-
                     </Typography>
                   </CardContent>
                 </Grid>
               </Grid>
             </Card>
           ))}
-
         </GridList>
 
-
         <Grid item xs={12}>
-
           <Grid item xs={12} className={classes.grid}>
             <Typography className={classes.fonts}> Saved Audio Books</Typography>
             <Button variant="text" style={{ marginLeft: '135px' }} className={classes.btnAlignRight} onClick={bookMarkedAudio}>
               more &gt;
               </Button>
           </Grid>
-
           <GridList cellHeight='auto' className={classes.gridList} cols={3}>
-
             {homeAudioBooksBM.map((item) => (
-
               <Card >
                 <Grid container spacing={6}>
                   <Grid item xs={6} className={classes.pap}>
@@ -227,13 +205,10 @@ const HomeAudioBooks = () => {
                 </Grid>
               </Card>
             ))}
-
           </GridList>
-
-
         </Grid>
-        <Grid item xs={12}>
 
+        <Grid item xs={12}>
           <Grid item xs={12} className={classes.grid}>
             <Typography className={classes.fonts}> Recently Viewed Audio Books</Typography>
             <Button variant="text" className={classes.btnAlignRight} onClick={recentlyViewed}>
@@ -241,25 +216,20 @@ const HomeAudioBooks = () => {
               </Button>
           </Grid>
           <GridList cellHeight={270} className={classes.gridList} cols={3}>
-
             {homeAudioBooksRV.map((item) => (
               <Card >
                 <Grid container spacing={6}>
                   <Grid item xs={6} className={classes.pap}>
-
                     <img className={classes.image} src={item.book.thumbnail_url} alt={item.book.title}
                       onError={(e) => { e.target.onerror = null; e.target.src = carasoul1 }}
                       onClick={() => handleRoute(`/audiobook/${item.book.file_name}/${item.book.title}`)}
                     />
-
                     <CardContent className={classes.cardcontent}>
                       <Tooltip title={item.book.title}>
                         <Typography gutterBottom variant="subtitle1" >
-
                           <Box whiteSpace="nowrap" component="div" textOverflow="ellipsis" overflow="hidden">
                             {item.book.title}
                           </Box>
-
                         </Typography>
                       </Tooltip>
                       <Typography variant="body2" gutterBottom>

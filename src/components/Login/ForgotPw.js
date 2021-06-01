@@ -7,21 +7,17 @@ import {
     TextField,
     Typography,
 } from "@material-ui/core";
-
 import { useDispatch, useSelector } from "react-redux";
-
 import { forgotPw } from "../../store/forgotpw/actionCreator";
 
 const styles = (theme) => ({
     button: {
         margin: theme.spacing.unit,
     },
-
     forgotpwForm: {
         justifyContent: "center",
         minHeight: "90vh",
     },
-
     forgotpwBackground: {
         justifyContent: "center",
         minHeight: "30vh",
@@ -34,15 +30,10 @@ const ForgotPw = (props) => {
     const [allValues, setAllValues] = useState({
         email: '',
     });
-
     const changeHandler = e => {
-        // console.log(e)
-        // console.log(e.target)
         setAllValues({...allValues, [e.target.name]: e.target.value})
     }
-
     const { classes } = props;
-
     const dispatch = useDispatch();
     const forgotPwPostResponse = useSelector(
         (state) => state.forgotPwReducer.forgotPwPostResponse
@@ -66,8 +57,6 @@ const ForgotPw = (props) => {
 
     //
     const forgotPwClicked = () => {
-
-        // console.log(allValues);
         if (allValues.email !== '') {
             processRequest();
         }

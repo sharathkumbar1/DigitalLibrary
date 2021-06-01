@@ -10,7 +10,6 @@ import BookmarkIcon from '@material-ui/icons/Bookmark';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { useHistory } from 'react-router';
 import {  useSelector } from 'react-redux'
-import isEmpty from 'lodash'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -73,10 +72,6 @@ useEffect(() => {
           <IconButton color="inherit" onClick={() => handleBottomMenuItemClick('/book_marked_books')} >
             <BookmarkIcon />
           </IconButton>
-          {/* <div className={classes.grow2} />
-          <IconButton color="inherit" onClick={() => handleBottomMenuItemClick('/')}>
-            <AccountCircleIcon />
-          </IconButton> */}
           {!admin ?  <div className={classes.grow2}>
           <IconButton  color="inherit" onClick={() => handleBottomMenuItemClick('/admin')}>
             <AccountCircleIcon />

@@ -8,14 +8,10 @@ import {
     TextField,
     Typography,
 } from "@material-ui/core";
-
 import {useDispatch, useSelector} from "react-redux";
-
 import {SUCCESS_ON_RESET} from "../../constants/errorConstants";
-
 import {showNotificationError, showNotificationSuccess,} from "../../store/notification/actionCreator";
 import {updatePw, handleUpdatePwError, handleUpdatePwSuccess} from "../../store/updatepw/actionCreator";
-
 import NotificationSuccess from "../Notifications/NotificationSuccess";
 import NotificationError from "../Notifications/NotificationError";
 
@@ -71,7 +67,6 @@ const UpdatePw = (props) => {
     console.log(myParam);
 
     const resetReduxStoreAndHideNotifications = () => {
-        console.log("resetting")
         dispatch(handleUpdatePwSuccess({data: null}))
         dispatch(handleUpdatePwError(null))
         dispatch(showNotificationError(false, ""));
@@ -93,8 +88,6 @@ const UpdatePw = (props) => {
     };
 
     const updatePwClicked = () => {
-
-        // console.log(termsAndConditions)
          if (password === "") {
             dispatch(showNotificationError(true, "Please fill in Password"));
         }
@@ -121,15 +114,9 @@ const UpdatePw = (props) => {
                 "Token": myParam,
             },
         };
-
-
         dispatch(updatePw(requestBody,requestConfigToken));
         setState({ ...initialState });
-
     };
-
-
-
     // const { active, updateWindow } = props
     // if (active === true) {
 

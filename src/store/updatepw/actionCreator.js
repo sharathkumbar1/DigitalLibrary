@@ -1,6 +1,5 @@
 import { UPDATE_PW_ERROR, UPDATE_PW_SUCCESS } from "./actionType";
 import axios from "axios";
-import apiConfig from '../../config/apiConfig'
 
 export function updatePw(requestBody,requestConfigToken) {
     const requestConfig = {
@@ -11,11 +10,9 @@ export function updatePw(requestBody,requestConfigToken) {
         },
     };
 
-    //console.log(">>>>>>>> "+apiConfig.signup.url);
-
     const url = "http://ec2-13-232-236-83.ap-south-1.compute.amazonaws.com:8080/user/password/update";
     return (dispatch) => {
-        let apiUrl = url; //`${apiConfig.signup.url}`;
+        let apiUrl = url; 
 
         return axios
             .post(apiUrl, requestBody, requestConfigToken)
