@@ -14,13 +14,10 @@ import { forgotPw, handleForgotPwError, handleForgotPwSuccess } from "../../stor
 export default function FormDialog(props) {
     const { open, onCloseButtonClick } = props;
     const [userEmail, setUserEmail] = React.useState("");
-
     const changeHandler = e => {
         setUserEmail(e.target.value)
     }
-
     const dispatch = useDispatch();
-
     const forgotPwPostResponse = useSelector(
         (state) => state.forgotPwReducer.forgotPwPostResponse
     );
@@ -45,25 +42,18 @@ export default function FormDialog(props) {
         }
     }, [forgotPwPostResponse, forgotPwPostErrResponse]);
 
-
-
     const pwprocessRequest = () => {
         const pwrequestBody = {
             email: userEmail,
         };
-
         dispatch(forgotPw(pwrequestBody));
-
         onCloseButtonClick()
-
     };
 
     function validateEmail(email) {
         var re = /\S+@\S+\.\S+/;
         return re.test(email);
     }
-
-
 
     const onResetButtonClick = () => {
         console.log("reset email" + userEmail)
@@ -78,8 +68,7 @@ export default function FormDialog(props) {
             pwprocessRequest();
         }
     };
-
-
+    
     return (
         <div>
             <Dialog open={open} aria-labelledby="form-dialog-title">

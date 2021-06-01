@@ -38,10 +38,8 @@ const useStyles = makeStyles((theme) => ({
     align: 'left',
     fontWeight: 'bold',
     color: 'darkgreen'
-
   },
 }));
-
 
 function RecentlyViewed() {
   const [recentlyBooks, setRecentlyBooks] = useState([]);
@@ -59,7 +57,6 @@ function RecentlyViewed() {
       .then(res => res.json())
       .then(
         (result) => {
-
           setRecentlyBooks(result);
           console.log(result)
         },
@@ -67,18 +64,14 @@ function RecentlyViewed() {
           setError(error);
         }
       )
-
   }, [])
 
   const readClicked = (file_name, isbn) => {
-    console.log("from recently viewed pdf file_name " + file_name);
-
     const apiUrl = "http://ec2-13-232-236-83.ap-south-1.compute.amazonaws.com:8080/download_url?file_name=";
     let pdfLink = "";
     axios
       .get(apiUrl + file_name)
       .then((response) => {
-        //this.setState({ "download_url": response.data })
         pdfLink = response.data;
         console.log("response data" + response.data)
         dispatch(setPdfURL(pdfLink));
@@ -94,9 +87,7 @@ function RecentlyViewed() {
     history.push(`${route}`)
   };
 
-
   return (
-
     <div>
       <IconButton className={classes.backArrow} aria-label="delete">
         <ArrowBackIcon onClick={() => handleRoute('/home')} />
@@ -136,14 +127,10 @@ function RecentlyViewed() {
               </Grid>
             </Paper>
           </div>
-
         ))}
       </ul>
-
     </div>
   )
-
-
 }
 
 export default RecentlyViewed

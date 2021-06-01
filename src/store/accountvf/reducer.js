@@ -12,9 +12,6 @@ export default function accountVfReducer(state = initialState, action = {}) {
         case ACCOUNT_VF_ERROR: {
             const { record } = action;
 
-            // console.log(record.response.status)
-            // console.log(record.response.data)
-            // console.log(record.response.data.errorMessage)
             return {
                 ...state,
                 accountVfPostErrResponse: record ?

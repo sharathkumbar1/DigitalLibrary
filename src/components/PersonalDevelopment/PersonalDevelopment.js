@@ -95,19 +95,16 @@ const PersonalDevelopment = () => {
     axios
       .get(apiUrl + file_name)
       .then((response) => {
-          //this.setState({ "download_url": response.data })
           pdfLink = response.data;
           console.log("response data" + response.data)
       })
       .catch((error) => {
           console.log(error);
       })
-    
       
     dispatch(setPdfURL(pdfLink));
     history.push("/pdfviewer");
   };
-
 
   return (
     <div>
