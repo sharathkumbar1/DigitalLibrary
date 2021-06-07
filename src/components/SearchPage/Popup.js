@@ -9,7 +9,7 @@ const { children, openPopup, setOpenPopup} = props;
 
 const closePopup = () =>{
     setOpenPopup(false)
-    window.location.reload()
+    
 }
     return(
         <Dialog open={openPopup}  maxWidth="md">
