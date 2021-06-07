@@ -31,7 +31,6 @@ const styles = (theme) => ({
 });
 
 const SideDrawer = (props) => {
-
   const { classes, variant, open, onClose, onItemClick } = props;
 
   return (
@@ -65,7 +64,6 @@ const SideDrawer = (props) => {
             component={Link}
             to="/"
             onClick={onItemClick("login")}
-            //onClick={() => props.onItemClick("login")}
           >
             <ListItemText>Log-In</ListItemText>
           </ListItem>
@@ -135,5 +133,3 @@ const SideDrawer = (props) => {
 };
 
 export default withStyles(styles)(SideDrawer);
-
-//export default SideDrawer;

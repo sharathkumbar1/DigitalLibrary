@@ -1,6 +1,5 @@
 import React from 'react'
 import Snackbar from '@material-ui/core/Snackbar'
-import { showNotificationError } from '../../store/notification/actionCreator'
 import { withStyles } from '@material-ui/core'
 import Fade from '@material-ui/core/Fade'
 import SnackbarContent from '@material-ui/core/SnackbarContent/SnackbarContent'
@@ -47,11 +46,9 @@ const NotificationError = props => {
   const notificationIsShown = useSelector(state => state.notification.isShownError)
   const notificationMessage = useSelector(state => state.notification.messageError)
   const dispatch = useDispatch()
-
   const handleRequestClose = (event, reason) => {
     props.resetReduxStoreAndHideNotifications()
   }
-
   const createMarkup = str => {
     return { __html: str }
   }

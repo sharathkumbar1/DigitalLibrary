@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from "react";
-import Helmet from "react-helmet";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { withStyles } from "@material-ui/core/styles";
-import AppHeader from "../Header/Header";
-import SideDrawer from "../Header/SideDrawer";
 import { Router, Route } from "react-router-dom";
 
 /* ROUTE COMPONENTS */
@@ -33,9 +30,7 @@ import { createBrowserHistory } from "history";
 import { useSelector } from "react-redux";
 
 const history = createBrowserHistory();
-
 const drawerWidth = 300;
-
 const styles = (theme) => ({
   root: {
     display: "flex",
@@ -102,24 +97,20 @@ const styles = (theme) => ({
 });
 
 const Layout = (props) => {
-  const { variant } = props;
   const [drawer, setDrawer] = useState(false);
 
-  const toggleDrawer = () => {
-    setDrawer(!drawer);
-  };
+  // const toggleDrawer = () => {
+  //   setDrawer(!drawer);
+  // };
 
-  const onItemClick = (route) => () => {
-    setDrawer(!drawer);
-  };
+  // const onItemClick = (route) => () => {
+  //   setDrawer(!drawer);
+  // };
 
   const userdata = useSelector(state => state.signInReducer);
-
-  console.log("ramesh...", userdata)
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    console.log("mayilllllll", userdata)
     console.log(userdata.signInPostResponse);
     if (userdata.signInPostResponse != null) {
       setIsLoggedIn(true);
@@ -133,18 +124,8 @@ const Layout = (props) => {
   return (
       <div>
         <CssBaseline />
-
-        {/* <AppHeader onMenuClick={() => toggleDrawer()} title="Digital Library" /> */}
-
         <Router history={history}>
-          {/* <SideDrawer
-            open={drawer}
-            onClose={() => toggleDrawer()}
-            onItemClick={onItemClick}
-            variant={variant}
-          ></SideDrawer> */}
           <main>
-            {/* <Route exact path="/" component={LogInOrSignUp} /> */}
             <Route exact path="/" component={LogIn} />
             <Route exact path="/home" component={HomePageContent} />
             <Route exact path="/recently_added_books" component={RecentlyAdded} />
@@ -166,12 +147,9 @@ const Layout = (props) => {
             <Route path="/pdfviewer" component={MobilePDFViewer} />
             <Route exact path="/updatepw" component={UpdatePw} />
             <Route exact path="/accountvf" component={AccountVf} />
-            {/* <Route component={NotFound} /> */}
           </main>
           {isLoggedIn && <Footer />}
         </Router>
-
-
       </div>
   );
 };

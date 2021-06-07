@@ -1,6 +1,5 @@
 import { FORGOT_PW_SUCCESS, FORGOT_PW_ERROR } from "./actionType";
 import axios from "axios";
-import apiConfig from '../../config/apiConfig'
 
 export function forgotPw(requestBody) {
     const requestConfig = {
@@ -12,15 +11,12 @@ export function forgotPw(requestBody) {
 
     const url = "http://ec2-13-232-236-83.ap-south-1.compute.amazonaws.com:8080/user/password/forgot";
     return (dispatch) => {
-        let apiUrl = url; //`${apiConfig.forgotpw.url}`;
+        let apiUrl = url; 
 
         return axios
             .post(apiUrl, requestBody, requestConfig)
             .then((response) => {
                 console.log(response);
-               // console.log(JSON.parse(response.data));
-                console.log(response.data.message);
-
                 dispatch(handleForgotPwSuccess(response));
             })
             .catch((response) => {

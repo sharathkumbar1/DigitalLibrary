@@ -11,7 +11,6 @@ import { useHistory } from "react-router-dom";
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
-
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -53,13 +52,11 @@ function RecentlyAddedAudio() {
   const classes = useStyles();
   const history = useHistory();
 
-
   useEffect(() => {
     fetch("http://ec2-13-232-236-83.ap-south-1.compute.amazonaws.com:8080/recently_added_books?book_type=AUDIO_BOOK")
       .then(res => res.json())
       .then(
         (result) => {
-
           setRecentlyAddedAudio(result);
           console.log(result)
 
@@ -68,21 +65,14 @@ function RecentlyAddedAudio() {
           setError(error);
         }
       )
-
   }, [])
-
-
 
   const handleRoute = (route) => {
     history.push(`${route}`)
   };
 
-
-
   return (
-
     <div>
-
       <IconButton className={classes.backArrow} aria-label="delete">
         <ArrowBackIcon onClick={() => handleRoute('/home')} />
       </IconButton>
@@ -95,20 +85,15 @@ function RecentlyAddedAudio() {
               <Grid container spacing={2}>
                 <Grid item xs={12} sm container>
                   <Grid item>
-
                     <ButtonBase className={classes.image} >
-
                       <img
                         className={classes.img} alt="complex" src={item.thumbnail_url}
                         onClick={
                           () =>
                             handleRoute(`/audiobook/${item.file_name}/${item.title}`)
-
                         }
                       />
-
                     </ButtonBase>
-
                   </Grid>
 
                   <Grid item xs container direction="column" spacing={2}>
@@ -129,16 +114,11 @@ function RecentlyAddedAudio() {
                 </Grid>
               </Grid>
             </Paper>
-
           </div>
-
-
         ))}
       </ul>
-
     </div>
   )
-
 }
 
 const mapStateToProps = () => {
@@ -147,7 +127,6 @@ const mapStateToProps = () => {
 
 const mapDispatchToProps = () => {
   return {
-
   }
 }
 

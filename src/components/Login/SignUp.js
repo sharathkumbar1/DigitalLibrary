@@ -12,14 +12,10 @@ import {
     TextField,
     Typography,
 } from "@material-ui/core";
-
 import {useDispatch, useSelector} from "react-redux";
-
 import {SUCCESS_ON_SAVE} from "../../constants/errorConstants";
-
 import {showNotificationError, showNotificationSuccess,} from "../../store/notification/actionCreator";
 import {signUp, handleSignUpError, handleSignUpSuccess} from "../../store/signup/actionCreator";
-
 import NotificationSuccess from "../Notifications/NotificationSuccess";
 import NotificationError from "../Notifications/NotificationError";
 

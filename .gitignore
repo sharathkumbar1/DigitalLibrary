@@ -8,7 +8,6 @@ npm_tmp/
 .tmp
 .idea
 .DS_Store
-/build
 /report
 /coverage
 .material-cache

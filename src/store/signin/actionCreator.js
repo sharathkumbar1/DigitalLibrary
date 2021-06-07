@@ -12,7 +12,7 @@ export function signIn(requestBody) {
 
     const url = "http://ec2-13-232-236-83.ap-south-1.compute.amazonaws.com:8080/user/login";
     return (dispatch) => {
-        let apiUrl = url; //`${apiConfig.signin.url}`;
+        let apiUrl = url; 
 
         return axios
             .post(apiUrl, requestBody, requestConfig)
@@ -21,7 +21,6 @@ export function signIn(requestBody) {
                 localStorage.setItem('token', token);
 
                 let user = jwt_decode(token); // decode your token here
-                // console.log(JSON.parse(user.payload))
                 dispatch(handleSignInSuccess(JSON.parse(user.payload)));
             })
             .catch((error) => {

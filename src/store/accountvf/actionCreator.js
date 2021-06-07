@@ -11,8 +11,6 @@ export function accountVf(tokenParam,requestConfigToken) {
         },
     };
 
-    //console.log(">>>>>>>> "+apiConfig.signup.url);
-
     const url = "http://ec2-13-232-236-83.ap-south-1.compute.amazonaws.com:8080/user/signup/verify?token=";
     return (dispatch) => {
         let apiUrl = url + tokenParam; //`${apiConfig.signup.url}`;

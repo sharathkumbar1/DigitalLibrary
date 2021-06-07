@@ -13,7 +13,6 @@ import axios from "axios";
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { IconButton } from "@material-ui/core";
 
-
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -40,7 +39,6 @@ const useStyles = makeStyles((theme) => ({
     align: 'left',
     fontWeight: 'bold',
     color: 'darkgreen'
-
   },
 }));
 
@@ -51,13 +49,11 @@ function RecentlyAdded() {
   const history = useHistory();
   const dispatch = useDispatch();
 
-
   useEffect(() => {
     fetch("http://ec2-13-232-236-83.ap-south-1.compute.amazonaws.com:8080/recently_added_books?book_type=PDF")
       .then(res => res.json())
       .then(
         (result) => {
-
           setRecentlyAdded(result);
           console.log(result)
         },
@@ -65,12 +61,10 @@ function RecentlyAdded() {
           setError(error);
         }
       )
-
   }, [])
 
   const readClicked = (file_name, isbn) => {
     console.log("from recently added pdf file_name " + file_name);
-
     const apiUrl = "http://ec2-13-232-236-83.ap-south-1.compute.amazonaws.com:8080/download_url?file_name=";
     let pdfLink = "";
     axios
@@ -91,9 +85,7 @@ function RecentlyAdded() {
     history.push(`${route}`)
   };
 
-
   return (
-
     <div>
       <IconButton className={classes.backArrow} aria-label="delete">
         <ArrowBackIcon onClick={() => handleRoute('/home')} />
@@ -135,13 +127,10 @@ function RecentlyAdded() {
               </Grid>
             </Paper>
           </div>
-
         ))}
       </ul>
-
     </div>
   )
-
 }
 
 export default RecentlyAdded

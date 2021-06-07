@@ -10,7 +10,6 @@ import {
 } from "@material-ui/core";
 
 import { useDispatch, useSelector } from "react-redux";
-
 import { signIn, handleSignInError, handleSignInSuccess } from "../../store/signin/actionCreator";
 import FormDialog from '../ModelWindow/ResetPassWord'
 import {showNotificationError} from "../../store/notification/actionCreator";
@@ -35,7 +34,6 @@ const styles = (theme) => ({
 });
 
 const LogIn = (props) => {
-
   const { classes } = props;
   const [allValues, setAllValues] = useState({
     email: '',
@@ -68,15 +66,10 @@ const LogIn = (props) => {
   }
 
   const handleRoute = (route) => {
-    ///userID = "23";
-    
-    console.log("route mmm "+route)
     props.history.push(`/${route}`);
-
   };
 
   const resetReduxStoreAndHideNotifications = () => {
-    console.log("resetting")
     dispatch(handleSignInSuccess(null))
     dispatch(handleSignInError(null))
     dispatch(showNotificationError(false, ""));
@@ -88,8 +81,6 @@ const LogIn = (props) => {
   }
 
   const signInClicked = () => {
-
-    // console.log(allValues);
     if (allValues.email === "") {
       dispatch(showNotificationError(true, "Please fill in Email"));
     }
