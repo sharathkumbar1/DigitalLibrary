@@ -51,7 +51,6 @@ const MobilePDFViewer = () => {
     const bookUrl = "http://ec2-13-232-236-83.ap-south-1.compute.amazonaws.com:8080/search?bookType=Audio_Book&book_name="
     let apiUrl = "http://ec2-13-232-236-83.ap-south-1.compute.amazonaws.com:8080/bookmarked_books";
 
-
     useEffect(() => {
         setPdfPath(pdfUrl)
     }, [pdfUrl])

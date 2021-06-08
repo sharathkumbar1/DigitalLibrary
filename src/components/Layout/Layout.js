@@ -116,7 +116,7 @@ const Layout = (props) => {
       setIsLoggedIn(true);
     } else {
       setIsLoggedIn(false);
-      history.push('/')
+      //history.push('/')
     }
   }, [userdata])
 

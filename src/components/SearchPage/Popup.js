@@ -2,12 +2,16 @@ import { Button, Dialog, DialogContent, DialogTitle } from '@material-ui/core'
 import React, { useState } from 'react'
 import CloseIcon from '@material-ui/icons/Close';
 
-export default function Popup(props) {
-    const { children, openPopup, setOpenPopup } = props;
-    const closePopup = () => {
-        setOpenPopup(false)
-        window.location.reload()
-    }
+ export default function Popup(props){
+
+const { children, openPopup, setOpenPopup} = props;
+
+const closePopup = () =>{
+    setOpenPopup(false)
+    
+}
+    
+       
     return (
         <Dialog open={openPopup} maxWidth="md">
             {/* <DialogTitle >

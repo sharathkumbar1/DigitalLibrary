@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useRef} from "react";
 import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
 import TextField from '@material-ui/core/TextField';
@@ -17,6 +17,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 // import { showNotificationError, showNotificationSuccess } from "../../store/notification/actionCreator";
 import axios from 'axios'
 import {useDispatch} from "react-redux";
+import CreatableSelect from 'react-select/creatable'
 
 import {SUCCESS_ON_SAVE} from "../../constants/errorConstants";
 
@@ -26,6 +27,7 @@ import {signUp, handleSignUpError, handleSignUpSuccess} from "../../store/signup
 import NotificationSuccess from "../Notifications/NotificationSuccess";
 import NotificationError from "../Notifications/NotificationError";
 import { Category, ReplyTwoTone } from "@material-ui/icons";
+import { colors } from "@material-ui/core";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -43,10 +45,30 @@ const useStyles = makeStyles((theme) => ({
     top:'40px',
     left:'52px',
   },
+  formControlEdit: {
+    margin: theme.spacing(1),
+    minWidth: '35ch',
+    position:'relative',
+    top:'40px',
+    left:'12px',
+  },
   notificationContainer: {
     position: "relative",
   },
-
+  createselect:{
+    width: '275px',
+    position: 'relative',
+    top: '25px',
+    left: '75px',
+    zIndex: '100 !important'
+  },
+  createselectEdit:{
+    width: '275px',
+    position: 'relative',
+    top: '25px',
+    left: '42px',
+    zIndex: '100 !important'
+  },
   root1: {
     '& > *': {
       margin: theme.spacing(1),
@@ -67,21 +89,17 @@ const AdminPage = props => {
   //   category: '',  
   // });
 
-
- 
-
-
-
   const [state, setState] = React.useState({ 
     category: '',  
   });
-  const [value, setValue]= useState(null)
+  const [value2, setValue2]= useState(null)
   const [value1, setValue1]= useState(null)
   const [authors, setAuthors] = useState([]);
   const [category, setCategory] = useState([])
   const [setError] = useState(null);
   const dispatch = useDispatch();
- 
+ const [authorValue, setAuthorValue] = useState('')
+ const selectAuthorRef = useRef();
 
   const initialFValues =  {
     author_name: '',
@@ -94,7 +112,7 @@ const AdminPage = props => {
     title: '',
     total_pages:0,
     year: '',
-    author_id: 0, 
+   
   } 
 
   const initialFValuesAudio ={
@@ -108,7 +126,7 @@ const AdminPage = props => {
     title: '',
     total_audio_time:'',
     year: '',
-    author_id: 0,
+    
   }
   const [bookDetails, setBookDetails] = useState(initialFValues)
   const [bookDetailsAudio, setBookDetailsAudio] = useState(initialFValuesAudio)
@@ -131,6 +149,11 @@ const AdminPage = props => {
       )
 
   }, [])
+
+  const creatableAuthor = authors.map(({name})=>({
+     value:name,
+     label:name,
+  }))
 
   useEffect(() => {
     fetch("http://ec2-13-232-236-83.ap-south-1.compute.amazonaws.com:8080/book_categories")
@@ -189,26 +212,31 @@ const AdminPage = props => {
   })
 }
 
+const handleChange = (newValue, actionMeta) => {
+  console.group('Value Changed');
+  console.log(newValue);
+  console.log(`action: ${actionMeta.action}`);
+  console.groupEnd();
+  return(
+    newValue ?
+     (bookDetails.author_name = newValue.value, bookDetailsAudio.author_name=newValue.value) : ''
+  )
 
+};
+const handleNewInputChange = (inputValue, actionMeta) => {
+  console.group('Input Changed');
+  console.log(inputValue);
+  console.log(`action: ${actionMeta.action}`);
+  console.groupEnd();
+};
 
-// const handleInputChangeNum = e => {
-//   const { name, value } = e.target
-//   setBookDetails({
-//       ...bookDetails,
-//       [name]: Number(value)
-//   })
-//   setBookDetailsAudio({
-//     ...bookDetailsAudio,
-//     [name]: Number(value)
-// })
-// }
 
 const addBook= () => {
   
   if (bookDetails.title === "") {
     dispatch(showNotificationError(true, "Please fill in Book Name"));
   }
-  else if (bookDetails.author_id === "" ) {
+  else if (bookDetails.author_name === "" ) {
     dispatch(showNotificationError(true, "Please fill in Author Name"));
   }
   else if (bookDetails.isbn === "" || bookDetails.isbn === 0) {
@@ -232,9 +260,7 @@ const addBook= () => {
   else if (bookDetails.year === '') {
     dispatch(showNotificationError(true, "Please fill in Year"));
   }
-  // else if (bookDetails.author_id === '') {
-  //   dispatch(showNotificationError(true, "Please fill in Author Id "));
-  // }
+ 
   else if (pages && bookDetails.total_pages === '') {
     dispatch(showNotificationError(true, "Please fill in number of pages"));
   }
@@ -243,18 +269,18 @@ const addBook= () => {
   }
   else if(pages && bookDetails.total_pages !== ''){
     dispatch(showNotificationError(false, ""));
-    {authors.map(author => {
-      return(
-      author.author_id === bookDetails.author_id ? bookDetails.author_name = author.name : '')
-    })} 
+    // {authors.map(author => {
+    //   return(
+    //   author.author_id === bookDetails.author_id ? bookDetails.author_name = author.name : '')
+    // })} 
     console.log("page is true")
       processRequest();
   }
   else if(time && bookDetailsAudio.total_audio_time !== ''){
-    {authors.map(author => {
-      return(
-      author.author_id === bookDetailsAudio.author_id ? bookDetailsAudio.author_name = author.name : '')
-    })} 
+    // {authors.map(author => {
+    //   return(
+    //   author.author_id === bookDetailsAudio.author_id ? bookDetailsAudio.author_name = author.name : '')
+    // })} 
     dispatch(showNotificationError(false, ""));
     console.log("time is true")
       processRequestAudio();
@@ -313,15 +339,9 @@ const resetForm = () =>{
   setBookDetailsAudio(initialFValuesAudio)
   setPages(false)
   setTime(false)
+  
   //window.location.reload();
 }
-
-
-
-// const radioChangeHandler = (event) => {
-//   console.log("cccc ", event.target.value)
-//   setValueRadio(event.target.value);
-// };
 
   return (
     <div>
@@ -345,7 +365,6 @@ const resetForm = () =>{
                 id="author"
                 name="author"
                 value={bookDetails.title}
-               
                 variant="outlined"
                 size="small"
               />
@@ -359,63 +378,16 @@ const resetForm = () =>{
                  Author
                </Typography>
               
-               <Autocomplete
-            value={bookDetails.author}
-            onChange={(event, newValue) => {
-              if (typeof newValue === 'string') {
-                setValue({
-                  name: newValue,
-                });
-              } else if (newValue && newValue.inputValue) {
-                // Create a new value from the user input
-                setValue({
-                  name: newValue.inputValue,
-                });
-              } else {
-                setValue(newValue);
-              }
-            }}
-            filterOptions={(options, params) => {
-              const filtered = filter(options, params);
-      
-              // Suggest the creation of a new value
-              if (params.inputValue !== '') {
-                filtered.push({
-                  inputValue: params.inputValue,
-                  name: `Add "${params.inputValue}"`,
-                });
-              }
-      
-              return filtered;
-            }}
-            selectOnFocus
-            clearOnBlur
-            handleHomeEndKeys
-            id="free-solo-with-text-demo"
-            options={authors}
-            getOptionLabel={(option) => {
-              // Value selected with enter, right from the input
-              if (typeof option === 'string') {
-                return option;
-              }
-              // Add "xxx" option created dynamically
-              if (option.inputValue) {
-                return option.inputValue;
-              }
-              // Regular option
-              return option.name;
-            }}
-            renderOption={(option) => option.name}
-            style={{ width: 300 }}
-            freeSolo
-            renderInput={(params) => (
-              <TextField {...params} label="Required" variant="outlined" required
-              style={{position: "relative",
-                top: "25px",
-                left: "36px"}} 
-                size='small'/>
-            )}
-          /> 
+               <CreatableSelect
+ref={selectAuthorRef}
+className={classes.createselectEdit}
+onChange={handleChange}
+onInputChange={handleNewInputChange}
+options={creatableAuthor}
+isSearchable
+defaultInputValue={bookDetails.author_name}
+/>
+           
          
         
               </div>
@@ -434,8 +406,7 @@ const resetForm = () =>{
                 required
                 id="isbn"
                 name="isbn"
-                value={bookDetails.isbn , bookDetailsAudio.isbn}
-                
+                value={bookDetails.isbn}
                 variant="outlined"
                 size="small"
               />
@@ -477,7 +448,7 @@ const resetForm = () =>{
                 label="PDF"
                 labelPlacement="End"
                 onClick={pdfPages}
-                
+                defaultValue={bookDetails.book_type}
               />
                <FormControlLabel
                 value="Audio"
@@ -538,68 +509,31 @@ const resetForm = () =>{
            left: "0px"}}>
                Category
                 </Typography>
-              
-       <Autocomplete
-            value={bookDetails.category}
-            onChange={(event, newValue1) => {
-              if (typeof newValue1 === 'string') {
-                setValue1({
-                  category_name: newValue1,
-                });
-              } else if (newValue1 && newValue1.inputValue) {
-                // Create a new value from the user input
-                setValue1({
-                  category_name: newValue1.inputValue,
-                });
-              } else {
-                setValue1(newValue1);
-              }
-            }}
-            filterOptions={(options, params) => {
-              const filtered = filter(options, params);
-      
-              // Suggest the creation of a new value
-              if (params.inputValue !== '') {
-                filtered.push({
-                  inputValue: params.inputValue,
-                  category_name: `Add "${params.inputValue}"`,
-                });
-              }
-      
-              return filtered;
-            }}
-            selectOnFocus
-            clearOnBlur
-            handleHomeEndKeys
-            id="free-solo-with-text-demo"
-            options={category}
-            getOptionLabel={(option) => {
-              // Value selected with enter, right from the input
-              if (typeof option === 'string') {
-                return option;
-              }
-              // Add "xxx" option created dynamically
-              if (option.inputValue) {
-                return option.inputValue;
-              }
-              // Regular option
-              return option.category_name;
-            }}
-            renderOption={(option) => option.category_name}
-            style={{ width: 300 }}
-            freeSolo
-            renderInput={(params) => (
-              <TextField {...params} label="Required" variant="outlined" required
-              value={bookDetails.category_id}
-              name="category_id"
-              id="category_id"
-              style={{
-              position:'relative',
-              top:'40px',
-              left:'17px',}}
-                size='small'/>
-            )}
-          />
+                <FormControl variant="outlined" className={classes.formControlEdit} size="small">
+       
+       <Select
+         labelId="demo-simple-select-outlined-label"
+         id="category_id"
+         name="category_id"
+         value={bookDetails.category_id, bookDetailsAudio.category_id}
+         onChange={handleInputChange}
+        defaultValue={bookDetails.category_name}
+         style={{
+           position:'relative',
+           top:'0px',
+           left:'5px',
+         }}
+       >
+         
+        
+         {category.map(cat =>{
+           return(
+           <MenuItem value={cat.category_id} >{cat.category_name}</MenuItem>
+           )
+         })}
+       </Select>
+       
+     </FormControl>
       
               </div>
       
@@ -679,13 +613,16 @@ const resetForm = () =>{
 
        :
 <div>
+  <FormControl>
    <div style={{display:"flex",
      }}>
+     
   <Typography style={{position: "relative",
     top: "32px",
-    left: "20px"}}>
+    left: "4px"}}>
            Book Name
          </Typography>
+        
         <TextField
           style={{position: "relative",
           top: "20px",
@@ -705,34 +642,19 @@ const resetForm = () =>{
      }}>
   <Typography style={{position: "relative",
     top: "35px",
-    left: "45px"}}>
+    left: "20px"}}>
            Author
          </Typography>
 
-<FormControl variant="outlined" className={classes.formControl} size="small">
 
-        <Select
-          labelId="demo-simple-select-outlined-label"
-          id="author_id"
-          name="author_id"
-          value={bookDetails.author_id, bookDetailsAudio.author_id}
-          onChange={handleInputChange}
-          style={{
-            position:'relative',
-            bottom:'13px',
-            left:'20px',}}
-       
-        >
-                  
-          {authors.map(author =>{
-            return(
-            <MenuItem value={author.author_id} >{author.name}</MenuItem>
-            )
-          })}
-          
-        </Select>
-        
-      </FormControl>
+<CreatableSelect
+className={classes.createselect}
+onChange={handleChange}
+onInputChange={handleNewInputChange}
+options={creatableAuthor}
+isSearchable
+isClearable
+/>
 
 
         </div>
@@ -741,7 +663,7 @@ const resetForm = () =>{
      }}>
   <Typography style={{position: "relative",
     top: "40px",
-    left: "50px"}}>
+    left: "20px"}}>
            ISBN
          </Typography>
         <TextField
@@ -763,7 +685,7 @@ const resetForm = () =>{
      }}>
   <Typography style={{position: "relative",
     top: "45px",
-    left: "30px"}}>
+    left: "4px"}}>
           File Name
          </Typography>
         <TextField
@@ -786,7 +708,7 @@ const resetForm = () =>{
      }}>
         <Typography style={{position: "relative",
     top: "48px",
-    left: "30px"}}>
+    left: "4px"}}>
           Book Type
          </Typography>
         <RadioGroup row aria-label="position" 
@@ -824,7 +746,7 @@ const resetForm = () =>{
      }}>
   <Typography style={{position: "relative",
     top: "50px",
-    left: "10px"}}>
+    left: "0px"}}>
           No. of pages
          </Typography>
         <TextField
@@ -847,7 +769,7 @@ const resetForm = () =>{
       }}>
    <Typography style={{position: "relative",
      top: "50px",
-     left: "26px"}}>
+     left: "4px"}}>
           Audio Time
           </Typography>
          <TextField
@@ -871,7 +793,7 @@ const resetForm = () =>{
       }}>
         <Typography style={{position: "relative",
      top: "50px",
-     left: "30px"}}>
+     left: "15px"}}>
          Category
           </Typography>
 
@@ -906,7 +828,7 @@ const resetForm = () =>{
      }}>
   <Typography style={{position: "relative",
     top: "55px",
-    left: "38px"}}>
+    left: "20px"}}>
            Country
          </Typography>
         <TextField
@@ -928,7 +850,7 @@ const resetForm = () =>{
      }}>
   <Typography style={{position: "relative",
     top: "60px",
-    left: "43px"}}>
+    left: "25px"}}>
            Edition
          </Typography>
         <TextField
@@ -950,7 +872,7 @@ const resetForm = () =>{
      }}>
   <Typography style={{position: "relative",
     top: "65px",
-    left: "49px"}}>
+    left: "30px"}}>
            Year
          </Typography>
         <TextField
@@ -982,6 +904,7 @@ const resetForm = () =>{
  
        
       </div>
+      </FormControl>
       </div>
       }
      
