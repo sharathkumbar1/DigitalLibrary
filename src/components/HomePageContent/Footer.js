@@ -172,7 +172,7 @@ useEffect(() => {
           <IconButton color="inherit" onClick={() => handleBottomMenuItemClick('/book_marked_books')} >
             <BookmarkIcon />
           </IconButton>
-          {!admin ?  <div className={classes.grow2}>
+          {admin ?  <div className={classes.grow2}>
           <IconButton  color="inherit" onClick={() => handleBottomMenuItemClick('/admin')}>
             <AccountCircleIcon />
           </IconButton>

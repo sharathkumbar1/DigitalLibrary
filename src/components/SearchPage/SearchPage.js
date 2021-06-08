@@ -20,7 +20,7 @@ import FormGroup from '@material-ui/core/FormGroup';
 import Checkbox from '@material-ui/core/Checkbox';
 import {  useHistory} from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux";
-import { setPdfURL } from "../../store/personalDevelopment/actionCreator";
+import { setPdfURL, setPdfISBN } from "../../store/personalDevelopment/actionCreator";
 import { connect } from 'react-redux';
 import {withStyles} from "@material-ui/core/styles";
 import { saveSearchValue, saveSearchList, clearSearchValue, clearSearchList} from '../../store/search/ActionCreator';
@@ -227,11 +227,30 @@ const [admin, setAdmin]= useState('')
     dispatch(clearSearchList())
   }
 
-  const readClicked = (pdfLink) => {
-    dispatch(setPdfURL(pdfLink));
-    console.log("book opened")
-    dispatch(setPdfURL("../../data/pdf/sample1.pdf"));
-    history.push("/pdfviewer");
+  const readClicked = (file_name, isbn) => {
+    console.log("from recently added pdf isbn " + isbn);
+
+    const apiUrl = "http://ec2-13-232-236-83.ap-south-1.compute.amazonaws.com:8080/download_url?file_name=";
+    let pdfLink = "";
+    axios
+      .get(apiUrl + file_name)
+      .then((response) => {
+        pdfLink = response.data;
+        console.log("response data from search page" + response.data)
+        dispatch(setPdfURL(pdfLink));
+        dispatch(setPdfISBN(isbn));
+        history.push("/pdfviewer");
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+    // console.log("pdf link from search page ", pdfLink)
+    // console.log("isbn ", isbn)
+    // dispatch(setPdfURL(pdfLink));
+    // dispatch(setPdfISBN(isbn));
+    //console.log("book opened")
+    //dispatch(setPdfURL("../../data/pdf/sample1.pdf"));
+    //history.push("/pdfviewer");
 
   }
 
@@ -384,7 +403,7 @@ searchList.map(item =>
              handleRoute(`/audiobook/${item.file_name}/${item.title}`)
             }
             else{
-              readClicked(item.pdflink)
+              readClicked(item.file_name, item.isbn)
             }
 
           }
