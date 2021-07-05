@@ -80,7 +80,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex'
   },
   btnAlignRight: {
-    marginLeft: '50px',
+    marginLeft: '85px',
     backgroundColor: 'grey'
 
   },
@@ -99,7 +99,7 @@ const HomeAudioBooks = () => {
     let currentUserId = userdata.signInPostResponse.userSequenceId;
     console.log(" user id ", currentUserId)
 
-    fetch("http://ec2-13-232-236-83.ap-south-1.compute.amazonaws.com:8080/home_page_books?user_id="+currentUserId+"&per_page=3&book_type=AUDIO_BOOK")
+    fetch("http://ec2-13-235-86-101.ap-south-1.compute.amazonaws.com:5000/home_page_books?user_id="+currentUserId+"&per_page=3&book_type=AUDIO_BOOK")
       .then(res => res.json())
       .then(
         (result) => {
@@ -134,8 +134,8 @@ const HomeAudioBooks = () => {
     <div className={classes.root}>
       <Grid container spacing={3}>
         <Grid item xs={12} className={classes.grid}>
-          <Typography className={classes.fonts}> Recently Added Audio Books</Typography>
-          <Button variant="text" className={classes.btnAlignRight} onClick={recentlyAddedAudioBooks}>
+          <Typography className={classes.fonts}> Recently Added Audibles        </Typography>
+          <Button variant="text" style={{ marginLeft: '90px' }} className={classes.btnAlignRight} onClick={recentlyAddedAudioBooks}>
             more &gt;
               </Button>
         </Grid>
@@ -171,8 +171,8 @@ const HomeAudioBooks = () => {
 
         <Grid item xs={12}>
           <Grid item xs={12} className={classes.grid}>
-            <Typography className={classes.fonts}> Saved Audio Books</Typography>
-            <Button variant="text" style={{ marginLeft: '135px' }} className={classes.btnAlignRight} onClick={bookMarkedAudio}>
+            <Typography className={classes.fonts}> Saved Audibles</Typography>
+            <Button variant="text" style={{ marginLeft: '175px' }} className={classes.btnAlignRight} onClick={bookMarkedAudio}>
               more &gt;
               </Button>
           </Grid>
@@ -210,7 +210,7 @@ const HomeAudioBooks = () => {
 
         <Grid item xs={12}>
           <Grid item xs={12} className={classes.grid}>
-            <Typography className={classes.fonts}> Recently Viewed Audio Books</Typography>
+            <Typography className={classes.fonts}> Recently Viewed Audibles</Typography>
             <Button variant="text" className={classes.btnAlignRight} onClick={recentlyViewed}>
               more &gt;
               </Button>

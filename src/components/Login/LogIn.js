@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, useRef} from "react";
 import { withStyles } from "@material-ui/core/styles";
 import {
   Button,
@@ -31,9 +31,14 @@ const styles = (theme) => ({
     minHeight: "30vh",
     padding: "50px",
   },
+  paddingTop: {
+    paddingTop: "10px",
+  }
 });
 
 const LogIn = (props) => {
+
+  const signInFocus = useRef();
   const { classes } = props;
   const [allValues, setAllValues] = useState({
     email: '',
@@ -51,14 +56,20 @@ const LogIn = (props) => {
 
 
   useEffect(() => {
+    console.log("testtt ", signInPostResponse)
+    console.log("testtt111 ", signInPostErrResponse)
+    
+  
     if (signInPostResponse) {
       handleRoute("home")
 
     } else if (signInPostErrResponse) {
-      console.log(signInPostErrResponse)
+      console.log("ccc ", signInPostErrResponse)
       dispatch(showNotificationError(true, signInPostErrResponse));
-
+    } else if (signInPostErrResponse === undefined) {
+      dispatch(showNotificationError(true, "Invalid Email ID or Password"));
     }
+
   }, [signInPostResponse, signInPostErrResponse]);
 
   const changeHandler = e => {
@@ -81,6 +92,7 @@ const LogIn = (props) => {
   }
 
   const signInClicked = () => {
+    signInFocus.current.focus();
     if (allValues.email === "") {
       dispatch(showNotificationError(true, "Please fill in Email"));
     }
@@ -132,7 +144,7 @@ const LogIn = (props) => {
                   className={classes.loginBackground}
               >
                 <Grid item>
-                  <Typography component="h1" variant="h5">
+                  <Typography  component="h1" variant="h5"  className={classes.paddingTop} aria-label="This is the sign in form. It contains sign in, forget password and sign up section">
                     Sign in
                   </Typography>
                 </Grid>
@@ -141,18 +153,22 @@ const LogIn = (props) => {
                     <Grid container direction="column" spacing={2}>
                       <Grid item>
                         <TextField
+                            className={classes.paddingTop}
+                         
                             type="email"
                             placeholder="Email"
                             fullWidth
                             name="email"
                             variant="outlined"
                             required
-                            autoFocus
+                            
                             onChange={changeHandler}
                         />
                       </Grid>
                       <Grid item>
                         <TextField
+                            className={classes.paddingTop}
+                            ref={signInFocus}
                             type="password"
                             placeholder="Password"
                             fullWidth
@@ -164,8 +180,9 @@ const LogIn = (props) => {
                       </Grid>
                     </Grid>
                   </form>
-                  <Grid item>
+                  <Grid item className={classes.paddingTop}>
                     <Button
+                        className={classes.paddingTop}
                         variant="contained"
                         color="primary"
                         type="submit"
@@ -178,6 +195,7 @@ const LogIn = (props) => {
                 </Grid>
                 <Grid item>
                   <Link
+                      className={classes.paddingTop}
                       component="button"
                       variant="body2"
                       //onClick={() => handleRoute('forgotpw')}
@@ -188,6 +206,7 @@ const LogIn = (props) => {
                 </Grid>
                 <Grid item>
                   <Link
+                      className={classes.paddingTop}
                       component="button"
                       variant="body2"
                       onClick={() => gotoSignUp()}

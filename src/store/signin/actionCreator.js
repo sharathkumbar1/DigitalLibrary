@@ -10,7 +10,7 @@ export function signIn(requestBody) {
         },
     };
 
-    const url = "http://ec2-13-232-236-83.ap-south-1.compute.amazonaws.com:8080/user/login";
+    const url = "http://ec2-13-235-86-101.ap-south-1.compute.amazonaws.com:5000/user/login";
     return (dispatch) => {
         let apiUrl = url; 
 

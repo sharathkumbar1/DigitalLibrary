@@ -53,7 +53,7 @@ function RecentlyAddedAudio() {
   const history = useHistory();
 
   useEffect(() => {
-    fetch("http://ec2-13-232-236-83.ap-south-1.compute.amazonaws.com:8080/recently_added_books?book_type=AUDIO_BOOK")
+    fetch("http://ec2-13-235-86-101.ap-south-1.compute.amazonaws.com:5000/recently_added_books?book_type=AUDIO_BOOK")
       .then(res => res.json())
       .then(
         (result) => {
@@ -76,7 +76,7 @@ function RecentlyAddedAudio() {
       <IconButton className={classes.backArrow} aria-label="delete">
         <ArrowBackIcon onClick={() => handleRoute('/home')} />
       </IconButton>
-      <text className={classes.fonts}>Recently Added Audio Books</text>
+      <text className={classes.fonts}>Recently Added Audibles</text>
       <Divider variant="middle" />
       <ul>
         {recentlyAddedAudio.map(item => (

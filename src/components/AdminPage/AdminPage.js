@@ -135,7 +135,7 @@ const AdminPage = props => {
 
 
   useEffect(() => {
-    fetch("http://ec2-13-232-236-83.ap-south-1.compute.amazonaws.com:8080/authors")
+    fetch("http://ec2-13-235-86-101.ap-south-1.compute.amazonaws.com:5000/authors")
       .then(res => res.json())
       .then(
         (result) => {
@@ -156,7 +156,7 @@ const AdminPage = props => {
   }))
 
   useEffect(() => {
-    fetch("http://ec2-13-232-236-83.ap-south-1.compute.amazonaws.com:8080/book_categories")
+    fetch("http://ec2-13-235-86-101.ap-south-1.compute.amazonaws.com:5000/book_categories")
       .then(res => res.json())
       .then(
         (result) => {
@@ -296,7 +296,7 @@ const processRequest = () =>{
   };
   
    
-  const apiUrl="http://ec2-13-232-236-83.ap-south-1.compute.amazonaws.com:8080/books" 
+  const apiUrl="http://ec2-13-235-86-101.ap-south-1.compute.amazonaws.com:5000/books" 
   
     return axios
   .post(apiUrl, bookDetails, requestConfig)
@@ -319,7 +319,7 @@ const processRequestAudio = () =>{
     },
   };
   
-  const apiUrl="http://ec2-13-232-236-83.ap-south-1.compute.amazonaws.com:8080/books" 
+  const apiUrl="http://ec2-13-235-86-101.ap-south-1.compute.amazonaws.com:5000/books" 
 
     return axios
   .post(apiUrl, bookDetailsAudio, requestConfig)

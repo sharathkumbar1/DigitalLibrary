@@ -50,7 +50,7 @@ function ViewedAudio() {
   useEffect(() => {
     let currentUserId = userdata.signInPostResponse.userSequenceId;
 
-    fetch("http://ec2-13-232-236-83.ap-south-1.compute.amazonaws.com:8080/users/"+currentUserId+"/recently_viewed_books?book_type=AUDIO_BOOK")
+    fetch("http://ec2-13-235-86-101.ap-south-1.compute.amazonaws.com:5000/users/"+currentUserId+"/recently_viewed_books?book_type=AUDIO_BOOK")
       .then(res => res.json())
       .then(
         (result) => {
@@ -72,7 +72,7 @@ function ViewedAudio() {
       <IconButton className={classes.backArrow} aria-label="delete">
         <ArrowBackIcon onClick={() => handleRoute('/home')} />
       </IconButton>
-      <text className={classes.fonts}>Recently Viewed Audio Books</text>
+      <text className={classes.fonts}>Recently Viewed Audibles</text>
       <Divider variant="middle" />
       <ul>
         {viewedAudio.map(item => (

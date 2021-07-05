@@ -65,8 +65,8 @@ const styles = theme => ({
     },
 })
 
-const apiUrl = "http://ec2-13-232-236-83.ap-south-1.compute.amazonaws.com:8080/download_url?file_name=";
-const bookUrl = "http://ec2-13-232-236-83.ap-south-1.compute.amazonaws.com:8080/search?bookType=Audio_Book&book_name="
+const apiUrl = "http://ec2-13-235-86-101.ap-south-1.compute.amazonaws.com:5000/download_url?file_name=";
+const bookUrl = "http://ec2-13-235-86-101.ap-south-1.compute.amazonaws.com:5000/search?bookType=Audio_Book&book_name="
 
 class AudioBook extends React.Component {
     constructor(props) {
@@ -90,7 +90,7 @@ class AudioBook extends React.Component {
                 "Content-Type": "application/json",
             },
         };
-        let apiUrl = "http://ec2-13-232-236-83.ap-south-1.compute.amazonaws.com:8080/bookmarked_books";
+        let apiUrl = "http://ec2-13-235-86-101.ap-south-1.compute.amazonaws.com:5000/bookmarked_books";
         let requestBody = {
             "isbn": isbn,
             "user_id": this.state.userData.signInPostResponse.userSequenceId
@@ -116,7 +116,7 @@ class AudioBook extends React.Component {
                 "Content-Type": "application/json",
             },
         };
-        let apiUrl = "http://ec2-13-232-236-83.ap-south-1.compute.amazonaws.com:8080/recently_viewed_books";
+        let apiUrl = "http://ec2-13-235-86-101.ap-south-1.compute.amazonaws.com:5000/recently_viewed_books";
         let requestBody = {
             "current_page": 0,
             "isbn": isbn,
@@ -136,7 +136,7 @@ class AudioBook extends React.Component {
     componentDidMount() {
         console.log("file-name" + this.state.file__name)
         axios
-            .get(apiUrl + this.state.file__name)
+            .get(apiUrl + this.state.file__name + ".mp3")
             .then((response) => {
                 this.setState({ "download_url": response.data })
                 console.log("response data" + response.data)
@@ -144,7 +144,7 @@ class AudioBook extends React.Component {
             .catch((error) => {
                 console.log(error);
             })
-
+console.log("title "+this.state.title_)
         axios.get(bookUrl + this.state.title_)
             .then((res) => {
                 this.recentlyViewedAudio(res.data[0].isbn);
@@ -214,7 +214,7 @@ class AudioBook extends React.Component {
                                 defaultCurrentTime="00:00"
                                 defaultDuration="loading..."
                                 customAdditionalControls={[
-                                    <a /*href={this.state.download_url} download={this.state.download_url}*/ onClick={this.downloadAudio()}
+                                    <a /*href={this.state.download_url} download={this.state.download_url} target="_blank" */ onClick={this.downloadAudio()}
                                     >
                                         <Download /*onClick={() => downloadFile()}*/ className={classes.download} />
                                         <SaveIcon className={classes.save} onClick={() => this.saveAudio(item.isbn)} />
