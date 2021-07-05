@@ -48,8 +48,8 @@ const MobilePDFViewer = () => {
         },
     };
 
-    const bookUrl = "http://ec2-13-232-236-83.ap-south-1.compute.amazonaws.com:8080/search?bookType=Audio_Book&book_name="
-    let apiUrl = "http://ec2-13-232-236-83.ap-south-1.compute.amazonaws.com:8080/bookmarked_books";
+    const bookUrl = "http://ec2-13-235-86-101.ap-south-1.compute.amazonaws.com:5000/search?bookType=Audio_Book&book_name="
+    let apiUrl = "http://ec2-13-235-86-101.ap-south-1.compute.amazonaws.com:5000/bookmarked_books";
 
     useEffect(() => {
         setPdfPath(pdfUrl)
@@ -68,7 +68,7 @@ const MobilePDFViewer = () => {
             "user_id": currentUserId
         }
 
-        let recentlyViewedBookUrl = "http://ec2-13-232-236-83.ap-south-1.compute.amazonaws.com:8080/recently_viewed_books"
+        let recentlyViewedBookUrl = "http://ec2-13-235-86-101.ap-south-1.compute.amazonaws.com:5000/recently_viewed_books"
         return () => {
             return axios
                 .post(recentlyViewedBookUrl, requestBody, requestConfig)

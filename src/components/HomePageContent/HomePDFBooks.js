@@ -83,7 +83,7 @@ const HomePDFBooks = () => {
 
   useEffect(() => {
     let currentUserId = userdata.signInPostResponse.userSequenceId;
-    fetch("http://ec2-13-232-236-83.ap-south-1.compute.amazonaws.com:8080/home_page_books?user_id=" + currentUserId + "&book_type=PDF")
+    fetch("http://ec2-13-235-86-101.ap-south-1.compute.amazonaws.com:5000/home_page_books?user_id=" + currentUserId + "&book_type=PDF")
       .then(res => res.json())
       .then(
         (result) => {
@@ -116,11 +116,12 @@ const HomePDFBooks = () => {
 
   const readClicked = (file_name, isbn) => {
     console.log("from recently added pdf isbn " + isbn);
+    console.log("file name qq "+file_name)
 
-    const apiUrl = "http://ec2-13-232-236-83.ap-south-1.compute.amazonaws.com:8080/download_url?file_name=";
+    const apiUrl = "http://ec2-13-235-86-101.ap-south-1.compute.amazonaws.com:5000/download_url?file_name=";
     let pdfLink = "";
     axios
-      .get(apiUrl + file_name)
+      .get(apiUrl + file_name + ".pdf")
       .then((response) => {
         pdfLink = response.data;
         console.log("response data qqqq" + response.data)
@@ -138,7 +139,7 @@ const HomePDFBooks = () => {
 
       <Grid item xs={12} className={classes.grid}>
         <Typography className={classes.fonts}> Recently Added Books                   </Typography>
-        <Button variant="text" style={{ marginLeft: '115px' }} className={classes.btnAlignRight} onClick={recentlyAddedBooks}>
+        <Button variant="text" aria-label="Recently added books more" style={{ marginLeft: '115px' }} className={classes.btnAlignRight} onClick={recentlyAddedBooks}>
           more &gt;
               </Button>
       </Grid>
@@ -171,8 +172,8 @@ const HomePDFBooks = () => {
       </GridList>
 
       <Grid item xs={12} className={classes.grid}>
-        <Typography className={classes.fonts}>Saved Books</Typography>
-        <Button variant="text" style={{ marginLeft: '200px' }} className={classes.btnAlignRight} onClick={bookMarked}>more &gt; </Button>
+        <Typography className={classes.fonts}>Bookmarked Books</Typography>
+        <Button variant="text" style={{ marginLeft: '145px' }} className={classes.btnAlignRight} onClick={bookMarked}>more &gt; </Button>
       </Grid>
 
       <GridList cellHeight='auto' className={classes.gridList} cols={3}>
@@ -201,7 +202,7 @@ const HomePDFBooks = () => {
 
       <Grid item xs={12} className={classes.grid}>
         <Typography className={classes.fonts}>Recently Viewed Books</Typography>
-        <Button variant="text" style={{ marginLeft: '100px' }} className={classes.btnAlignRight} onClick={recentlyViewed}>more &gt; </Button>
+        <Button variant="text" style={{ marginLeft: '110px' }} className={classes.btnAlignRight} onClick={recentlyViewed}>more &gt; </Button>
       </Grid>
 
       <GridList cellHeight={270} className={classes.gridList} cols={3}>

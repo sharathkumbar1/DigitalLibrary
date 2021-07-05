@@ -56,7 +56,7 @@ function BookMarked() {
     let currentUserId = userdata.signInPostResponse.userSequenceId;
     console.log(" user id ", currentUserId)
 
-    fetch("http://ec2-13-232-236-83.ap-south-1.compute.amazonaws.com:8080/users/"+currentUserId+"/bookmarked_books?book_type=PDF")
+    fetch("http://ec2-13-235-86-101.ap-south-1.compute.amazonaws.com:5000/users/"+currentUserId+"/bookmarked_books?book_type=PDF")
       .then(res => res.json())
       .then(
         (result) => {
@@ -72,7 +72,7 @@ function BookMarked() {
   const readClicked = (file_name, isbn) => {
     console.log("from book mark file_name " + file_name);
 
-    const apiUrl = "http://ec2-13-232-236-83.ap-south-1.compute.amazonaws.com:8080/download_url?file_name=";
+    const apiUrl = "http://ec2-13-235-86-101.ap-south-1.compute.amazonaws.com:5000/download_url?file_name=";
     let pdfLink = "";
     axios
       .get(apiUrl + file_name)
@@ -97,7 +97,7 @@ function BookMarked() {
       <IconButton className={classes.backArrow} aria-label="delete">
         <ArrowBackIcon onClick={() => handleRoute('/home')} />
       </IconButton>
-      <text className={classes.fonts}>Saved Books</text>
+      <text className={classes.fonts}>Bookmarked Books</text>
       <Divider variant="middle" />
       <ul>
         {bookMarkedBooks.map(item => (

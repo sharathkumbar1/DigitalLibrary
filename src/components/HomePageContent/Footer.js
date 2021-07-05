@@ -161,19 +161,19 @@ useEffect(() => {
       <CssBaseline />
       <AppBar position="fixed" color="primary" className={classes.appBar}>
         <Toolbar>
-          <IconButton color="inherit" aria-label="open drawer" onClick={() => handleBottomMenuItemClick('/home')} >
+          <IconButton color="inherit" aria-label="home" onClick={() => handleBottomMenuItemClick('/home')} >
             <HomeIcon />
           </IconButton>
           <div className={classes.grow} />
-          <IconButton color="inherit" onClick={() => handleBottomMenuItemClick('/search')}>
+          <IconButton color="inherit" aria-label="search" onClick={() => handleBottomMenuItemClick('/search')}>
             <SearchIcon />
           </IconButton>
           <div className={classes.grow1} />
-          <IconButton color="inherit" onClick={() => handleBottomMenuItemClick('/book_marked_books')} >
+          <IconButton color="inherit" aria-label="book marked books" onClick={() => handleBottomMenuItemClick('/book_marked_books')} >
             <BookmarkIcon />
           </IconButton>
           {admin ?  <div className={classes.grow2}>
-          <IconButton  color="inherit" onClick={() => handleBottomMenuItemClick('/admin')}>
+          <IconButton  color="inherit" aria-label="admin" onClick={() => handleBottomMenuItemClick('/admin')}>
             <AccountCircleIcon />
           </IconButton>
           </div> : ''}

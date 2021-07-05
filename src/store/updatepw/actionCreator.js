@@ -10,7 +10,7 @@ export function updatePw(requestBody,requestConfigToken) {
         },
     };
 
-    const url = "http://ec2-13-232-236-83.ap-south-1.compute.amazonaws.com:8080/user/password/update";
+    const url = "http://ec2-13-235-86-101.ap-south-1.compute.amazonaws.com:5000/user/password/update";
     return (dispatch) => {
         let apiUrl = url; 
 

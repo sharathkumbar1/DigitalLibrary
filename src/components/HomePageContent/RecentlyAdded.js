@@ -50,7 +50,7 @@ function RecentlyAdded() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    fetch("http://ec2-13-232-236-83.ap-south-1.compute.amazonaws.com:8080/recently_added_books?book_type=PDF")
+    fetch("http://ec2-13-235-86-101.ap-south-1.compute.amazonaws.com:5000/recently_added_books?book_type=PDF")
       .then(res => res.json())
       .then(
         (result) => {
@@ -65,7 +65,7 @@ function RecentlyAdded() {
 
   const readClicked = (file_name, isbn) => {
     console.log("from recently added pdf file_name " + file_name);
-    const apiUrl = "http://ec2-13-232-236-83.ap-south-1.compute.amazonaws.com:8080/download_url?file_name=";
+    const apiUrl = "http://ec2-13-235-86-101.ap-south-1.compute.amazonaws.com:5000/download_url?file_name=";
     let pdfLink = "";
     axios
       .get(apiUrl + file_name)
