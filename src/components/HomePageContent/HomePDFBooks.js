@@ -1,16 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
-import Grid from '@material-ui/core/Grid';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
+import Grid from "@material-ui/core/Grid";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
 import { useHistory } from "react-router-dom";
-import carasoul1 from '../../images/carasoul1.png'
-import GridList from '@material-ui/core/GridList';
-import Box from '@material-ui/core/Box';
-import { setPdfURL, setPdfISBN } from "../../store/personalDevelopment/actionCreator";
+import carasoul1 from "../../images/carasoul1.png";
+import GridList from "@material-ui/core/GridList";
+import Box from "@material-ui/core/Box";
+import {
+  setPdfURL,
+  setPdfISBN,
+} from "../../store/personalDevelopment/actionCreator";
 import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
@@ -19,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     padding: theme.spacing(2),
-    textAlign: 'center',
+    textAlign: "center",
     color: theme.palette.text.secondary,
   },
   title: {
@@ -30,43 +33,43 @@ const useStyles = makeStyles((theme) => ({
   },
   card: {
     minWidth: 100,
-    direction: 'row',
-    float: 'left',
+    direction: "row",
+    float: "left",
     width: 50,
-    padding: 0
+    padding: 0,
   },
   media: {
     height: 140,
   },
   gridList: {
-    width: '400px',
-    padding: '10px 0px 10px 10px',
+    width: "400px",
+    padding: "10px 0px 10px 10px",
   },
   icon: {
-    color: 'rgba(255, 255, 255, 0.54)',
+    color: "rgba(255, 255, 255, 0.54)",
   },
   image: {
     width: 128,
     height: 128,
-    margin: 'auto',
-    padding: '1px 18px 0px 15px'
+    margin: "auto",
+    padding: "1px 18px 0px 15px",
   },
   cardcontent: {
     width: 150,
-    textAlign: 'left',
+    textAlign: "left",
   },
   fonts: {
     fontSize: 18,
-    align: 'left',
-    fontWeight: 'bold',
-    color: 'grey'
+    align: "left",
+    fontWeight: "bold",
+    color: "grey",
   },
   grid: {
-    display: 'flex'
+    display: "flex",
   },
   btnAlignRight: {
-    marginLeft: '50px',
-    backgroundColor: 'grey'
+    marginLeft: "50px",
+    backgroundColor: "grey",
   },
 }));
 
@@ -79,83 +82,106 @@ const HomePDFBooks = () => {
   let history = useHistory();
   let dispatch = useDispatch();
   const [filterPDF, setFilterPDF] = useState(false);
-  const userdata = useSelector(state => state.signInReducer);
+  const userdata = useSelector((state) => state.signInReducer);
 
   useEffect(() => {
     let currentUserId = userdata.signInPostResponse.userSequenceId;
-    fetch("http://ec2-13-232-236-83.ap-south-1.compute.amazonaws.com:8080/home_page_books?user_id=" + currentUserId + "&book_type=PDF")
-      .then(res => res.json())
+    fetch(
+      "http://ec2-13-235-86-101.ap-south-1.compute.amazonaws.com:5000/home_page_books?user_id=" +
+        currentUserId +
+        "&book_type=PDF"
+    )
+      .then((res) => res.json())
       .then(
         (result) => {
           setHomePageBooksRA(result.recently_added_books);
           setHomePageBooksBM(result.bookmarked_books);
           setHomePageBooksRV(result.recently_viewed_books);
-          console.log(result)
+          console.log(result);
         },
         (error) => {
           setError(error);
         }
-      )
-  }, [])
+      );
+  }, []);
 
   const handleRoute = (route) => {
     history.push(`${route}`);
   };
 
   const recentlyAddedBooks = () => {
-    handleRoute("/recently_added_books")
-  }
+    handleRoute("/recently_added_books");
+  };
 
   const bookMarked = () => {
-    handleRoute("/book_marked_books")
-  }
+    handleRoute("/book_marked_books");
+  };
 
   const recentlyViewed = () => {
-    handleRoute("/recently_viewed_books")
-  }
+    handleRoute("/recently_viewed_books");
+  };
 
   const readClicked = (file_name, isbn) => {
     console.log("from recently added pdf isbn " + isbn);
 
-    const apiUrl = "http://ec2-13-232-236-83.ap-south-1.compute.amazonaws.com:8080/download_url?file_name=";
+    const apiUrl =
+      "http://ec2-13-232-236-83.ap-south-1.compute.amazonaws.com:8080/download_url?file_name=";
     let pdfLink = "";
     axios
       .get(apiUrl + file_name)
       .then((response) => {
         pdfLink = response.data;
-        console.log("response data qqqq" + response.data)
+        console.log("response data qqqq" + response.data);
         dispatch(setPdfURL(pdfLink));
         dispatch(setPdfISBN(isbn));
         history.push("/pdfviewer");
       })
       .catch((error) => {
         console.log(error);
-      })
+      });
   };
 
   return (
     <Grid container spacing={3}>
-
       <Grid item xs={12} className={classes.grid}>
-        <Typography className={classes.fonts}> Recently Added Books                   </Typography>
-        <Button variant="text" style={{ marginLeft: '115px' }} className={classes.btnAlignRight} onClick={recentlyAddedBooks}>
+        <Typography className={classes.fonts}>
+          {" "}
+          Recently Added Books{" "}
+        </Typography>
+        <Button
+          variant="text"
+          style={{ marginLeft: "115px" }}
+          className={classes.btnAlignRight}
+          onClick={recentlyAddedBooks}
+        >
           more &gt;
-              </Button>
+        </Button>
       </Grid>
 
-      <GridList cellHeight='auto' className={classes.gridList} cols={3}>
+      <GridList cellHeight="auto" className={classes.gridList} cols={3}>
         {homePageBooksRA.slice(0, 3).map((item, index) => (
-          <Card key={index} >
-            <Grid container spacing={3} >
+          <Card key={index}>
+            <Grid container spacing={3}>
               <Grid item xs={6} className={classes.pap}>
-                <img className={classes.image} src={item.thumbnail_url} alt={item.title}
-                  onError={(e) => { e.target.onerror = null; e.target.src = carasoul1 }}
-                   onClick={() => readClicked(item.file_name, item.isbn)} 
+                <img
+                  className={classes.image}
+                  src={item.thumbnail_url}
+                  alt={item.title}
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = carasoul1;
+                  }}
+                  onClick={() => readClicked(item.file_name, item.isbn)}
                 />
 
                 <CardContent className={classes.cardcontent}>
-                  <Typography gutterBottom variant="subtitle1" >
-                    <Box whiteSpace="nowrap" component="div" textOverflow="ellipsis" overflow="hidden">
+                  <Typography gutterBottom variant="subtitle1">
+                    <Box
+                      whiteSpace="nowrap"
+                      component="div"
+                      textOverflow="ellipsis"
+                      overflow="hidden"
+                    >
                       {item.title}
                     </Box>
                   </Typography>
@@ -166,26 +192,46 @@ const HomePDFBooks = () => {
               </Grid>
             </Grid>
           </Card>
-        ))
-        }
+        ))}
       </GridList>
 
       <Grid item xs={12} className={classes.grid}>
         <Typography className={classes.fonts}>Saved Books</Typography>
-        <Button variant="text" style={{ marginLeft: '200px' }} className={classes.btnAlignRight} onClick={bookMarked}>more &gt; </Button>
+        <Button
+          variant="text"
+          style={{ marginLeft: "200px" }}
+          className={classes.btnAlignRight}
+          onClick={bookMarked}
+        >
+          more &gt;{" "}
+        </Button>
       </Grid>
 
-      <GridList cellHeight='auto' className={classes.gridList} cols={3}>
+      <GridList cellHeight="auto" className={classes.gridList} cols={3}>
         {homePageBooksBM.slice(0, 3).map((item, index) => (
-          <Card key={index} >
+          <Card key={index}>
             <Grid container spacing={3}>
               <Grid item xs={6} className={classes.pap}>
-                <img className={classes.image} src={item.book.thumbnail_url} alt={item.book.title}
-                  onError={(e) => { e.target.onerror = null; e.target.src = carasoul1 }}
-                  onClick={() => readClicked(item.book.file_name, item.book.isbn)} />
+                <img
+                  className={classes.image}
+                  src={item.book.thumbnail_url}
+                  alt={item.book.title}
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = carasoul1;
+                  }}
+                  onClick={() =>
+                    readClicked(item.book.file_name, item.book.isbn)
+                  }
+                />
                 <CardContent className={classes.cardcontent}>
-                  <Typography gutterBottom variant="subtitle1" >
-                    <Box whiteSpace="nowrap" component="div" textOverflow="ellipsis" overflow="hidden">
+                  <Typography gutterBottom variant="subtitle1">
+                    <Box
+                      whiteSpace="nowrap"
+                      component="div"
+                      textOverflow="ellipsis"
+                      overflow="hidden"
+                    >
                       {item.book.title}
                     </Box>
                   </Typography>
@@ -201,7 +247,14 @@ const HomePDFBooks = () => {
 
       <Grid item xs={12} className={classes.grid}>
         <Typography className={classes.fonts}>Recently Viewed Books</Typography>
-        <Button variant="text" style={{ marginLeft: '100px' }} className={classes.btnAlignRight} onClick={recentlyViewed}>more &gt; </Button>
+        <Button
+          variant="text"
+          style={{ marginLeft: "100px" }}
+          className={classes.btnAlignRight}
+          onClick={recentlyViewed}
+        >
+          more &gt;{" "}
+        </Button>
       </Grid>
 
       <GridList cellHeight={270} className={classes.gridList} cols={3}>
@@ -209,12 +262,26 @@ const HomePDFBooks = () => {
           <Card key={index}>
             <Grid container spacing={3}>
               <Grid item xs={6} className={classes.pap}>
-                <img className={classes.image} src={item.book.thumbnail_url} alt={item.book.title}
-                  onError={(e) => { e.target.onerror = null; e.target.src = carasoul1 }}
-                  onClick={() => readClicked(item.book.file_name, item.book.isbn)} />
+                <img
+                  className={classes.image}
+                  src={item.book.thumbnail_url}
+                  alt={item.book.title}
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = carasoul1;
+                  }}
+                  onClick={() =>
+                    readClicked(item.book.file_name, item.book.isbn)
+                  }
+                />
                 <CardContent className={classes.cardcontent}>
-                  <Typography gutterBottom variant="subtitle1" >
-                    <Box whiteSpace="nowrap" component="div" textOverflow="ellipsis" overflow="hidden">
+                  <Typography gutterBottom variant="subtitle1">
+                    <Box
+                      whiteSpace="nowrap"
+                      component="div"
+                      textOverflow="ellipsis"
+                      overflow="hidden"
+                    >
                       {item.book.title}
                     </Box>
                   </Typography>
@@ -229,21 +296,5 @@ const HomePDFBooks = () => {
       </GridList>
     </Grid>
   );
-}
-export default HomePDFBooks
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+};
+export default HomePDFBooks;
