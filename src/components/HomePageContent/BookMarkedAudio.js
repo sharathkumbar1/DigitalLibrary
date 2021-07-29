@@ -51,7 +51,7 @@ function BookMarkedAudio() {
     let currentUserId = userdata.signInPostResponse.userSequenceId;
     console.log(" user id ", currentUserId)
 
-    fetch("http://ec2-13-232-236-83.ap-south-1.compute.amazonaws.com:8080/users/"+currentUserId+"/bookmarked_books?book_type=AUDIO_BOOK")
+    fetch("http://ec2-13-235-86-101.ap-south-1.compute.amazonaws.com:5000/users/"+currentUserId+"/bookmarked_books?book_type=AUDIO_BOOK")
       .then(res => res.json())
       .then(
         (result) => {
@@ -73,7 +73,7 @@ function BookMarkedAudio() {
       <IconButton className={classes.backArrow} aria-label="delete">
         <ArrowBackIcon onClick={() => handleRoute('/home')} />
       </IconButton>
-      <text className={classes.fonts}>Saved Audio Books</text>
+      <text className={classes.fonts}>Saved Audibles</text>
       <Divider variant="middle" />
       <ul>
         {bookMarkedAudioBooks.map(item => (
@@ -94,7 +94,7 @@ function BookMarkedAudio() {
 
                   <Grid item xs container direction="column" spacing={2}>
                     <Grid item xs>
-                      <Typography gutterBottom variant="subtitle1">
+                      <Typography gutterBottom >
                         {item.book.title}
                       </Typography>
                       <Typography variant="body2" gutterBottom>

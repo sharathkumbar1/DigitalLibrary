@@ -78,7 +78,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
   },
   btnAlignRight: {
-    marginLeft: "50px",
+    marginLeft: "85px",
     backgroundColor: "grey",
   },
 }));
@@ -142,10 +142,11 @@ const HomeAudioBooks = () => {
         <Grid item xs={12} className={classes.grid}>
           <Typography className={classes.fonts}>
             {" "}
-            Recently Added Audio Books
+            Recently Added Audibles{" "}
           </Typography>
           <Button
             variant="text"
+            style={{ marginLeft: "90px" }}
             className={classes.btnAlignRight}
             onClick={recentlyAddedAudioBooks}
           >
@@ -196,13 +197,10 @@ const HomeAudioBooks = () => {
 
         <Grid item xs={12}>
           <Grid item xs={12} className={classes.grid}>
-            <Typography className={classes.fonts}>
-              {" "}
-              Saved Audio Books
-            </Typography>
+            <Typography className={classes.fonts}> Saved Audibles</Typography>
             <Button
               variant="text"
-              style={{ marginLeft: "135px" }}
+              style={{ marginLeft: "175px" }}
               className={classes.btnAlignRight}
               onClick={bookMarkedAudio}
             >
@@ -231,7 +229,7 @@ const HomeAudioBooks = () => {
 
                     <CardContent className={classes.cardcontent}>
                       <Tooltip title={item.book.title}>
-                        <Typography gutterBottom variant="subtitle1">
+                        <Typography gutterBottom>
                           <Box
                             whiteSpace="nowrap"
                             component="div"
@@ -257,7 +255,7 @@ const HomeAudioBooks = () => {
           <Grid item xs={12} className={classes.grid}>
             <Typography className={classes.fonts}>
               {" "}
-              Recently Viewed Audio Books
+              Recently Viewed Audibles
             </Typography>
             <Button
               variant="text"
@@ -288,7 +286,7 @@ const HomeAudioBooks = () => {
                     />
                     <CardContent className={classes.cardcontent}>
                       <Tooltip title={item.book.title}>
-                        <Typography gutterBottom variant="subtitle1">
+                        <Typography gutterBottom>
                           <Box
                             whiteSpace="nowrap"
                             component="div"

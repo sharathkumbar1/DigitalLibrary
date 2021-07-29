@@ -53,7 +53,6 @@ function RecentlyAdded() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // fetch("http://ec2-13-232-236-83.ap-south-1.compute.amazonaws.com:8080/recently_added_books?book_type=PDF")
     fetch(
       "http://ec2-13-235-86-101.ap-south-1.compute.amazonaws.com:5000/recently_added_books?book_type=PDF"
     )
@@ -72,10 +71,10 @@ function RecentlyAdded() {
   const readClicked = (file_name, isbn) => {
     console.log("from recently added pdf file_name " + file_name);
     const apiUrl =
-      "http://ec2-13-232-236-83.ap-south-1.compute.amazonaws.com:8080/download_url?file_name=";
+      "http://ec2-13-235-86-101.ap-south-1.compute.amazonaws.com:5000/download_url?file_name=";
     let pdfLink = "";
     axios
-      .get(apiUrl + file_name)
+      .get(apiUrl + file_name + ".pdf")
       .then((response) => {
         pdfLink = response.data;
         console.log("response data" + response.data);
@@ -124,14 +123,12 @@ function RecentlyAdded() {
 
                   <Grid item xs container direction="column" spacing={2}>
                     <Grid item xs>
-                      <Typography gutterBottom variant="subtitle1">
-                        {item.title}
-                      </Typography>
+                      <Typography gutterBottom>{item.title}</Typography>
                       <Typography variant="body2" gutterBottom>
                         Author: {item.author}
                       </Typography>
                       <Typography variant="body2" color="textSecondary">
-                        Category: {item.category}
+                        Category: {item.category_name}
                         <br />
                         Page No. {item.total_pages}
                       </Typography>

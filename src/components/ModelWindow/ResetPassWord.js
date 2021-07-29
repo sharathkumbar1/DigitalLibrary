@@ -58,10 +58,10 @@ export default function FormDialog(props) {
     const onResetButtonClick = () => {
         console.log("reset email" + userEmail)
         if (userEmail === "") {
-            dispatch(showNotificationError(true, "Please enter the email "));
+            dispatch(showNotificationError(true, "Please enter the email ", "reset"));
         }
         else if (validateEmail(userEmail) === false) {
-            dispatch(showNotificationError(true, "email format is not valid "));
+            dispatch(showNotificationError(true, "email format is not valid ", "reset"));
         }
         else {
             dispatch(showNotificationError(false, ""));
@@ -82,6 +82,7 @@ export default function FormDialog(props) {
                         margin="dense"
                         id="name"
                         label="Email Address"
+                        id="resetEmailFormat"
                         type="email"
                         //value={userEmail}
                         onChange={changeHandler}

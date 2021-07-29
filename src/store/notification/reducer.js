@@ -7,6 +7,8 @@ export const initialState = {
   messageSuccess: '',
   isShownError: false,
   messageError: '',
+  inWhichPage: '',
+
 }
 
 export default function notificationReducer(state = initialState, action = {}) {
@@ -31,11 +33,12 @@ export default function notificationReducer(state = initialState, action = {}) {
     }
     case SHOW_NOTIFICATION_ERROR: {
       const { payload } = action
-      const { isShownError, messageError } = payload
+      const { isShownError, messageError, inWhichPage } = payload
       return {
         ...state,
         isShownError,
         messageError,
+        inWhichPage,
       }
     }
     default:

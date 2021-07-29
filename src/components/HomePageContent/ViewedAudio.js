@@ -76,7 +76,7 @@ function ViewedAudio() {
       <IconButton className={classes.backArrow} aria-label="delete">
         <ArrowBackIcon onClick={() => handleRoute("/home")} />
       </IconButton>
-      <text className={classes.fonts}>Recently Viewed Audio Books</text>
+      <text className={classes.fonts}>Recently Viewed Audibles</text>
       <Divider variant="middle" />
       <ul>
         {viewedAudio.map((item) => (
@@ -105,9 +105,7 @@ function ViewedAudio() {
 
                   <Grid item xs container direction="column" spacing={2}>
                     <Grid item xs>
-                      <Typography gutterBottom variant="subtitle1">
-                        {item.book.title}
-                      </Typography>
+                      <Typography gutterBottom>{item.book.title}</Typography>
                       <Typography variant="body2" gutterBottom>
                         Author: {item.book.author}
                       </Typography>

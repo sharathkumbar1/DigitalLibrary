@@ -67,8 +67,8 @@ function RecentlyAddedAudio() {
   }, []);
 
   const openAudioBook = (fileName, title) => {
-    const file_name = fileName + ".mp3";
-    handleRoute(`/audiobook/${file_name}/${title}`);
+    // const file_name = fileName + ".mp3";
+    handleRoute(`/audiobook/${fileName}/${title}`);
     console.log(fileName, title);
   };
 
@@ -81,7 +81,7 @@ function RecentlyAddedAudio() {
       <IconButton className={classes.backArrow} aria-label="delete">
         <ArrowBackIcon onClick={() => handleRoute("/home")} />
       </IconButton>
-      <text className={classes.fonts}>Recently Added Audio Books</text>
+      <text className={classes.fonts}>Recently Added Audibles</text>
       <Divider variant="middle" />
       <ul>
         {recentlyAddedAudio.map((item) => (
@@ -104,9 +104,7 @@ function RecentlyAddedAudio() {
 
                   <Grid item xs container direction="column" spacing={2}>
                     <Grid item xs>
-                      <Typography gutterBottom variant="subtitle1">
-                        {item.title}
-                      </Typography>
+                      <Typography gutterBottom>{item.title}</Typography>
                       <Typography variant="body2" gutterBottom>
                         Author: {item.author}
                       </Typography>

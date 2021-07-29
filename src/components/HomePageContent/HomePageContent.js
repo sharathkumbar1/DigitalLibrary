@@ -74,8 +74,8 @@ export default function HomePageContent() {
           variant="fullWidth"
           aria-label="full width tabs example"
         >
-          <Tab label="PDF Books" {...a11yProps(0)} />
-          <Tab label="Audio Books" {...a11yProps(1)} />
+          <Tab label="Books" {...a11yProps(0)} />
+          <Tab label="Audibles" {...a11yProps(1)} />
         </Tabs>
       </AppBar>
       

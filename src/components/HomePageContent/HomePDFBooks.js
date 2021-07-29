@@ -123,12 +123,13 @@ const HomePDFBooks = () => {
 
   const readClicked = (file_name, isbn) => {
     console.log("from recently added pdf isbn " + isbn);
+    console.log("file name qq " + file_name);
 
     const apiUrl =
-      "http://ec2-13-232-236-83.ap-south-1.compute.amazonaws.com:8080/download_url?file_name=";
+      "http://ec2-13-235-86-101.ap-south-1.compute.amazonaws.com:5000/download_url?file_name=";
     let pdfLink = "";
     axios
-      .get(apiUrl + file_name)
+      .get(apiUrl + file_name + ".pdf")
       .then((response) => {
         pdfLink = response.data;
         console.log("response data qqqq" + response.data);
@@ -150,6 +151,7 @@ const HomePDFBooks = () => {
         </Typography>
         <Button
           variant="text"
+          aria-label="Recently added books more"
           style={{ marginLeft: "115px" }}
           className={classes.btnAlignRight}
           onClick={recentlyAddedBooks}
@@ -175,7 +177,7 @@ const HomePDFBooks = () => {
                 />
 
                 <CardContent className={classes.cardcontent}>
-                  <Typography gutterBottom variant="subtitle1">
+                  <Typography gutterBottom>
                     <Box
                       whiteSpace="nowrap"
                       component="div"
@@ -196,10 +198,10 @@ const HomePDFBooks = () => {
       </GridList>
 
       <Grid item xs={12} className={classes.grid}>
-        <Typography className={classes.fonts}>Saved Books</Typography>
+        <Typography className={classes.fonts}>Bookmarked Books</Typography>
         <Button
           variant="text"
-          style={{ marginLeft: "200px" }}
+          style={{ marginLeft: "145px" }}
           className={classes.btnAlignRight}
           onClick={bookMarked}
         >
@@ -225,7 +227,7 @@ const HomePDFBooks = () => {
                   }
                 />
                 <CardContent className={classes.cardcontent}>
-                  <Typography gutterBottom variant="subtitle1">
+                  <Typography gutterBottom>
                     <Box
                       whiteSpace="nowrap"
                       component="div"
@@ -249,7 +251,7 @@ const HomePDFBooks = () => {
         <Typography className={classes.fonts}>Recently Viewed Books</Typography>
         <Button
           variant="text"
-          style={{ marginLeft: "100px" }}
+          style={{ marginLeft: "110px" }}
           className={classes.btnAlignRight}
           onClick={recentlyViewed}
         >
@@ -275,7 +277,7 @@ const HomePDFBooks = () => {
                   }
                 />
                 <CardContent className={classes.cardcontent}>
-                  <Typography gutterBottom variant="subtitle1">
+                  <Typography gutterBottom>
                     <Box
                       whiteSpace="nowrap"
                       component="div"

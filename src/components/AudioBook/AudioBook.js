@@ -66,7 +66,6 @@ const styles = (theme) => ({
 
 const apiUrl =
   "http://ec2-13-235-86-101.ap-south-1.compute.amazonaws.com:5000/download_url?file_name=";
-
 const bookUrl =
   "http://ec2-13-235-86-101.ap-south-1.compute.amazonaws.com:5000/search?bookType=Audio_Book&book_name=";
 
@@ -136,11 +135,10 @@ class AudioBook extends React.Component {
         console.log(response);
       });
   };
-
   componentDidMount() {
     console.log("file-name" + this.state.file__name);
     axios
-      .get(apiUrl + this.state.file__name)
+      .get(apiUrl + this.state.file__name + ".mp3")
       .then((response) => {
         this.setState({ download_url: response.data });
         console.log("response data" + response.data);
@@ -148,7 +146,7 @@ class AudioBook extends React.Component {
       .catch((error) => {
         console.log(error);
       });
-
+    console.log("title " + this.state.title_);
     axios
       .get(bookUrl + this.state.title_)
       .then((res) => {
@@ -213,7 +211,7 @@ class AudioBook extends React.Component {
                 defaultDuration="loading..."
                 customAdditionalControls={[
                   <a
-                    /*href={this.state.download_url} download={this.state.download_url}*/ onClick={this.downloadAudio()}
+                    /*href={this.state.download_url} download={this.state.download_url} target="_blank" */ onClick={this.downloadAudio()}
                   >
                     <Download
                       /*onClick={() => downloadFile()}*/ className={
@@ -235,10 +233,10 @@ class AudioBook extends React.Component {
               </Typography>
               <br />
               <Typography variant="body2" gutterBottom>
-                Author: {item.author}
+                Author: {item.author_name}
               </Typography>
               <Typography variant="body2" gutterBottom>
-                Category: {item.category}
+                Category: {item.category_name}
               </Typography>
             </div>
           </GridList>
