@@ -115,7 +115,7 @@ function BookMarked() {
 
                   <Grid item xs container direction="column" spacing={2}>
                     <Grid item xs>
-                      <Typography gutterBottom variant="subtitle1">
+                      <Typography gutterBottom >
                         {item.book.title}
                       </Typography>
                       <Typography variant="body2" gutterBottom>

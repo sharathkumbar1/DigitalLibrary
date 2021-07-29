@@ -155,7 +155,7 @@ const HomePDFBooks = () => {
                 />
 
                 <CardContent className={classes.cardcontent}>
-                  <Typography gutterBottom variant="subtitle1" >
+                  <Typography gutterBottom >
                     <Box whiteSpace="nowrap" component="div" textOverflow="ellipsis" overflow="hidden">
                       {item.title}
                     </Box>
@@ -185,7 +185,7 @@ const HomePDFBooks = () => {
                   onError={(e) => { e.target.onerror = null; e.target.src = carasoul1 }}
                   onClick={() => readClicked(item.book.file_name, item.book.isbn)} />
                 <CardContent className={classes.cardcontent}>
-                  <Typography gutterBottom variant="subtitle1" >
+                  <Typography gutterBottom >
                     <Box whiteSpace="nowrap" component="div" textOverflow="ellipsis" overflow="hidden">
                       {item.book.title}
                     </Box>
@@ -214,7 +214,7 @@ const HomePDFBooks = () => {
                   onError={(e) => { e.target.onerror = null; e.target.src = carasoul1 }}
                   onClick={() => readClicked(item.book.file_name, item.book.isbn)} />
                 <CardContent className={classes.cardcontent}>
-                  <Typography gutterBottom variant="subtitle1" >
+                  <Typography gutterBottom  >
                     <Box whiteSpace="nowrap" component="div" textOverflow="ellipsis" overflow="hidden">
                       {item.book.title}
                     </Box>

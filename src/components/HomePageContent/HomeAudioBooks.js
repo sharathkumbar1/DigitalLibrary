@@ -153,7 +153,7 @@ const HomeAudioBooks = () => {
 
                   <CardContent className={classes.cardcontent}>
                     <Tooltip title={item.title}>
-                      <Typography gutterBottom variant="subtitle1" >
+                      <Typography gutterBottom >
                         <Box whiteSpace="nowrap" component="div" textOverflow="ellipsis" overflow="hidden">
                           {item.title}
                         </Box>
@@ -189,7 +189,7 @@ const HomeAudioBooks = () => {
 
                     <CardContent className={classes.cardcontent}>
                       <Tooltip title={item.book.title}>
-                        <Typography gutterBottom variant="subtitle1" >
+                        <Typography gutterBottom >
 
                           <Box whiteSpace="nowrap" component="div" textOverflow="ellipsis" overflow="hidden">
                             {item.book.title}
@@ -226,7 +226,7 @@ const HomeAudioBooks = () => {
                     />
                     <CardContent className={classes.cardcontent}>
                       <Tooltip title={item.book.title}>
-                        <Typography gutterBottom variant="subtitle1" >
+                        <Typography gutterBottom >
                           <Box whiteSpace="nowrap" component="div" textOverflow="ellipsis" overflow="hidden">
                             {item.book.title}
                           </Box>

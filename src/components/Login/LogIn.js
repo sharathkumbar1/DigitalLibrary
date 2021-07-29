@@ -64,10 +64,13 @@ const LogIn = (props) => {
       handleRoute("home")
 
     } else if (signInPostErrResponse) {
+      signInFocus.current.focus();
       console.log("ccc ", signInPostErrResponse)
-      dispatch(showNotificationError(true, signInPostErrResponse));
+
+      dispatch(showNotificationError(true, signInPostErrResponse, "login"));
     } else if (signInPostErrResponse === undefined) {
-      dispatch(showNotificationError(true, "Invalid Email ID or Password"));
+      console.log("2222222")
+      dispatch(showNotificationError(true, "Invalid Email ID or Password", "login"));
     }
 
   }, [signInPostResponse, signInPostErrResponse]);
@@ -83,7 +86,7 @@ const LogIn = (props) => {
   const resetReduxStoreAndHideNotifications = () => {
     dispatch(handleSignInSuccess(null))
     dispatch(handleSignInError(null))
-    dispatch(showNotificationError(false, ""));
+    dispatch(showNotificationError(false, "", "login"));
   }
 
   const gotoSignUp = () => {
@@ -92,12 +95,18 @@ const LogIn = (props) => {
   }
 
   const signInClicked = () => {
-    signInFocus.current.focus();
+    
     if (allValues.email === "") {
-      dispatch(showNotificationError(true, "Please fill in Email"));
+      console.log("10101010")
+     // document.getElementById("notificationCloseBtn").focus();
+      dispatch(showNotificationError(true, "Please fill in Email", "login"));
+      //signInFocus.current.focus();
+//document.getElementById("notificationCloseBtn").focus();
+      
     }
     else if (allValues.password === "") {
-      dispatch(showNotificationError(true, "Please fill in Password"));
+      console.log("1111111")
+      dispatch(showNotificationError(true, "Please fill in Password", "login"));
     }
     else {
       // dispatch(showNotificationError(false, ""));
@@ -122,6 +131,7 @@ const LogIn = (props) => {
   }
 
   const onCloseButtonClick = () => {
+    console.log("ccccc")
     setOpen(false)
   }
 
@@ -154,25 +164,25 @@ const LogIn = (props) => {
                       <Grid item>
                         <TextField
                             className={classes.paddingTop}
-                         
+                            //ref={signInFocus}
                             type="email"
                             placeholder="Email"
                             fullWidth
                             name="email"
+                            id="email"
                             variant="outlined"
                             required
-                            
                             onChange={changeHandler}
                         />
                       </Grid>
                       <Grid item>
                         <TextField
                             className={classes.paddingTop}
-                            ref={signInFocus}
                             type="password"
                             placeholder="Password"
                             fullWidth
                             name="password"
+                            id="password"
                             variant="outlined"
                             required
                             onChange={changeHandler}
@@ -182,6 +192,7 @@ const LogIn = (props) => {
                   </form>
                   <Grid item className={classes.paddingTop}>
                     <Button
+                        
                         className={classes.paddingTop}
                         variant="contained"
                         color="primary"
@@ -221,7 +232,7 @@ const LogIn = (props) => {
 
         <div className={classes.notificationContainer}>
           <NotificationError resetReduxStoreAndHideNotifications={resetReduxStoreAndHideNotifications}/>
-          <NotificationSuccess resetReduxStoreAndHideNotifications={resetReduxStoreAndHideNotifications} />
+          <NotificationSuccess resetRsignInFocuseduxStoreAndHideNotifications={resetReduxStoreAndHideNotifications} />
         </div>
 
         <FormDialog
