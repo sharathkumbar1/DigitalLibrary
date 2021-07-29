@@ -177,6 +177,7 @@ const SignUp = (props) => {
                       <TextField
                         type="name"
                         placeholder="First Name"
+                        id = "firstName"
                         fullWidth
                         name="firstname"
                         variant="outlined"
@@ -190,6 +191,7 @@ const SignUp = (props) => {
                       <TextField
                         type="name"
                         placeholder="Last Name"
+                        id="lastName"
                         fullWidth
                         name="lastname"
                         variant="outlined"
@@ -204,6 +206,7 @@ const SignUp = (props) => {
                         placeholder="Email"
                         fullWidth
                         name="email"
+                        id="signupEmail"
                         variant="outlined"
                         required
                         value={email}
@@ -214,6 +217,7 @@ const SignUp = (props) => {
                       <TextField
                         type="password"
                         placeholder="Password"
+                        id="signupPassword"
                         fullWidth
                         name="password"
                         variant="outlined"
@@ -228,6 +232,7 @@ const SignUp = (props) => {
                         placeholder="Confirm Password"
                         fullWidth
                         name="confirmPassword"
+                        id="confirmPassword"
                         variant="outlined"
                         required
                         value={confirmPassword}
@@ -238,6 +243,7 @@ const SignUp = (props) => {
                       <RadioGroup
                         aria-label="gender"
                         name="gender"
+                       
                         className={classes.genderRadioGroup}
                         onChange={changeHandler}
                       >
@@ -245,6 +251,7 @@ const SignUp = (props) => {
                           value="F"
                           control={<Radio />}
                           label="Female"
+                          id="gender"
                         />
                         <FormControlLabel
                           value="M"
@@ -257,6 +264,7 @@ const SignUp = (props) => {
                       <Checkbox
                         style={{ padding: "9px 9px 9px 0px" }}
                         name="termsAndConditions"
+                        id="agree"
                         size="small"
                         inputProps={{
                           "aria-label": "checkbox with small size",
