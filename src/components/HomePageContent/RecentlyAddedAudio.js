@@ -106,10 +106,10 @@ function RecentlyAddedAudio() {
                     <Grid item xs>
                       <Typography gutterBottom>{item.title}</Typography>
                       <Typography variant="body2" gutterBottom>
-                        Author: {item.author}
+                        Author: {item.author_name}
                       </Typography>
                       <Typography variant="body2" color="textSecondary">
-                        Category: {item.category}
+                        Category: {item.category_name}
                         <br />
                         Audio time: {item.total_audio_time}
                       </Typography>

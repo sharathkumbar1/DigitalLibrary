@@ -115,9 +115,7 @@ const HomeAudioBooks = () => {
   }, []);
 
   const openAudioBook = (fileName, title) => {
-    const file_name = fileName + ".mp3";
-    handleRoute(`/audiobook/${file_name}/${title}`);
-    console.log(fileName, title);
+    handleRoute(`/audiobook/${fileName}/${title}`);
   };
 
   const handleRoute = (route) => {

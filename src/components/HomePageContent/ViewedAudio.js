@@ -107,10 +107,10 @@ function ViewedAudio() {
                     <Grid item xs>
                       <Typography gutterBottom>{item.book.title}</Typography>
                       <Typography variant="body2" gutterBottom>
-                        Author: {item.book.author}
+                        Author: {item.book.author_name}
                       </Typography>
                       <Typography variant="body2" color="textSecondary">
-                        Category: {item.book.category}
+                        Category: {item.book.category_name}
                         <br />
                         Audio time: {item.book.total_audio_time}
                       </Typography>

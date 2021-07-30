@@ -92,7 +92,7 @@ class AudioBook extends React.Component {
       },
     };
     let apiUrl =
-      "http://ec2-13-232-236-83.ap-south-1.compute.amazonaws.com:5000/bookmarked_books";
+      "http://ec2-13-235-86-101.ap-south-1.compute.amazonaws.com:5000/bookmarked_books";
     let requestBody = {
       isbn: isbn,
       user_id: this.state.userData.signInPostResponse.userSequenceId,
@@ -119,7 +119,7 @@ class AudioBook extends React.Component {
       },
     };
     let apiUrl =
-      "http://ec2-13-232-236-83.ap-south-1.compute.amazonaws.com:5000/recently_viewed_books";
+      "http://ec2-13-235-86-101.ap-south-1.compute.amazonaws.com:5000/recently_viewed_books";
     let requestBody = {
       current_page: 0,
       isbn: isbn,
