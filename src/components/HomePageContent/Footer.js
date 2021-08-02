@@ -123,6 +123,12 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     padding: "6px 30px 6px 30px",
   },
+  phantom: {
+    display: "block",
+    padding: "20px",
+    height: "60px",
+    width: "100%",
+  },
 }));
 
 export default function Footer() {
@@ -150,6 +156,7 @@ export default function Footer() {
   return (
     <React.Fragment>
       <CssBaseline />
+      <div className={classes.phantom} />
       <AppBar position="fixed" color="primary" className={classes.appBar}>
         <Toolbar>
           <IconButton

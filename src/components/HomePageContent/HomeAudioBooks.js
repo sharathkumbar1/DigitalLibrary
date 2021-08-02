@@ -263,7 +263,7 @@ const HomeAudioBooks = () => {
               more &gt;
             </Button>
           </Grid>
-          <GridList cellHeight={270} className={classes.gridList} cols={3}>
+          <GridList cellHeight="auto" className={classes.gridList} cols={3}>
             {homeAudioBooksRV.map((item) => (
               <Card>
                 <Grid container spacing={6}>

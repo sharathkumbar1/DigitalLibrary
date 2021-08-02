@@ -822,7 +822,7 @@ const AdminPage = (props) => {
                   aria-label="full width tabs example"
                 >
                   <Tab label="Add a Book" {...a11yProps(0)} />
-                  <Tab label="Bulk Upload" {...a11yProps(1)} />
+                  {/* <Tab label="Bulk Upload" {...a11yProps(1)} /> */}
                 </Tabs>
               </AppBar>
 

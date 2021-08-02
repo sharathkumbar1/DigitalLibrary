@@ -218,11 +218,12 @@ class AudioBook extends React.Component {
                         classes.download
                       }
                     />
-                    <SaveIcon
-                      className={classes.save}
-                      onClick={() => this.saveAudio(item.isbn)}
-                    />
+                    
                   </a>,
+                  <SaveIcon
+                  className={classes.save}
+                  onClick={() => this.saveAudio(item.isbn)}
+                />
                 ]}
               />
             </GridListTile>

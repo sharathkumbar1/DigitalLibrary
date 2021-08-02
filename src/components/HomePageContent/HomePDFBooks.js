@@ -259,7 +259,7 @@ const HomePDFBooks = () => {
         </Button>
       </Grid>
 
-      <GridList cellHeight={270} className={classes.gridList} cols={3}>
+      <GridList cellHeight='auto' className={classes.gridList} cols={3}>
         {homePageBooksRV.slice(0, 3).map((item, index) => (
           <Card key={index}>
             <Grid container spacing={3}>

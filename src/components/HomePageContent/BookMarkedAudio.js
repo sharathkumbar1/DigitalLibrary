@@ -20,6 +20,8 @@ const useStyles = makeStyles((theme) => ({
     margin: "left",
     maxWidth: 450,
     paddingLeft: 10,
+    position: 'relative',
+    right: '20px'
   },
   image: {
     width: 128,
