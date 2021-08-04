@@ -170,9 +170,9 @@ class AudioBook extends React.Component {
           method,
           responseType: "blob",
           mode: "no-cors",
-          headers: {
-            "Access-Control-Allow-Origin": "*",
-          },
+          // headers: {
+          //   "Access-Control-Allow-Origin": "*",
+          // },
         })
         .then(({ data }) => {
           const downloadUrl = window.URL.createObjectURL(new Blob([data]));
