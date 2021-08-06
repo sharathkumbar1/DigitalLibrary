@@ -169,7 +169,7 @@ class AudioBook extends React.Component {
           url,
           method,
           responseType: "blob",
-          mode: "no-cors",
+          // mode: "no-cors",
           // headers: {
           //   "Access-Control-Allow-Origin": "*",
           // },
@@ -211,7 +211,7 @@ class AudioBook extends React.Component {
                 defaultDuration="loading..."
                 customAdditionalControls={[
                   <a
-                    /*href={this.state.download_url} download={this.state.download_url} target="_blank" */ onClick={this.downloadAudio()}
+                    href={this.state.download_url} download={this.state.download_url} target="_blank" /*onClick={this.downloadAudio()}*/
                   >
                     <Download
                       /*onClick={() => downloadFile()}*/ className={
