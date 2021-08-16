@@ -43,6 +43,8 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Box from "@material-ui/core/Box";
 import NativeSelect from "@material-ui/core/NativeSelect";
+import { getAuthorList, postAudioBook, postPdf } from "../../config/apiCalls";
+import { getCategoryList } from "../../config/apiCalls";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -193,9 +195,7 @@ const AdminPage = (props) => {
   const [bookDetailsAudio, setBookDetailsAudio] = useState(initialFValuesAudio);
 
   useEffect(() => {
-    fetch(
-      "http://ec2-13-235-86-101.ap-south-1.compute.amazonaws.com:5000/authors"
-    )
+    getAuthorList()
       .then((res) => res.json())
       .then(
         (result) => {
@@ -214,9 +214,7 @@ const AdminPage = (props) => {
   }));
 
   useEffect(() => {
-    fetch(
-      "http://ec2-13-235-86-101.ap-south-1.compute.amazonaws.com:5000/book_categories?"
-    )
+    getCategoryList()
       .then((res) => res.json())
       .then(
         (result) => {
@@ -412,7 +410,7 @@ const AdminPage = (props) => {
   //     return axios
 
   //       .put(
-  //         "http://ec2-13-235-86-101.ap-south-1.compute.amazonaws.com:5000/books/" +
+  //         "books/" +
   //           isbn,
   //         bookDetails,
   //         requestConfig
@@ -439,11 +437,8 @@ const AdminPage = (props) => {
         "Content-Type": "application/json",
       },
     };
-    const apiUrl =
-      "http://ec2-13-235-86-101.ap-south-1.compute.amazonaws.com:5000/books";
 
-    return axios
-      .post(apiUrl, bookDetails, requestConfig)
+    return postPdf(bookDetails, requestConfig)
       .then((response) => {
         console.log(response);
         dispatch(showNotificationError(true, "Book is uploaded successfully"));
@@ -463,9 +458,6 @@ const AdminPage = (props) => {
       },
     };
 
-    const apiUrl =
-      "http://ec2-13-235-86-101.ap-south-1.compute.amazonaws.com:5000/books";
-
     const bookDetailsAudio1 = {
       author_name: bookDetailsAudio.author_name,
       book_type: bookDetailsAudio.book_type,
@@ -479,8 +471,7 @@ const AdminPage = (props) => {
       year: bookDetailsAudio.year,
     };
 
-    return axios
-      .post(apiUrl, bookDetailsAudio1, requestConfig)
+    return postAudioBook(bookDetailsAudio1, requestConfig)
       .then((response) => {
         console.log(response);
         dispatch(
@@ -822,7 +813,7 @@ const AdminPage = (props) => {
                   aria-label="full width tabs example"
                 >
                   <Tab label="Add a Book" {...a11yProps(0)} />
-                  <Tab label="Bulk Upload" {...a11yProps(1)} />
+                  {/* <Tab label="Bulk Upload" {...a11yProps(1)} /> */}
                 </Tabs>
               </AppBar>
 
@@ -1060,7 +1051,7 @@ const AdminPage = (props) => {
                       <Typography
                         style={{
                           position: "relative",
-                          top: "55px",
+                          top: "57px",
                           left: "20px",
                         }}
                       >
@@ -1120,7 +1111,7 @@ const AdminPage = (props) => {
                       <Typography
                         style={{
                           position: "relative",
-                          top: "50px",
+                          top: "55px",
                           left: "15px",
                         }}
                       >

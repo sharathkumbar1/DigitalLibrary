@@ -9,9 +9,10 @@ export function signUp(requestBody) {
     },
   };
 
-  const url = "http://ec2-13-235-86-101.ap-south-1.compute.amazonaws.com:5000/user/signup";
+  const url =
+    "http://ec2-15-206-164-19.ap-south-1.compute.amazonaws.com:5000/user/signup";
   return (dispatch) => {
-    let apiUrl = url; 
+    let apiUrl = url;
 
     return axios
       .post(apiUrl, requestBody, requestConfig)

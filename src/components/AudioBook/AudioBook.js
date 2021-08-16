@@ -9,6 +9,10 @@ import Typography from "@material-ui/core/Typography";
 import { ReactComponent as Download } from "../../images/download.svg";
 import axios from "axios";
 import SaveIcon from "@material-ui/icons/Save";
+import { listenAudibles } from "../../config/apiCalls";
+import { audioBookUrl } from "../../config/apiCalls";
+import { saveAudioCall } from "../../config/apiCalls";
+import { recentlyViewedAudioCall } from "../../config/apiCalls";
 
 const styles = (theme) => ({
   gridList: {
@@ -45,7 +49,6 @@ const styles = (theme) => ({
     height: "48px",
     width: "28px",
     fill: "#00000090",
-
     "&:active": {
       fill: "black",
       cursor: "pointer",
@@ -64,15 +67,9 @@ const styles = (theme) => ({
   },
 });
 
-const apiUrl =
-  "http://ec2-13-235-86-101.ap-south-1.compute.amazonaws.com:5000/download_url?file_name=";
-const bookUrl =
-  "http://ec2-13-235-86-101.ap-south-1.compute.amazonaws.com:5000/search?bookType=Audio_Book&book_name=";
-
 class AudioBook extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       file__name: this.props.match.params.file_name,
       title_: this.props.match.params.title,
@@ -81,26 +78,20 @@ class AudioBook extends React.Component {
       userData: this.props.userData,
     };
   }
-
   saveAudio = (isbn) => {
     console.log("saving .... " + isbn);
-
     const requestConfig = {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
     };
-    let apiUrl =
-      "http://ec2-13-235-86-101.ap-south-1.compute.amazonaws.com:5000/bookmarked_books";
     let requestBody = {
       isbn: isbn,
       user_id: this.state.userData.signInPostResponse.userSequenceId,
     };
     console.log("Hello User", requestBody);
-
-    return axios
-      .post(apiUrl, requestBody, requestConfig)
+    saveAudioCall(requestBody, requestConfig)
       .then((response) => {
         console.log(response.data.message);
       })
@@ -108,26 +99,21 @@ class AudioBook extends React.Component {
         console.log(response);
       });
   };
-
   recentlyViewedAudio = (isbn) => {
     console.log("recentlyViewedAudio .... " + isbn);
-
     const requestConfig = {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
     };
-    let apiUrl =
-      "http://ec2-13-235-86-101.ap-south-1.compute.amazonaws.com:5000/recently_viewed_books";
+
     let requestBody = {
       current_page: 0,
       isbn: isbn,
       user_id: this.state.userData.signInPostResponse.userSequenceId,
     };
-
-    return axios
-      .post(apiUrl, requestBody, requestConfig)
+    return recentlyViewedAudioCall(requestBody, requestConfig)
       .then((response) => {
         console.log(response.data.message);
       })
@@ -137,8 +123,9 @@ class AudioBook extends React.Component {
   };
   componentDidMount() {
     console.log("file-name" + this.state.file__name);
-    axios
-      .get(apiUrl + this.state.file__name + ".mp3")
+    // axios
+    //   .get(apiUrl + this.state.file__name + ".mp3")
+    listenAudibles(this.state.file__name)
       .then((response) => {
         this.setState({ download_url: response.data });
         console.log("response data" + response.data);
@@ -147,8 +134,9 @@ class AudioBook extends React.Component {
         console.log(error);
       });
     console.log("title " + this.state.title_);
-    axios
-      .get(bookUrl + this.state.title_)
+    // axios
+    //   .get(bookUrl + this.state.title_)
+    audioBookUrl(this.state.title_)
       .then((res) => {
         this.recentlyViewedAudio(res.data[0].isbn);
         console.log("isbn full data ", res.data[0].isbn);
@@ -159,7 +147,6 @@ class AudioBook extends React.Component {
         console.log(err2);
       });
   }
-
   downloadAudio = () => {
     return () => {
       const method = "GET";
@@ -170,9 +157,9 @@ class AudioBook extends React.Component {
           method,
           responseType: "blob",
           mode: "no-cors",
-          headers: {
-            "Access-Control-Allow-Origin": "*",
-          },
+          // headers: {
+          //   "Access-Control-Allow-Origin": "*",
+          // },
         })
         .then(({ data }) => {
           const downloadUrl = window.URL.createObjectURL(new Blob([data]));
@@ -185,11 +172,9 @@ class AudioBook extends React.Component {
         });
     };
   };
-
   render() {
     const { classes } = this.props;
     console.log(this.state.download_url);
-
     return (
       <div>
         {this.state.full_data.map((item) => (
@@ -211,22 +196,25 @@ class AudioBook extends React.Component {
                 defaultDuration="loading..."
                 customAdditionalControls={[
                   <a
-                    /*href={this.state.download_url} download={this.state.download_url} target="_blank" */ onClick={this.downloadAudio()}
+                    href={this.state.download_url}
+                    download={this.state.download_url}
+                    target="_blank" /*onClick={this.downloadAudio()}*/
                   >
                     <Download
                       /*onClick={() => downloadFile()}*/ className={
                         classes.download
                       }
-                    />
-                    <SaveIcon
-                      className={classes.save}
-                      onClick={() => this.saveAudio(item.isbn)}
+                      onClick={this.downloadAudio()}
                     />
                   </a>,
+                  <SaveIcon
+                    className={classes.save}
+                    onClick={() => this.saveAudio(item.isbn)}
+                  />,
                 ]}
               />
             </GridListTile>
-
+            ​
             <div className={classes.bookDetails}>
               <Typography variant="h6" className={classes.bookTitle}>
                 {this.state.title_}
@@ -245,7 +233,6 @@ class AudioBook extends React.Component {
     );
   }
 }
-
 const mapStateToProps = (state) => {
   return {
     userData: state.signInReducer,

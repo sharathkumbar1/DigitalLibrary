@@ -46,6 +46,7 @@ import NotificationSuccess from "../Notifications/NotificationSuccess";
 import NotificationError from "../Notifications/NotificationError";
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
+import { editAudibles, editPdf, searchCall } from "../../config/apiCalls";
 
 const styles = makeStyles((theme) => ({
   root: {
@@ -162,21 +163,23 @@ export default function SearchPage(props) {
   useEffect(() => {
     !isEmpty(searchValue) ? setIsOnSelect(true) : setIsOnSelect(false);
     !isEmpty(searchValue) ? setHideCheckbox(true) : setHideCheckbox(false);
-  }, []);
-
-  useEffect(() => {
     !isEmpty(searchValue) ? setSearchBook(searchValue) : setSearchBook("");
-
-    if (!isEmpty(searchRetainList) && !!isfetched) {
-      setSearchList(searchRetainList);
-      setIsFetched(false);
-    } else {
-      setSearchList([]);
-    }
-    // !isEmpty(searchRetainList) && !!isfetched
-    //   ? (setSearchList(searchRetainList), setIsFetched(false))
-    //   : setSearchList([]);
   }, []);
+
+  // useEffect(() => {
+  //   !isEmpty(searchValue) ? setSearchBook(searchValue) : setSearchBook("");
+
+  //   if (!isEmpty(searchRetainList) && !!isfetched) {
+  //     setSearchList(searchRetainList);
+  //     console.log("useEffecttt");
+  //     setIsFetched(false);
+  //   } else {
+  //     setSearchList([]);
+  //   }
+  //   // !isEmpty(searchRetainList) && !!isfetched
+  //   //   ? (setSearchList(searchRetainList), setIsFetched(false))
+  //   //   : setSearchList([]);
+  // }, []);
 
   const resetReduxStoreAndHideNotifications = () => {
     dispatch(handleSignUpSuccess({ data: null }));
@@ -195,7 +198,7 @@ export default function SearchPage(props) {
       getSearchBooks(searchBook).then((result) => {
         setIsFetched(true);
         setSearchList(result.data);
-        dispatch(saveSearchList(result.data));
+        // dispatch(saveSearchList(result.data));
         setOriginalSearchList(result.data);
       });
       console.log("submittttted");
@@ -207,15 +210,7 @@ export default function SearchPage(props) {
   };
 
   function getSearchBooks(searchBook) {
-    return axios.get(
-      "http://ec2-13-235-86-101.ap-south-1.compute.amazonaws.com:5000/search",
-      {
-        headers: { "Content-type": "application/json" },
-        params: {
-          any_book: searchBook,
-        },
-      }
-    );
+    return searchCall(searchBook);
   }
 
   const onSearchSubmit = (event) => {
@@ -223,7 +218,7 @@ export default function SearchPage(props) {
       getSearchBooks(searchBook).then((result) => {
         setIsFetched(true);
         setSearchList(result.data);
-        dispatch(saveSearchList(result.data));
+        // dispatch(saveSearchList(result.data));
         setOriginalSearchList(result.data);
       });
       console.log("submittttted");
@@ -336,23 +331,25 @@ export default function SearchPage(props) {
         },
       };
 
-      return axios
-
-        .put(
-          "http://ec2-13-235-86-101.ap-south-1.compute.amazonaws.com:5000/books/" +
-            isbn,
-          bookDetails,
-          requestConfig
-        )
-        .then((response) => {
-          console.log(response);
-          setOpenPopup(false);
-          if (!isfetched) {
-            dispatch(
-              showNotificationError(true, "Book is updated successfully")
-            );
-          }
-        });
+      return (
+        editPdf(isbn, bookDetails, requestConfig)
+          // axios
+          //   .put(
+          //     "http://ec2-15-206-164-19.ap-south-1.compute.amazonaws.com:5000/books/" +
+          //       isbn,
+          //     bookDetails,
+          //     requestConfig
+          //   )
+          .then((response) => {
+            console.log(response);
+            setOpenPopup(false);
+            if (!isfetched) {
+              dispatch(
+                showNotificationError(true, "Book is updated successfully")
+              );
+            }
+          })
+      );
     } catch (err) {
       dispatch(showNotificationError(true, "Error"));
       console.log("page is updated......");
@@ -368,15 +365,8 @@ export default function SearchPage(props) {
         },
       };
 
-      return axios
-
-        .put(
-          "http://ec2-13-235-86-101.ap-south-1.compute.amazonaws.com:5000/books/" +
-            isbnA,
-          bookDetailsAudio,
-          requestConfig
-        )
-        .then((response) => {
+      return editAudibles(isbnA, bookDetailsAudio, requestConfig).then(
+        (response) => {
           console.log(response);
           setOpenPopup(false);
           if (!isfetched) {
@@ -384,9 +374,11 @@ export default function SearchPage(props) {
               showNotificationError(true, "Audio Book updated successfully")
             );
           }
-        });
+        }
+      );
     } catch (err) {
       dispatch(showNotificationError(true, "Error"));
+      setOpenPopup(false);
       console.log("time is updated......");
     }
   };
@@ -406,7 +398,7 @@ export default function SearchPage(props) {
   const deleteFunc = (isbn) => {
     if (window.confirm("Are you sure?")) {
       return axios.delete(
-        "http://ec2-13-235-86-101.ap-south-1.compute.amazonaws.com:5000/books/" +
+        "http://ec2-15-206-164-19.ap-south-1.compute.amazonaws.com:5000/books/" +
           isbn,
         {
           headers: { "Content-type": "application/json" },
@@ -529,7 +521,19 @@ export default function SearchPage(props) {
 
                     <Grid item xs container direction="column" spacing={2}>
                       <Grid item xs>
-                        <Typography gutterBottom variant="subtitle1">
+                        <Typography
+                          gutterBottom
+                          variant="subtitle1"
+                          onClick={() => {
+                            if (item.book_type === "Audio Book") {
+                              handleRoute(
+                                `/audiobook/${item.file_name}/${item.title}`
+                              );
+                            } else {
+                              readClicked(item.pdflink);
+                            }
+                          }}
+                        >
                           {item.title}
                         </Typography>
                         <Typography variant="body2" gutterBottom>

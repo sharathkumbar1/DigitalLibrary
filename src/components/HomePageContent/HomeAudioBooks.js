@@ -11,6 +11,7 @@ import carasoul1 from "../../images/carasoul1.png";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import Tooltip from "@material-ui/core/Tooltip";
+import { HomePageBooksAudio } from "../../config/apiCalls";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -94,12 +95,7 @@ const HomeAudioBooks = () => {
   useEffect(() => {
     let currentUserId = userdata.signInPostResponse.userSequenceId;
     console.log(" user id ", currentUserId);
-
-    fetch(
-      "http://ec2-13-235-86-101.ap-south-1.compute.amazonaws.com:5000/home_page_books?user_id=" +
-        currentUserId +
-        "&per_page=3&book_type=AUDIO_BOOK"
-    )
+    HomePageBooksAudio(currentUserId)
       .then((res) => res.json())
       .then(
         (result) => {
@@ -263,7 +259,7 @@ const HomeAudioBooks = () => {
               more &gt;
             </Button>
           </Grid>
-          <GridList cellHeight={270} className={classes.gridList} cols={3}>
+          <GridList cellHeight="auto" className={classes.gridList} cols={3}>
             {homeAudioBooksRV.map((item) => (
               <Card>
                 <Grid container spacing={6}>

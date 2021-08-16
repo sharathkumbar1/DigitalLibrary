@@ -15,6 +15,8 @@ import {
   setPdfISBN,
 } from "../../store/personalDevelopment/actionCreator";
 import axios from "axios";
+import { HomePageBooksPDF } from "../../config/apiCalls";
+import { readPDF } from "../../config/apiCalls";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -86,11 +88,8 @@ const HomePDFBooks = () => {
 
   useEffect(() => {
     let currentUserId = userdata.signInPostResponse.userSequenceId;
-    fetch(
-      "http://ec2-13-235-86-101.ap-south-1.compute.amazonaws.com:5000/home_page_books?user_id=" +
-        currentUserId +
-        "&book_type=PDF"
-    )
+
+    HomePageBooksPDF(currentUserId)
       .then((res) => res.json())
       .then(
         (result) => {
@@ -124,12 +123,9 @@ const HomePDFBooks = () => {
   const readClicked = (file_name, isbn) => {
     console.log("from recently added pdf isbn " + isbn);
     console.log("file name qq " + file_name);
-
-    const apiUrl =
-      "http://ec2-13-235-86-101.ap-south-1.compute.amazonaws.com:5000/download_url?file_name=";
     let pdfLink = "";
-    axios
-      .get(apiUrl + file_name + ".pdf")
+
+    readPDF(file_name)
       .then((response) => {
         pdfLink = response.data;
         console.log("response data qqqq" + response.data);
@@ -259,7 +255,7 @@ const HomePDFBooks = () => {
         </Button>
       </Grid>
 
-      <GridList cellHeight={270} className={classes.gridList} cols={3}>
+      <GridList cellHeight="auto" className={classes.gridList} cols={3}>
         {homePageBooksRV.slice(0, 3).map((item, index) => (
           <Card key={index}>
             <Grid container spacing={3}>

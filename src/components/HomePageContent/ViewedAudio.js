@@ -10,6 +10,7 @@ import { IconButton } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import carasoul1 from "../../images/carasoul1.png";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
+import { viewedAudioPage } from "../../config/apiCalls";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -50,11 +51,7 @@ function ViewedAudio() {
   useEffect(() => {
     let currentUserId = userdata.signInPostResponse.userSequenceId;
 
-    fetch(
-      "http://ec2-13-235-86-101.ap-south-1.compute.amazonaws.com:5000/users/" +
-        currentUserId +
-        "/recently_viewed_books?book_type=AUDIO_BOOK"
-    )
+    viewedAudioPage(currentUserId)
       .then((res) => res.json())
       .then(
         (result) => {

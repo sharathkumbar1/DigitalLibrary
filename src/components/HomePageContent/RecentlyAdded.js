@@ -15,6 +15,7 @@ import carasoul1 from "../../images/carasoul1.png";
 import axios from "axios";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import { IconButton } from "@material-ui/core";
+import { readPDF, recentlyAddedPDFPage } from "../../config/apiCalls";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -53,9 +54,7 @@ function RecentlyAdded() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    fetch(
-      "http://ec2-13-235-86-101.ap-south-1.compute.amazonaws.com:5000/recently_added_books?book_type=PDF"
-    )
+    recentlyAddedPDFPage()
       .then((res) => res.json())
       .then(
         (result) => {
@@ -70,11 +69,10 @@ function RecentlyAdded() {
 
   const readClicked = (file_name, isbn) => {
     console.log("from recently added pdf file_name " + file_name);
-    const apiUrl =
-      "http://ec2-13-235-86-101.ap-south-1.compute.amazonaws.com:5000/download_url?file_name=";
+
     let pdfLink = "";
-    axios
-      .get(apiUrl + file_name + ".pdf")
+
+    readPDF(file_name)
       .then((response) => {
         pdfLink = response.data;
         console.log("response data" + response.data);

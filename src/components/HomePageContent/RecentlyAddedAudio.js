@@ -10,6 +10,7 @@ import { IconButton, withStyles } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import { recentlyAddedAudioPage } from "../../config/apiCalls";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -51,9 +52,10 @@ function RecentlyAddedAudio() {
   const history = useHistory();
 
   useEffect(() => {
-    fetch(
-      "http://ec2-13-235-86-101.ap-south-1.compute.amazonaws.com:5000/recently_added_books?book_type=AUDIO_BOOK"
-    )
+    // fetch(
+    //   "http://ec2-13-235-86-101.ap-south-1.compute.amazonaws.com:5000/recently_added_books?book_type=AUDIO_BOOK"
+    // )
+    recentlyAddedAudioPage()
       .then((res) => res.json())
       .then(
         (result) => {

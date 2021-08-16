@@ -10,6 +10,7 @@ import { IconButton } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import carasoul1 from "../../images/carasoul1.png";
+import { bookmarkedAudioPage } from "../../config/apiCalls";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -51,11 +52,12 @@ function BookMarkedAudio() {
     let currentUserId = userdata.signInPostResponse.userSequenceId;
     console.log(" user id ", currentUserId);
 
-    fetch(
-      "http://ec2-13-235-86-101.ap-south-1.compute.amazonaws.com:5000/users/" +
-        currentUserId +
-        "/bookmarked_books?book_type=AUDIO_BOOK"
-    )
+    // fetch(
+    //   "http://ec2-13-235-86-101.ap-south-1.compute.amazonaws.com:5000/users/" +
+    //     currentUserId +
+    //     "/bookmarked_books?book_type=AUDIO_BOOK"
+    // )
+    bookmarkedAudioPage(currentUserId)
       .then((res) => res.json())
       .then(
         (result) => {
