@@ -26,6 +26,8 @@ const useStyles = makeStyles((theme) => ({
     margin: "left",
     maxWidth: 450,
     paddingLeft: 10,
+    position: 'relative',
+    right: '20px'
   },
   image: {
     width: 128,
@@ -123,7 +125,7 @@ function RecentlyAdded() {
                     <Grid item xs>
                       <Typography gutterBottom>{item.title}</Typography>
                       <Typography variant="body2" gutterBottom>
-                        Author: {item.author}
+                        Author: {item.author_name}
                       </Typography>
                       <Typography variant="body2" color="textSecondary">
                         Category: {item.category_name}

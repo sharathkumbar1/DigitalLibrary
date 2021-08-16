@@ -331,25 +331,13 @@ export default function SearchPage(props) {
         },
       };
 
-      return (
-        editPdf(isbn, bookDetails, requestConfig)
-          // axios
-          //   .put(
-          //     "http://ec2-15-206-164-19.ap-south-1.compute.amazonaws.com:5000/books/" +
-          //       isbn,
-          //     bookDetails,
-          //     requestConfig
-          //   )
-          .then((response) => {
-            console.log(response);
-            setOpenPopup(false);
-            if (!isfetched) {
-              dispatch(
-                showNotificationError(true, "Book is updated successfully")
-              );
-            }
-          })
-      );
+      return editPdf(isbn, bookDetails, requestConfig).then((response) => {
+        console.log(response);
+        setOpenPopup(false);
+        if (!isfetched) {
+          dispatch(showNotificationError(true, "Book is updated successfully"));
+        }
+      });
     } catch (err) {
       dispatch(showNotificationError(true, "Error"));
       console.log("page is updated......");

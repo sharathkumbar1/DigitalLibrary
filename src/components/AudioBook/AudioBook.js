@@ -156,7 +156,7 @@ class AudioBook extends React.Component {
           url,
           method,
           responseType: "blob",
-          mode: "no-cors",
+          // mode: "no-cors",
           // headers: {
           //   "Access-Control-Allow-Origin": "*",
           // },
@@ -204,7 +204,6 @@ class AudioBook extends React.Component {
                       /*onClick={() => downloadFile()}*/ className={
                         classes.download
                       }
-                      onClick={this.downloadAudio()}
                     />
                   </a>,
                   <SaveIcon
