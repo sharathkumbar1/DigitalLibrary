@@ -167,7 +167,7 @@ const HomeAudioBooks = () => {
 
                     <CardContent className={classes.cardcontent}>
                       <Tooltip title={item.title}>
-                        <Typography gutterBottom variant="subtitle1">
+                        <Typography gutterBottom >
                           <Box
                             whiteSpace="nowrap"
                             component="div"

@@ -101,7 +101,7 @@ const MobilePDFViewer = () => {
       <CssBaseline />
       <AppBar position="fixed" color="primary" className={classes.appBar}>
         <Toolbar>
-          <IconButton aria-label="delete">
+          <IconButton aria-label="download PDF">
             <a
               href={pdfUrl}
               download={pdfUrl}

@@ -94,7 +94,7 @@ function RecentlyViewed() {
 
   return (
     <div>
-      <IconButton className={classes.backArrow} aria-label="delete">
+      <IconButton className={classes.backArrow} aria-label="back">
         <ArrowBackIcon onClick={() => handleRoute("/home")} />
       </IconButton>
       <text className={classes.fonts}>Recently Viewed Books</text>

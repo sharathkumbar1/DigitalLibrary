@@ -69,12 +69,12 @@ const PersonalDevelopment = () => {
                 </Grid>
               </Grid>
               <Grid item xs={2} spacing={3}>
-                <IconButton aria-label="delete">
+                <IconButton >
                   <ImportContactsOutlinedIcon onClick={() => readClicked(booksData.file_name)} />
                 </IconButton>
               </Grid>
               <Grid item xs={2} spacing={3}>
-                <IconButton aria-label="delete">
+                <IconButton >
                   <a href={booksData.file_name} download={booksData.file_name}><CloudDownloadOutlinedIcon /></a>
                 </IconButton>
               </Grid>
@@ -88,20 +88,20 @@ const PersonalDevelopment = () => {
   };
 
   const readClicked = (file_name) => {
-    console.log("pdf file_name "+file_name);
+    console.log("pdf file_name " + file_name);
 
     const apiUrl = "http://ec2-13-235-86-101.ap-south-1.compute.amazonaws.com:5000/download_url?file_name=";
     let pdfLink = "";
     axios
       .get(apiUrl + file_name)
       .then((response) => {
-          pdfLink = response.data;
-          console.log("response data" + response.data)
+        pdfLink = response.data;
+        console.log("response data" + response.data)
       })
       .catch((error) => {
-          console.log(error);
+        console.log(error);
       })
-      
+
     dispatch(setPdfURL(pdfLink));
     history.push("/pdfviewer");
   };

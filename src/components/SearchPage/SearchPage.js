@@ -387,7 +387,7 @@ export default function SearchPage(props) {
     if (window.confirm("Are you sure?")) {
       return axios.delete(
         "http://ec2-15-206-164-19.ap-south-1.compute.amazonaws.com:5000/books/" +
-          isbn,
+        isbn,
         {
           headers: { "Content-type": "application/json" },
         }
@@ -479,98 +479,97 @@ export default function SearchPage(props) {
       </div>
       {isOnSelect
         ? searchList.map((item) =>
-            item.title.toLowerCase().includes(searchBook) ||
+          item.title.toLowerCase().includes(searchBook) ||
             item.author_name.toLowerCase().includes(searchBook) ? (
-              <Paper className={classes.paper}>
-                <Grid container spacing={2}>
-                  <Grid item xs={12} sm container>
-                    <Grid item>
-                      <ButtonBase className={classes.image}>
-                        <img
-                          className={classes.img}
-                          alt="complex"
-                          src={item.thumbnail_url}
-                          onError={(e) => {
-                            e.target.onerror = null;
-                            e.target.src = carasoul1;
-                          }}
-                          onClick={() => {
-                            if (item.book_type === "Audio Book") {
-                              handleRoute(
-                                `/audiobook/${item.file_name}/${item.title}`
-                              );
-                            } else {
-                              readClicked(item.pdflink);
-                            }
-                          }}
-                        />
-                      </ButtonBase>
-                    </Grid>
+            <Paper className={classes.paper}>
+              <Grid container spacing={2}>
+                <Grid item xs={12} sm container>
+                  <Grid item>
+                    <ButtonBase className={classes.image}>
+                      <img
+                        className={classes.img}
+                        alt="complex"
+                        src={item.thumbnail_url}
+                        onError={(e) => {
+                          e.target.onerror = null;
+                          e.target.src = carasoul1;
+                        }}
+                        onClick={() => {
+                          if (item.book_type === "Audio Book") {
+                            handleRoute(
+                              `/audiobook/${item.file_name}/${item.title}`
+                            );
+                          } else {
+                            readClicked(item.pdflink);
+                          }
+                        }}
+                      />
+                    </ButtonBase>
+                  </Grid>
 
-                    <Grid item xs container direction="column" spacing={2}>
-                      <Grid item xs>
-                        <Typography
-                          gutterBottom
-                          variant="subtitle1"
-                          onClick={() => {
-                            if (item.book_type === "Audio Book") {
-                              handleRoute(
-                                `/audiobook/${item.file_name}/${item.title}`
-                              );
-                            } else {
-                              readClicked(item.pdflink);
-                            }
-                          }}
-                        >
-                          {item.title}
-                        </Typography>
-                        <Typography variant="body2" gutterBottom>
-                          Author: {item.author_name}
-                          <br /> {item.book_type}
-                        </Typography>
-                        {admin ? (
-                          <div>
-                            <Button
-                              variant="text"
-                              size="small"
-                              style={{
-                                position: "relative",
-                                left: "230px",
-                                bottom: "35px",
-                              }}
-                              onClick={() => openInPopup(item)}
-                            >
-                              edit
-                            </Button>
-                            <Button
-                              variant="text"
-                              size="small"
-                              style={{
-                                position: "relative",
-                                backgroundColor: "#f03131",
-                                left: "166px",
-                                bottom: "2px",
-                              }}
-                              onClick={() => {
-                                deleteFunc(item.isbn);
-                                softDlt(item.isbn);
-                              }}
-                            >
-                              DELETE
-                            </Button>
-                          </div>
-                        ) : (
-                          ""
-                        )}
-                      </Grid>
+                  <Grid item xs container direction="column" spacing={2}>
+                    <Grid item xs>
+                      <Typography
+                        gutterBottom
+                        onClick={() => {
+                          if (item.book_type === "Audio Book") {
+                            handleRoute(
+                              `/audiobook/${item.file_name}/${item.title}`
+                            );
+                          } else {
+                            readClicked(item.pdflink);
+                          }
+                        }}
+                      >
+                        {item.title}
+                      </Typography>
+                      <Typography variant="body2" gutterBottom>
+                        Author: {item.author_name}
+                        <br /> {item.book_type}
+                      </Typography>
+                      {admin ? (
+                        <div>
+                          <Button
+                            variant="text"
+                            size="small"
+                            style={{
+                              position: "relative",
+                              left: "230px",
+                              bottom: "35px",
+                            }}
+                            onClick={() => openInPopup(item)}
+                          >
+                            edit
+                          </Button>
+                          <Button
+                            variant="text"
+                            size="small"
+                            style={{
+                              position: "relative",
+                              backgroundColor: "#f03131",
+                              left: "166px",
+                              bottom: "2px",
+                            }}
+                            onClick={() => {
+                              deleteFunc(item.isbn);
+                              softDlt(item.isbn);
+                            }}
+                          >
+                            DELETE
+                          </Button>
+                        </div>
+                      ) : (
+                        ""
+                      )}
                     </Grid>
                   </Grid>
                 </Grid>
-              </Paper>
-            ) : (
-              ""
-            )
+              </Grid>
+            </Paper>
+          ) : (
+            ""
           )
+        )
         : ""}
 
       <Popup openPopup={openPopup} setOpenPopup={setOpenPopup}>

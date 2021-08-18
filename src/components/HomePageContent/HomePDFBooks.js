@@ -147,7 +147,7 @@ const HomePDFBooks = () => {
         </Typography>
         <Button
           variant="text"
-          aria-label="Recently added books more"
+          //aria-label="Recently added books more"
           style={{ marginLeft: "115px" }}
           className={classes.btnAlignRight}
           onClick={recentlyAddedBooks}
