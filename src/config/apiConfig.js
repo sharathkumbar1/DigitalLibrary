@@ -9,53 +9,61 @@ const envConfigs = {
     auth: {},
     signup: {
       key: "b9ef4b57f852f9a3c886bd8b0da5447c23eacb65",
-      url: " http://ec2-15-206-164-19.ap-south-1.compute.amazonaws.com:5000/user/signup",
+      url: "http://ec2-15-206-164-19.ap-south-1.compute.amazonaws.com:5000/user/signup",
+    },
+    signup: {
+      key: 'b9ef4b57f852f9a3c886bd8b0da5447c23eacb65',
+      url: 'http://ec2-15-206-164-19.ap-south-1.compute.amazonaws.com:5000/user/signup',
     },
     signin: {
-      key: "b9ef4b57f852f9a3c886bd8b0da5447c23eacb65",
-      url: "http://ec2-15-206-164-19.ap-south-1.compute.amazonaws.com:5000/user/login",
+      key: 'b9ef4b57f852f9a3c886bd8b0da5447c23eacb65',
+      url: 'http://ec2-15-206-164-19.ap-south-1.compute.amazonaws.com:5000/user/login',
     },
     forgotpw: {
-      key: "b9ef4b57f852f9a3c886bd8b0da5447c23eacb65",
-      url: " http://ec2-15-206-164-19.ap-south-1.compute.amazonaws.com:5000/user/password/forgot",
+      key: 'b9ef4b57f852f9a3c886bd8b0da5447c23eacb65',
+      url: 'http://ec2-15-206-164-19.ap-south-1.compute.amazonaws.com:5000/user/password/forgot',
     },
     updatepw: {
-      key: "b9ef4b57f852f9a3c886bd8b0da5447c23eacb65",
-      url: " http://ec2-15-206-164-19.ap-south-1.compute.amazonaws.com:5000/user/password/update",
+      key: 'b9ef4b57f852f9a3c886bd8b0da5447c23eacb65',
+      url: 'http://ec2-15-206-164-19.ap-south-1.compute.amazonaws.com:5000/user/password/update',
     },
     accountvf: {
-      key: "b9ef4b57f852f9a3c886bd8b0da5447c23eacb65",
-      url: " http://ec2-15-206-164-19.ap-south-1.compute.amazonaws.com:5000/user/signup/verify",
+      key: 'b9ef4b57f852f9a3c886bd8b0da5447c23eacb65',
+      url: 'http://ec2-15-206-164-19.ap-south-1.compute.amazonaws.com:5000/user/signup/verify',
     },
   },
   dev: {
     auth: {},
     signup: {
       key: "b9ef4b57f852f9a3c886bd8b0da5447c23eacb65",
-      url: " http://ec2-15-206-164-19.ap-south-1.compute.amazonaws.com:5000/user/signup",
+      url: "http://ec2-15-206-164-19.ap-south-1.compute.amazonaws.com:5000/user/signup",
+    },
+    signup: {
+      key: 'b9ef4b57f852f9a3c886bd8b0da5447c23eacb65',
+      url: 'http://ec2-15-206-164-19.ap-south-1.compute.amazonaws.com:5000/user/signup',
     },
     signin: {
-      key: "b9ef4b57f852f9a3c886bd8b0da5447c23eacb65",
-      url: "http://ec2-15-206-164-19.ap-south-1.compute.amazonaws.com:5000/user/login",
+      key: 'b9ef4b57f852f9a3c886bd8b0da5447c23eacb65',
+      url: 'http://ec2-15-206-164-19.ap-south-1.compute.amazonaws.com:5000/user/login',
     },
     forgotpw: {
-      key: "b9ef4b57f852f9a3c886bd8b0da5447c23eacb65",
-      url: " http://ec2-15-206-164-19.ap-south-1.compute.amazonaws.com:5000/user/password/forgot",
+      key: 'b9ef4b57f852f9a3c886bd8b0da5447c23eacb65',
+      url: 'http://ec2-15-206-164-19.ap-south-1.compute.amazonaws.com:5000/user/password/forgot',
     },
     updatepw: {
-      key: "b9ef4b57f852f9a3c886bd8b0da5447c23eacb65",
-      url: " http://ec2-15-206-164-19.ap-south-1.compute.amazonaws.com:5000/user/password/update",
+      key: 'b9ef4b57f852f9a3c886bd8b0da5447c23eacb65',
+      url: 'http://ec2-15-206-164-19.ap-south-1.compute.amazonaws.com:5000/user/password/update',
     },
     accountvf: {
-      key: "b9ef4b57f852f9a3c886bd8b0da5447c23eacb65",
-      url: " http://ec2-15-206-164-19.ap-south-1.compute.amazonaws.com:5000/user/signup/verify",
+      key: 'b9ef4b57f852f9a3c886bd8b0da5447c23eacb65',
+      url: 'http://ec2-15-206-164-19.ap-south-1.compute.amazonaws.com:5000/user/signup/verify',
     },
   },
   stg: {
     auth: {},
     signup: {
       key: "b9ef4b57f852f9a3c886bd8b0da5447c23eacb65",
-      url: " http://ec2-15-206-164-19.ap-south-1.compute.amazonaws.com:5000/user/signup",
+      url: "http://ec2-15-206-164-19.ap-south-1.compute.amazonaws.com:5000/user/signup",
     },
     signin: {
       key: "b9ef4b57f852f9a3c886bd8b0da5447c23eacb65",
@@ -63,22 +71,22 @@ const envConfigs = {
     },
     forgotpw: {
       key: "b9ef4b57f852f9a3c886bd8b0da5447c23eacb65",
-      url: " http://ec2-15-206-164-19.ap-south-1.compute.amazonaws.com:5000/user/password/forgot",
+      url: "http://ec2-15-206-164-19.ap-south-1.compute.amazonaws.com:5000/user/password/forgot",
     },
     updatepw: {
       key: "b9ef4b57f852f9a3c886bd8b0da5447c23eacb65",
-      url: " http://ec2-15-206-164-19.ap-south-1.compute.amazonaws.com:5000/user/password/update",
+      url: "http://ec2-15-206-164-19.ap-south-1.compute.amazonaws.com:5000/user/password/update",
     },
     accountvf: {
       key: "b9ef4b57f852f9a3c886bd8b0da5447c23eacb65",
-      url: " http://ec2-15-206-164-19.ap-south-1.compute.amazonaws.com:5000/user/signup/verify",
+      url: "http://ec2-15-206-164-19.ap-south-1.compute.amazonaws.com:5000/user/signup/verify",
     },
   },
   prod: {
     auth: {},
     signup: {
       key: "b9ef4b57f852f9a3c886bd8b0da5447c23eacb65",
-      url: " http://ec2-15-206-164-19.ap-south-1.compute.amazonaws.com:5000/user/signup",
+      url: "http://ec2-15-206-164-19.ap-south-1.compute.amazonaws.com:5000/user/signup",
     },
     signin: {
       key: "b9ef4b57f852f9a3c886bd8b0da5447c23eacb65",
@@ -86,15 +94,15 @@ const envConfigs = {
     },
     forgotpw: {
       key: "b9ef4b57f852f9a3c886bd8b0da5447c23eacb65",
-      url: " http://ec2-15-206-164-19.ap-south-1.compute.amazonaws.com:5000/user/password/forgot",
+      url: "http://ec2-15-206-164-19.ap-south-1.compute.amazonaws.com:5000/user/password/forgot",
     },
     updatepw: {
       key: "b9ef4b57f852f9a3c886bd8b0da5447c23eacb65",
-      url: " http://ec2-15-206-164-19.ap-south-1.compute.amazonaws.com:5000/user/password/update",
+      url: "http://ec2-15-206-164-19.ap-south-1.compute.amazonaws.com:5000/user/password/update",
     },
     accountvf: {
       key: "b9ef4b57f852f9a3c886bd8b0da5447c23eacb65",
-      url: " http://ec2-15-206-164-19.ap-south-1.compute.amazonaws.com:5000/user/signup/verify",
+      url: "http://ec2-15-206-164-19.ap-south-1.compute.amazonaws.com:5000/user/signup/verify",
     },
   },
 };
