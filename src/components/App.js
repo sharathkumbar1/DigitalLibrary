@@ -10,11 +10,10 @@ function App() {
       <BrowserRouter>
         <Switch>
           <Route path="/" component={Layout} />
-          
         </Switch>
       </BrowserRouter>
     </MuiThemeProvider>
   );
 }
 
-export default App;
+export default App

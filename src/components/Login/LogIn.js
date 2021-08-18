@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, useRef} from "react";
 import { withStyles } from "@material-ui/core/styles";
 import {
   Button,
@@ -10,7 +10,6 @@ import {
 } from "@material-ui/core";
 
 import { useDispatch, useSelector } from "react-redux";
-
 import { signIn, handleSignInError, handleSignInSuccess } from "../../store/signin/actionCreator";
 import FormDialog from '../ModelWindow/ResetPassWord'
 import {showNotificationError} from "../../store/notification/actionCreator";
@@ -32,10 +31,14 @@ const styles = (theme) => ({
     minHeight: "30vh",
     padding: "50px",
   },
+  paddingTop: {
+    paddingTop: "10px",
+  }
 });
 
 const LogIn = (props) => {
 
+  const signInFocus = useRef();
   const { classes } = props;
   const [allValues, setAllValues] = useState({
     email: '',
@@ -53,14 +56,23 @@ const LogIn = (props) => {
 
 
   useEffect(() => {
+    console.log("testtt ", signInPostResponse)
+    console.log("testtt111 ", signInPostErrResponse)
+    
+  
     if (signInPostResponse) {
-      handleRoute("")
+      handleRoute("home")
 
     } else if (signInPostErrResponse) {
-      console.log(signInPostErrResponse)
-      dispatch(showNotificationError(true, signInPostErrResponse));
+      signInFocus.current.focus();
+      console.log("ccc ", signInPostErrResponse)
 
+      dispatch(showNotificationError(true, signInPostErrResponse, "login"));
+    } else if (signInPostErrResponse === undefined) {
+      console.log("2222222")
+      dispatch(showNotificationError(true, "Invalid Email ID or Password", "login"));
     }
+
   }, [signInPostResponse, signInPostErrResponse]);
 
   const changeHandler = e => {
@@ -72,10 +84,9 @@ const LogIn = (props) => {
   };
 
   const resetReduxStoreAndHideNotifications = () => {
-    console.log("resetting")
     dispatch(handleSignInSuccess(null))
     dispatch(handleSignInError(null))
-    dispatch(showNotificationError(false, ""));
+    dispatch(showNotificationError(false, "", "login"));
   }
 
   const gotoSignUp = () => {
@@ -84,13 +95,18 @@ const LogIn = (props) => {
   }
 
   const signInClicked = () => {
-
-    // console.log(allValues);
+    
     if (allValues.email === "") {
-      dispatch(showNotificationError(true, "Please fill in Email"));
+      console.log("10101010")
+     // document.getElementById("notificationCloseBtn").focus();
+      dispatch(showNotificationError(true, "Please fill in Email", "login"));
+      //signInFocus.current.focus();
+//document.getElementById("notificationCloseBtn").focus();
+      
     }
     else if (allValues.password === "") {
-      dispatch(showNotificationError(true, "Please fill in Password"));
+      console.log("1111111")
+      dispatch(showNotificationError(true, "Please fill in Password", "login"));
     }
     else {
       // dispatch(showNotificationError(false, ""));
@@ -115,6 +131,7 @@ const LogIn = (props) => {
   }
 
   const onCloseButtonClick = () => {
+    console.log("ccccc")
     setOpen(false)
   }
 
@@ -137,7 +154,7 @@ const LogIn = (props) => {
                   className={classes.loginBackground}
               >
                 <Grid item>
-                  <Typography component="h1" variant="h5">
+                  <Typography  component="h1" variant="h5"  className={classes.paddingTop} aria-label="This is the sign in form. It contains sign in, forget password and sign up section">
                     Sign in
                   </Typography>
                 </Grid>
@@ -146,22 +163,26 @@ const LogIn = (props) => {
                     <Grid container direction="column" spacing={2}>
                       <Grid item>
                         <TextField
+                            className={classes.paddingTop}
+                            //ref={signInFocus}
                             type="email"
                             placeholder="Email"
                             fullWidth
                             name="email"
+                            id="email"
                             variant="outlined"
                             required
-                            autoFocus
                             onChange={changeHandler}
                         />
                       </Grid>
                       <Grid item>
                         <TextField
+                            className={classes.paddingTop}
                             type="password"
                             placeholder="Password"
                             fullWidth
                             name="password"
+                            id="password"
                             variant="outlined"
                             required
                             onChange={changeHandler}
@@ -169,8 +190,10 @@ const LogIn = (props) => {
                       </Grid>
                     </Grid>
                   </form>
-                  <Grid item>
+                  <Grid item className={classes.paddingTop}>
                     <Button
+                        
+                        className={classes.paddingTop}
                         variant="contained"
                         color="primary"
                         type="submit"
@@ -183,6 +206,7 @@ const LogIn = (props) => {
                 </Grid>
                 <Grid item>
                   <Link
+                      className={classes.paddingTop}
                       component="button"
                       variant="body2"
                       //onClick={() => handleRoute('forgotpw')}
@@ -193,6 +217,7 @@ const LogIn = (props) => {
                 </Grid>
                 <Grid item>
                   <Link
+                      className={classes.paddingTop}
                       component="button"
                       variant="body2"
                       onClick={() => gotoSignUp()}
@@ -207,7 +232,7 @@ const LogIn = (props) => {
 
         <div className={classes.notificationContainer}>
           <NotificationError resetReduxStoreAndHideNotifications={resetReduxStoreAndHideNotifications}/>
-          <NotificationSuccess resetReduxStoreAndHideNotifications={resetReduxStoreAndHideNotifications} />
+          <NotificationSuccess resetRsignInFocuseduxStoreAndHideNotifications={resetReduxStoreAndHideNotifications} />
         </div>
 
         <FormDialog

@@ -11,10 +11,6 @@ export default function updatePwReducer(state = initialState, action = {}) {
     switch (action.type) {
         case UPDATE_PW_ERROR: {
             const { record } = action;
-
-            // console.log(record.response.status)
-            // console.log(record.response.data)
-            // console.log(record.response.data.errorMessage)
             return {
                 ...state,
                 updatePwPostErrResponse: record ?

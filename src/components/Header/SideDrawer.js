@@ -1,32 +1,12 @@
 import React from "react";
-import { Router, Route, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import clsx from "clsx";
 import { withStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
-import { createBrowserHistory } from "history";
 
-/* ROUTE COMPONENTS */
-import HomePageContent from "./../HomePageContent/HomePageContent";
-import LogInOrSignUp from "./../Login/LogInOrSignUp";
-import LogIn from "./../Login/LogIn";
-import SignUp from "./../Login/SignUp";
-import SearchPage from "./../SearchPage/SearchPage";
-import BrowsePage from "./../BrowsePage/BrowsePage";
-import DisclaimerPage from "./../DisclaimerPage/DisclaimerPage";
-import About from "../About/About";
-import Sponsor from "../Sponsor/Sponsor";
-import Faq from "../Faq/Faq";
-import ForgotPw from "./../Login/ForgotPw";
-import AudioBook from "./../AudioBook/AudioBook";
-import PersonalDevelopment from "../PersonalDevelopment/PersonalDevelopment"
-import PDFViewer from "../PDFViewer/PDFViewer";
-import UpdatePw from "../Login/UpdatePw";
-import AccountVf from "../Login/AccountVf";
-
-const history = createBrowserHistory();
 
 const drawerWidth = 240;
 const styles = (theme) => ({
@@ -52,9 +32,9 @@ const styles = (theme) => ({
 
 const SideDrawer = (props) => {
   const { classes, variant, open, onClose, onItemClick } = props;
+
   return (
-    <Router history={history}>
-      <Drawer
+    <Drawer
         variant={variant}
         open={open}
         onClose={onClose}
@@ -72,7 +52,7 @@ const SideDrawer = (props) => {
             button
             key={"Home"}
             component={Link}
-            to="/"
+            to="/home"
             onClick={onItemClick("home")}
           >
             <ListItemText>Home</ListItemText>
@@ -82,9 +62,8 @@ const SideDrawer = (props) => {
             button
             key={"Log-In"}
             component={Link}
-            to="/login"
+            to="/"
             onClick={onItemClick("login")}
-            //onClick={() => props.onItemClick("login")}
           >
             <ListItemText>Log-In</ListItemText>
           </ListItem>
@@ -150,29 +129,7 @@ const SideDrawer = (props) => {
           </ListItem>
         </List>
       </Drawer>
-      <main className={classes.content}>
-        {/* <Route exact path="/" component={LogInOrSignUp} /> */}
-        <Route exact path="/" component={HomePageContent} />
-        <Route exact path="/login" component={LogIn} />
-        <Route exact path="/signup" component={SignUp} />
-        <Route exact path="/forgotpw" component={ForgotPw} />
-        <Route exact path="/search" component={SearchPage} />
-        <Route exact path="/browse" component={BrowsePage} />
-        <Route exact path="/disclaimer" component={DisclaimerPage} />
-        <Route exact path="/about" component={About} />
-        <Route exact path="/sponsor" component={Sponsor} />
-        <Route exact path="/faq" component={Faq} />
-        <Route exact path="/audiobook" component={AudioBook} />
-        <Route path="/personaldev" component={PersonalDevelopment} />
-        <Route path="/pdfviewer" component={PDFViewer} />
-        <Route exact path="/updatepw" component={UpdatePw} />
-        <Route exact path="/accountvf" component={AccountVf} />
-        {/* <Route component={NotFound} /> */}
-      </main>
-    </Router>
   );
 };
 
 export default withStyles(styles)(SideDrawer);
-
-//export default SideDrawer;

@@ -26,7 +26,7 @@ export default function signInReducer(state = initialState, action = {}) {
         case SIGN_IN_SUCCESS: {
             const { record } = action;
 
-            // console.log(record)
+             console.log("bbbbbbb ",record)
             return {
                 ...state,
                 signInPostResponse: record,

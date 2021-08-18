@@ -8,14 +8,10 @@ import {
     TextField,
     Typography,
 } from "@material-ui/core";
-
 import {useDispatch, useSelector} from "react-redux";
-
 import {SUCCESS_ON_ACCOUNT_VERIFY} from "../../constants/errorConstants";
-
 import {showNotificationError, showNotificationSuccess,} from "../../store/notification/actionCreator";
 import {accountVf, handleAccountVfError, handleAccountVfSuccess} from "../../store/accountvf/actionCreator";
-
 import NotificationSuccess from "../Notifications/NotificationSuccess";
 import NotificationError from "../Notifications/NotificationError";
 
@@ -67,11 +63,9 @@ const AccountVf = (props) => {
 
     const urlParams = new URLSearchParams(window.location.search);
     const myParam = urlParams.get('token');
-    console.log("here is the token captured");
     console.log(myParam);
 
     const resetReduxStoreAndHideNotifications = () => {
-        console.log("resetting")
         dispatch(handleAccountVfSuccess({data: null}))
         dispatch(handleAccountVfError(null))
         dispatch(showNotificationError(false, ""));
@@ -94,7 +88,7 @@ const AccountVf = (props) => {
 
     const gotoSignIn = () => {
         resetReduxStoreAndHideNotifications()
-        props.history.push('/login');
+        props.history.push('/');
     };
 
     const accountVfClicked = () => {
@@ -125,17 +119,9 @@ const AccountVf = (props) => {
                 "Content-Type": "application/json",
             },
         };
-
-
         dispatch(accountVf(tokenParam,requestConfigToken));
         setState({ ...initialState });
-
     };
-
-
-
-    // const { active, updateWindow } = props
-    // if (active === true) {
 
     return (
         <div>

@@ -69,7 +69,7 @@ const SimpleCard = (props) => {
   } = props;
 
   const goBtnClicked = (routePath) => {
-    //props.history.push(`/${routePath}`)
+    // props.history.push(`/${routePath}`)
   };
 
   return (

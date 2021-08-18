@@ -1,43 +1,41 @@
 import { UPDATE_PW_ERROR, UPDATE_PW_SUCCESS } from "./actionType";
 import axios from "axios";
-import apiConfig from '../../config/apiConfig'
 
-export function updatePw(requestBody,requestConfigToken) {
-    const requestConfig = {
-        headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            "Token": "test",
-        },
-    };
+export function updatePw(requestBody, requestConfigToken) {
+  const requestConfig = {
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Token: "test",
+    },
+  };
 
-    //console.log(">>>>>>>> "+apiConfig.signup.url);
+  const url =
+    "http://ec2-15-206-164-19.ap-south-1.compute.amazonaws.com:5000/user/password/update";
+  return (dispatch) => {
+    let apiUrl = url;
 
-    const url = "http://ec2-13-232-236-83.ap-south-1.compute.amazonaws.com:8080/user/password/update";
-    return (dispatch) => {
-        let apiUrl = url; //`${apiConfig.signup.url}`;
-
-        return axios
-            .post(apiUrl, requestBody, requestConfigToken)
-            .then((response) => {
-                dispatch(handleUpdatePwSuccess(response));
-            })
-            .catch((error) => {
-                dispatch(handleUpdatePwError(error));
-            });
-    };
+    return axios
+      .post(apiUrl, requestBody, requestConfigToken)
+      .then((response) => {
+        dispatch(handleUpdatePwSuccess(response));
+      })
+      .catch((error) => {
+        dispatch(handleUpdatePwError(error));
+      });
+  };
 }
 
 export function handleUpdatePwError(record) {
-    return {
-        type: UPDATE_PW_ERROR,
-        record,
-    };
+  return {
+    type: UPDATE_PW_ERROR,
+    record,
+  };
 }
 
 export function handleUpdatePwSuccess(record) {
-    return {
-        type: UPDATE_PW_SUCCESS,
-        record,
-    };
+  return {
+    type: UPDATE_PW_SUCCESS,
+    record,
+  };
 }

@@ -10,7 +10,7 @@ const tileData = [
         bookName: "Uncle Tom's Cabin",
         Author: "Harriet",
         type:"pdf",
-        pdflink:"../../data/pdf/sample1.pdf"
+        pdflink:"http://localhost:3000/data/pdf/sample1.pdf"
       },
       {
         bookName: "The Great Gatsby",

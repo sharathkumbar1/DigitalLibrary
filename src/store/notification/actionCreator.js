@@ -20,12 +20,13 @@ export function showNotificationSuccess(isShownSuccess, messageSuccess) {
   }
 }
 
-export function showNotificationError(isShownError, messageError) {
+export function showNotificationError(isShownError, messageError, inWhichPage) {
   return {
     type: SHOW_NOTIFICATION_ERROR,
     payload: {
       isShownError,
       messageError,
+      inWhichPage,
     },
   }
 }

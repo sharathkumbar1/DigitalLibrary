@@ -1,6 +1,5 @@
 import { SIGN_UP_ERROR, SIGN_UP_SUCCESS } from "./actionType";
 import axios from "axios";
-import apiConfig from '../../config/apiConfig'
 
 export function signUp(requestBody) {
   const requestConfig = {
@@ -10,11 +9,10 @@ export function signUp(requestBody) {
     },
   };
 
-  //console.log(">>>>>>>> "+apiConfig.signup.url);
-
-  const url = "http://ec2-13-232-236-83.ap-south-1.compute.amazonaws.com:8080/user/signup";
+  const url =
+    "http://ec2-15-206-164-19.ap-south-1.compute.amazonaws.com:5000/user/signup";
   return (dispatch) => {
-    let apiUrl = url; //`${apiConfig.signup.url}`;
+    let apiUrl = url;
 
     return axios
       .post(apiUrl, requestBody, requestConfig)

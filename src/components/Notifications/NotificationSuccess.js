@@ -54,7 +54,7 @@ const NotificationSuccess = (props) => {
 
           <Button
             component={Link}
-            to="/login"
+            to="/"
             onClick={handleRequestClose}
           >
             OK
