@@ -386,7 +386,7 @@ export default function SearchPage(props) {
   const deleteFunc = (isbn) => {
     if (window.confirm("Are you sure?")) {
       return axios.delete(
-        "http://ec2-15-206-164-19.ap-south-1.compute.amazonaws.com:5000/books/" +
+        "http://ec2-13-127-107-224.ap-south-1.compute.amazonaws.com:5000/books/" +
         isbn,
         {
           headers: { "Content-type": "application/json" },
