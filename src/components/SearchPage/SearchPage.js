@@ -1,34 +1,27 @@
-import React, { useState, useEffect } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import SearchIcon from "@material-ui/icons/Search";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import ButtonBase from "@material-ui/core/ButtonBase";
-import ImportContactsOutlinedIcon from "@material-ui/icons/ImportContactsOutlined";
-import CloudDownloadOutlinedIcon from "@material-ui/icons/CloudDownloadOutlined";
 import { IconButton } from "@material-ui/core";
 import carasoul1 from "../../images/carasoul1.png";
 import { fade, makeStyles } from "@material-ui/core/styles";
 import InputBase from "@material-ui/core/InputBase";
 import ClearIcon from "@material-ui/icons/Clear";
 import axios from "axios";
-import { isNotEmpty, isEmpty } from "lodash";
+import { isEmpty } from "lodash";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormGroup from "@material-ui/core/FormGroup";
-import Checkbox from "@material-ui/core/Checkbox";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { setPdfURL } from "../../store/personalDevelopment/actionCreator";
-import { connect } from "react-redux";
-import { withStyles } from "@material-ui/core/styles";
+import { setPdfURL, setPdfISBN } from "../../store/personalDevelopment/actionCreator";
 import {
   saveSearchValue,
-  saveSearchList,
   clearSearchValue,
   clearSearchList,
 } from "../../store/search/ActionCreator";
-import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import AdminPage from "../AdminPage/AdminPage";
 import Popup from "../SearchPage/Popup";
@@ -46,7 +39,7 @@ import NotificationSuccess from "../Notifications/NotificationSuccess";
 import NotificationError from "../Notifications/NotificationError";
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
-import { editAudibles, editPdf, searchCall } from "../../config/apiCalls";
+import { readPDF, editAudibles, editPdf, searchCall } from "../../config/apiCalls";
 
 const styles = makeStyles((theme) => ({
   root: {
@@ -119,9 +112,14 @@ const styles = makeStyles((theme) => ({
   check: {
     paddingLeft: "30px",
   },
+  // alignButton: {
+  //   position: "relative",
+  //   right: "10px",
+  // }
 }));
 
 export default function SearchPage(props) {
+  const searchTextFocus = useRef();
   const [searchBook, setSearchBook] = useState([]);
   const classes = styles();
   const [isOnSelect, setIsOnSelect] = useState(false);
@@ -143,6 +141,8 @@ export default function SearchPage(props) {
   const [admin, setAdmin] = useState("");
   const [isfetched, setIsFetched] = useState(false);
 
+
+
   const searchValue = useSelector((state) => state.searchReducer.searchValue);
   const searchRetainList = useSelector(
     (state) => state.searchReducer.searchList
@@ -152,34 +152,22 @@ export default function SearchPage(props) {
     (state) => state.signInReducer.signInPostResponse
   );
 
+
   useEffect(() => {
     if (signInPostResponse) {
       console.log(signInPostResponse);
+      document.getElementById("searchText").focus();
       const { isAdmin } = signInPostResponse;
       setAdmin(isAdmin);
     }
   }, [signInPostResponse]);
 
   useEffect(() => {
+    //searchTextFocus.current.focus();
     !isEmpty(searchValue) ? setIsOnSelect(true) : setIsOnSelect(false);
     !isEmpty(searchValue) ? setHideCheckbox(true) : setHideCheckbox(false);
     !isEmpty(searchValue) ? setSearchBook(searchValue) : setSearchBook("");
   }, []);
-
-  // useEffect(() => {
-  //   !isEmpty(searchValue) ? setSearchBook(searchValue) : setSearchBook("");
-
-  //   if (!isEmpty(searchRetainList) && !!isfetched) {
-  //     setSearchList(searchRetainList);
-  //     console.log("useEffecttt");
-  //     setIsFetched(false);
-  //   } else {
-  //     setSearchList([]);
-  //   }
-  //   // !isEmpty(searchRetainList) && !!isfetched
-  //   //   ? (setSearchList(searchRetainList), setIsFetched(false))
-  //   //   : setSearchList([]);
-  // }, []);
 
   const resetReduxStoreAndHideNotifications = () => {
     dispatch(handleSignUpSuccess({ data: null }));
@@ -189,7 +177,6 @@ export default function SearchPage(props) {
   };
 
   const handleSearch = (event) => {
-    console.log("printtttt");
     const copySearchBook = event.target.value.toLowerCase();
     setSearchBook(copySearchBook);
     dispatch(saveSearchValue(copySearchBook));
@@ -198,7 +185,6 @@ export default function SearchPage(props) {
       getSearchBooks(searchBook).then((result) => {
         setIsFetched(true);
         setSearchList(result.data);
-        // dispatch(saveSearchList(result.data));
         setOriginalSearchList(result.data);
       });
       console.log("submittttted");
@@ -218,7 +204,6 @@ export default function SearchPage(props) {
       getSearchBooks(searchBook).then((result) => {
         setIsFetched(true);
         setSearchList(result.data);
-        // dispatch(saveSearchList(result.data));
         setOriginalSearchList(result.data);
       });
       console.log("submittttted");
@@ -240,11 +225,24 @@ export default function SearchPage(props) {
     }
   };
 
-  const readClicked = (pdfLink) => {
-    dispatch(setPdfURL(pdfLink));
-    console.log("book opened");
-    dispatch(setPdfURL("../../data/pdf/sample1.pdf"));
-    history.push("/pdfviewer");
+  const readClicked = (file_name, isbn) => {
+    // dispatch(setPdfURL(pdfLink));
+    console.log("book opened ", file_name);
+    //dispatch(setPdfURL("../../data/pdf/sample1.pdf"));
+    //history.push("/pdfviewer");
+
+    let pdfLink = "";
+    readPDF(file_name)
+      .then((response) => {
+        pdfLink = response.data;
+        console.log("response data qqqq" + response.data);
+        dispatch(setPdfURL(pdfLink));
+        dispatch(setPdfISBN(isbn));
+        history.push("/pdfviewer");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   const handleChange = (event) => {
@@ -255,16 +253,9 @@ export default function SearchPage(props) {
       if (event.target.checked) {
         listOfPdfBooks = searchList.filter((obj) => obj.book_type === "PDF");
         setSearchList(listOfPdfBooks);
-        // console.log(originalSearchList);
-        // setSearchList(originalSearchList);
       } else {
         console.log(originalSearchList);
         setSearchList(originalSearchList);
-        // listOfPdfBooks = searchList.filter(
-        //   (obj) => obj.book_type === "Audio Book"
-        // );
-        // console.log(listOfPdfBooks);
-        // setSearchList(listOfPdfBooks);
       }
     }
     if (event.target.name === "audio") {
@@ -273,14 +264,9 @@ export default function SearchPage(props) {
           (obj) => obj.book_type === "Audio Book"
         );
         setSearchList(listOfPdfBooks);
-        // console.log(originalSearchList);
-        // setSearchList(originalSearchList);
       } else {
         console.log(originalSearchList);
         setSearchList(originalSearchList);
-        // listOfPdfBooks = searchList.filter((obj) => obj.book_type === "PDF");
-        // console.log(listOfPdfBooks);
-        // setSearchList(listOfPdfBooks);
       }
     }
     if (event.target.name === "pdf" && event.target.name === "Audio Book") {
@@ -404,55 +390,32 @@ export default function SearchPage(props) {
   };
 
   return (
-    <div style={{ width: 450 }}>
+    <div >
+      {/* style={{ width: 450 }} */}
       <div>
-        <form>
-          <InputBase
-            placeholder="Search…"
-            className={classes.search}
-            // classes={{
-            //   root: classes.inputRoot,
-            //   input: classes.inputInput,
-            // }}
-            inputProps={{ "aria-label": "search" }}
-            value={searchBook}
-            onChange={handleSearch}
-            endAdornment={
-              <InputAdornment position="end">
-                <IconButton aria-label="delete">
-                  <SearchIcon onClick={onSearchSubmit} />
-                  <ClearIcon onClick={onClearSubmit} />
-                </IconButton>
-              </InputAdornment>
-            }
-          />
-        </form>
+
+        <InputBase
+          placeholder="Search…"
+          ref={searchTextFocus}
+          className={classes.search}
+          id="searchText"
+          inputProps={{ "aria-label": "search" }}
+          value={searchBook}
+          onChange={handleSearch}
+
+          endAdornment={
+            <InputAdornment position="end">
+              <IconButton aria-label="delete">
+                <SearchIcon onClick={onSearchSubmit} />
+                <ClearIcon onClick={onClearSubmit} />
+              </IconButton>
+            </InputAdornment>
+          }
+        />
+
         <div>
           {hideCheckbox ? (
             <FormGroup row className={classes.check}>
-              {/* <FormControlLabel
-                control={
-                  <Checkbox
-                    onChange={handleChange}
-                    checked={checkBox.pdf}
-                    name="pdf"
-                    value={pdfBooks}
-                  />
-                }
-                label="pdf"
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={checkBox.audio}
-                    onChange={handleChange}
-                    name="audio"
-                    color="primary"
-                    value={pdfBooks}
-                  />
-                }
-                label="audio"
-              /> */}
               <RadioGroup row aria-label="position">
                 <FormControlLabel
                   value="pdf"
@@ -500,7 +463,7 @@ export default function SearchPage(props) {
                               `/audiobook/${item.file_name}/${item.title}`
                             );
                           } else {
-                            readClicked(item.pdflink);
+                            readClicked(item.file_name, item.isbn);
                           }
                         }}
                       />
@@ -517,7 +480,7 @@ export default function SearchPage(props) {
                               `/audiobook/${item.file_name}/${item.title}`
                             );
                           } else {
-                            readClicked(item.pdflink);
+                            readClicked(item.file_name, item.isbn);
                           }
                         }}
                       >
@@ -528,13 +491,13 @@ export default function SearchPage(props) {
                         <br /> {item.book_type}
                       </Typography>
                       {admin ? (
-                        <div>
+                        <div >
                           <Button
                             variant="text"
                             size="small"
                             style={{
                               position: "relative",
-                              left: "230px",
+                              left: "200px",
                               bottom: "35px",
                             }}
                             onClick={() => openInPopup(item)}
@@ -547,7 +510,7 @@ export default function SearchPage(props) {
                             style={{
                               position: "relative",
                               backgroundColor: "#f03131",
-                              left: "166px",
+                              left: "136px",
                               bottom: "2px",
                             }}
                             onClick={() => {

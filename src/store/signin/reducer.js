@@ -16,17 +16,17 @@ export default function signInReducer(state = initialState, action = {}) {
             return {
                 ...state,
                 signInPostErrResponse: record ?
-                record.response
-                  ? record.response.data.errorMessage
-                  : record
-                : null,
+                    record.response
+                        ? record.response.data.errorMessage
+                        : record
+                    : null,
                 signInPostResponse: null,
             };
         }
         case SIGN_IN_SUCCESS: {
             const { record } = action;
 
-             console.log("bbbbbbb ",record)
+            //console.log("bbbbbbb ",record)
             return {
                 ...state,
                 signInPostResponse: record,

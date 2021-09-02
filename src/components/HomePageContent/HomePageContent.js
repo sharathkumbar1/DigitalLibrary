@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
-  
+
   paper: {
     padding: theme.spacing(2),
     textAlign: 'center',
@@ -56,8 +56,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function HomePageContent() {
+  const homeBooks = useRef();
   const classes = useStyles();
   const theme = useTheme();
+
+  useEffect(() => {
+    homeBooks.current.focus()
+  }, [])
+
   const [value, setValue] = React.useState(0);
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -74,11 +80,11 @@ export default function HomePageContent() {
           variant="fullWidth"
           aria-label="full width tabs example"
         >
-          <Tab label="Books" {...a11yProps(0)} />
+          <Tab label="Books" {...a11yProps(0)} ref={homeBooks} />
           <Tab label="Audibles" {...a11yProps(1)} />
         </Tabs>
       </AppBar>
-      
+
       <TabPanel value={value} index={0} dir={theme.direction}>
         <HomePDFBooks />
       </TabPanel>

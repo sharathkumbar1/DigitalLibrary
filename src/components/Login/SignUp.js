@@ -1,21 +1,21 @@
-import React, {useEffect, useState} from "react";
-import {withStyles} from "@material-ui/core/styles";
+import React, { useEffect, useState } from "react";
+import { withStyles } from "@material-ui/core/styles";
 import {
-    Button,
-    Checkbox,
-    FormControlLabel,
-    Grid,
-    Link,
-    Paper,
-    Radio,
-    RadioGroup,
-    TextField,
-    Typography,
+  Button,
+  Checkbox,
+  FormControlLabel,
+  Grid,
+  Link,
+  Paper,
+  Radio,
+  RadioGroup,
+  TextField,
+  Typography,
 } from "@material-ui/core";
-import {useDispatch, useSelector} from "react-redux";
-import {SUCCESS_ON_SAVE} from "../../constants/errorConstants";
-import {showNotificationError, showNotificationSuccess,} from "../../store/notification/actionCreator";
-import {signUp, handleSignUpError, handleSignUpSuccess} from "../../store/signup/actionCreator";
+import { useDispatch, useSelector } from "react-redux";
+import { SUCCESS_ON_SAVE } from "../../constants/errorConstants";
+import { showNotificationError, showNotificationSuccess, } from "../../store/notification/actionCreator";
+import { signUp, handleSignUpError, handleSignUpSuccess } from "../../store/signup/actionCreator";
 import NotificationSuccess from "../Notifications/NotificationSuccess";
 import NotificationError from "../Notifications/NotificationError";
 
@@ -69,6 +69,7 @@ const SignUp = (props) => {
   };
 
   const { classes } = props;
+  console.log('THies tesin', props);
 
   const dispatch = useDispatch();
   const signUpPostResponse = useSelector(
@@ -80,7 +81,7 @@ const SignUp = (props) => {
 
   const resetReduxStoreAndHideNotifications = () => {
     console.log("resetting")
-    dispatch(handleSignUpSuccess({data: null}))
+    dispatch(handleSignUpSuccess({ data: null }))
     dispatch(handleSignUpError(null))
     dispatch(showNotificationError(false, ""));
     dispatch(showNotificationSuccess(false, ""));
@@ -141,10 +142,10 @@ const SignUp = (props) => {
 
     dispatch(signUp(requestBody));
     setState({ ...initialState });
-    
+
   };
 
-  
+
 
   // const { active, updateWindow } = props
   // if (active === true) {
@@ -177,7 +178,7 @@ const SignUp = (props) => {
                       <TextField
                         type="name"
                         placeholder="First Name"
-                        id = "firstName"
+                        id="firstName"
                         fullWidth
                         name="firstname"
                         variant="outlined"
@@ -243,7 +244,7 @@ const SignUp = (props) => {
                       <RadioGroup
                         aria-label="gender"
                         name="gender"
-                       
+
                         className={classes.genderRadioGroup}
                         onChange={changeHandler}
                       >
@@ -272,7 +273,7 @@ const SignUp = (props) => {
                         onChange={toggleTermsAndConditions}
                         checked={termsAndConditions}
                       />
-                      I agree to Samarthanam {}
+                      I agree to Samarthanam { }
                       <Link
                         href="https://www.samarthanam.org/terms-conditions/"
                         color="inherit"
@@ -289,7 +290,7 @@ const SignUp = (props) => {
                     type="submit"
                     className="button-block"
                     onClick={() => signUpClicked()}
-                    >
+                  >
                     Sign Up
                   </Button>
                 </Grid>

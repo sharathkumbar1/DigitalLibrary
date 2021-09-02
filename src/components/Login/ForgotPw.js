@@ -1,39 +1,67 @@
-import React, { useState, useEffect } from "react";
-import { withStyles } from "@material-ui/core/styles";
-import {
-    Button,
-    Grid,
-    Paper,
-    TextField,
-    Typography,
-} from "@material-ui/core";
+import React, { useEffect } from 'react';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
 import { useDispatch, useSelector } from "react-redux";
-import { forgotPw } from "../../store/forgotpw/actionCreator";
+import { showNotificationError, showNotificationSuccess, } from "../../store/notification/actionCreator";
+import { SUCCESS_ON_SAVE } from "../../constants/errorConstants";
+import { forgotPw, handleForgotPwError, handleForgotPwSuccess } from "../../store/forgotpw/actionCreator";
+import { Grid, Paper, Typography, withStyles } from '@material-ui/core';
+import NotificationError from '../Notifications/NotificationError';
+import NotificationSuccess from '../Notifications/NotificationSuccess';
 
 const styles = (theme) => ({
     button: {
         margin: theme.spacing.unit,
     },
-    forgotpwForm: {
+
+    signupForm: {
         justifyContent: "center",
         minHeight: "90vh",
     },
-    forgotpwBackground: {
+
+    signupBackground: {
+        padding: "20px",
+        minHeight: "62vh",
+        maxWidth: "50vh",
         justifyContent: "center",
-        minHeight: "30vh",
-        padding: "50px",
     },
+    genderRadioGroup: {
+        display: "block",
+    },
+    notificationContainer: {
+        position: "relative",
+    },
+    buttonBlock: {
+        // marginTop: "40px",
+        margin: "auto",
+        paddingTop: "30px"
+    },
+    buttonLeft: {
+        marginLeft: "50px"
+    },
+    buttonRight: {
+        marginLeft: "10px"
+    }
 });
 
-const ForgotPw = (props) => {
+const initialState = {
+    firstname: "",
+    lastname: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    gender: "",
+    termsAndConditions: false,
+};
 
-    const [allValues, setAllValues] = useState({
-        email: '',
-    });
-    const changeHandler = e => {
-        setAllValues({...allValues, [e.target.name]: e.target.value})
-    }
+const ForgotPw = (props) => {
     const { classes } = props;
+
+    //const { open, onCloseButtonClick } = props;
+    const [userEmail, setUserEmail] = React.useState("");
+    const changeHandler = e => {
+        setUserEmail(e.target.value)
+    }
     const dispatch = useDispatch();
     const forgotPwPostResponse = useSelector(
         (state) => state.forgotPwReducer.forgotPwPostResponse
@@ -42,42 +70,57 @@ const ForgotPw = (props) => {
         (state) => state.forgotPwReducer.forgotPwPostErrResponse
     );
 
+    const resetReduxStoreAndHideNotifications = () => {
+        console.log("resetting")
+        dispatch(handleForgotPwSuccess({ data: null }))
+        dispatch(handleForgotPwError(null))
+        dispatch(showNotificationError(false, ""));
+        dispatch(showNotificationSuccess(false, ""));
+    }
+
     useEffect(() => {
         if (forgotPwPostResponse) {
-            console.log("--------------SUCCESS MESSAGE------------");
+            dispatch(showNotificationError(true, SUCCESS_ON_SAVE));
         } else if (forgotPwPostErrResponse) {
-            console.log("--------------ERROR MESSAGE------------");
+            console.log(forgotPwPostErrResponse)
+            dispatch(showNotificationError(true, forgotPwPostErrResponse));
         }
     }, [forgotPwPostResponse, forgotPwPostErrResponse]);
 
-    //
-    const handleRoute = (route) => {
-        props.history.push(`/${route}`);
+    const pwprocessRequest = () => {
+        const pwrequestBody = {
+            email: userEmail,
+        };
+        dispatch(forgotPw(pwrequestBody));
+        ///onCloseButtonClick()
     };
 
-    //
-    const forgotPwClicked = () => {
-        if (allValues.email !== '') {
-            processRequest();
+    function validateEmail(email) {
+        var re = /\S+@\S+\.\S+/;
+        return re.test(email);
+    }
+
+    const onResetButtonClick = () => {
+        console.log("reset email" + userEmail)
+        if (userEmail === "") {
+            dispatch(showNotificationError(true, "Please enter the email ", "reset"));
+        }
+        else if (validateEmail(userEmail) === false) {
+            dispatch(showNotificationError(true, "email format is not valid", "reset"));
+        }
+        else {
+            //dispatch(showNotificationError(false, ""));
+            pwprocessRequest();
         }
     };
 
-    //
-    const processRequest = () => {
-        const requestBody = {
-            emailAddress: allValues.email,
-        };
-
-        dispatch(forgotPw(requestBody));
-        handleRoute("login")
+    const handleRoute = (route) => {
+        props.history.push(`/${route}`);
     };
-
-    // const updateFirstName = (value) => {
-    //
-    // }
-
-    // const { active, updateWindow } = props
-    // if (active === true) {
+    const onCloseButtonClick = () => {
+        ///setOpen(false)
+        handleRoute("")
+    }
 
     return (
         <div>
@@ -88,55 +131,68 @@ const ForgotPw = (props) => {
                         direction="column"
                         justify="center"
                         spacing={2}
-                        classname={classes.forgotpwForm}
+                        className={classes.signupForm}
                     >
                         <Paper
                             variant="elevation"
                             elevation={2}
-                            className={classes.forgotpwBackground}
+                            className={classes.signupBackground}
                         >
                             <Grid item>
-                                <Typography component="h1" variant="h5">
-                                    Forgot Password
+                                <Typography variant="h6">
+                                    Enter your email address and we will send you an email to reset your password
                                 </Typography>
                             </Grid>
                             <Grid item>
                                 <form>
-                                    <Grid container direction="column" spacing={2}>
-                                        <Grid item>
-                                            <TextField
-                                                type="email"
-                                                placeholder="Email"
-                                                fullWidth
-                                                name="email"
-                                                variant="outlined"
-                                                required
-                                                autoFocus
-                                                onChange={changeHandler}
-                                            />
-                                        </Grid>
-                                        <Grid item>
-                                            <Button
-                                                variant="contained"
-                                                color="primary"
-                                                type="submit"
-                                                className="button-block"
-                                                onClick={() => forgotPwClicked()}
-                                            >
-                                                Reset Password
-                                            </Button>
-                                        </Grid>
+                                    <Grid container direction="column" spacing={1}>
+                                        <TextField
+                                            autoFocus
+                                            margin="dense"
+                                            id="name"
+                                            label="Email Address"
+                                            id="resetEmailFormat"
+                                            type="email"
+                                            onChange={changeHandler}
+                                            fullWidth
+                                        />
+
                                     </Grid>
+
+                                    <Grid item className={classes.buttonBlock} justify="center" direction="flex">
+                                        <Button
+                                            variant="contained"
+                                            color="primary"
+                                            className={classes.buttonLeft}
+                                            onClick={() => onCloseButtonClick()}
+                                        >
+                                            Cancel
+                                        </Button>
+                                        <Button
+                                            variant="contained"
+                                            color="primary"
+                                            className={classes.buttonRight}
+                                            onClick={() => onResetButtonClick()}
+                                        >
+                                            Reset
+                                        </Button>
+                                    </Grid>
+
                                 </form>
+
                             </Grid>
+
                         </Paper>
                     </Grid>
                 </Grid>
             </Grid>
+
+            <div className={classes.notificationContainer}>
+                <NotificationError resetReduxStoreAndHideNotifications={resetReduxStoreAndHideNotifications} />
+                <NotificationSuccess resetReduxStoreAndHideNotifications={resetReduxStoreAndHideNotifications} />
+            </div>
         </div>
     );
-    // } else
-    //     return null
 };
 
 export default withStyles(styles)(ForgotPw);
