@@ -7,6 +7,7 @@ import IconButton from '@material-ui/core/IconButton/IconButton'
 import CloseIcon from '@material-ui/icons/Close'
 import ErrorIcon from '@material-ui/icons/Error'
 import { useDispatch, useSelector } from 'react-redux'
+import { useHistory } from "react-router-dom";
 
 const styles = theme => ({
   container: {
@@ -56,47 +57,73 @@ const NotificationError = (props) => {
   const notificationMessage = useSelector(state => state.notification.messageError)
   const notificationInWhichPage = useSelector(state => state.notification.inWhichPage)
   const dispatch = useDispatch()
-  console.log("notificationInWhichPage", notificationInWhichPage)
+  const history = useHistory();
+  ///console.log("notificationInWhichPage", notificationInWhichPage)
 
-  useEffect(()=>{
-    console.log(closeFocusRef);
-    if(notificationIsShown){
+  useEffect(() => {
+    //console.log(closeFocusRef);
+    if (notificationIsShown) {
+      //console.log("inside iffffffff")
+      document.getElementById("notificationCloseBtn").focus();
       closeFocusRef.current.focus();
     }
-    
+
   }, [notificationIsShown])
+
+  // const onKeyDownHandler = (e) => {
+  //   if (e.keyCode === 13) {
+  //     //this.sendMessage();
+  //     console.log("rrrrrrrrr key pressed")
+  //   }
+  // }
+
+
+
   const handleRequestClose = (event, reason) => {
-    console.log("bbb ", notificationMessage);
-   console.log( "aaaa ", notificationMessage.indexOf("gender"))
-    if(notificationMessage.indexOf("Email")>0 && notificationInWhichPage == "login"){
+
+    // console.log("bbb ", notificationMessage);
+    // console.log("aaaa ", notificationMessage.indexOf("email"))
+    // console.log("ccc ", notificationInWhichPage);
+    if ((notificationMessage.indexOf("Email") > 0 || notificationMessage.indexOf("email") > 0) && notificationInWhichPage == "login") {
       document.getElementById("email").focus();
-    } else if(notificationMessage.indexOf("Password")>0 && notificationInWhichPage == "login"){
+    } else if (notificationMessage.indexOf("Password") > 0 && notificationInWhichPage == "login") {
       document.getElementById("password").focus();
-    } else if(notificationMessage.indexOf("the email")>=0 && notificationInWhichPage == "reset"){
-      console.log("1111112")
+    } else if (notificationMessage.indexOf("the email") >= 0 && notificationInWhichPage == "reset") {
+      //console.log("1111112")
       document.getElementById("resetEmailFormat").focus();
-    } else if(notificationMessage.indexOf("email format")>=0 && notificationInWhichPage == "reset"){
-      console.log("22222223")
+    } else if (notificationMessage.indexOf("email format") >= 0 && notificationInWhichPage == "reset") {
+      //console.log("22222223")
       document.getElementById("resetEmailFormat").focus();
-    } else if(notificationMessage.indexOf("First Name")>0){
+    } else if (notificationMessage.indexOf("First Name") > 0) {
       document.getElementById("firstName").focus();
-    } else if(notificationMessage.indexOf("Last Name")>0){
+    } else if (notificationMessage.indexOf("Last Name") > 0) {
       document.getElementById("lastName").focus();
-    } else if(notificationMessage.indexOf("Email")>0){
+    } else if (notificationMessage.indexOf("Email") > 0) {
       document.getElementById("signupEmail").focus();
-    } else if(notificationMessage.indexOf("Password")>0){
+    } else if (notificationMessage.indexOf("Password") > 0) {
       document.getElementById("signupPassword").focus();
-    } else if(notificationMessage.indexOf("Confirm")>=0){
+    } else if (notificationMessage.indexOf("Confirm") >= 0) {
       document.getElementById("confirmPassword").focus();
-    } else if(notificationMessage.indexOf("gender")>0){
+    } else if (notificationMessage.indexOf("gender") > 0) {
       document.getElementById("gender").focus();
-    } else if(notificationMessage.indexOf("Please accept")>=0){
+    } else if (notificationMessage.indexOf("Please accept") >= 0) {
       document.getElementById("agree").focus();
-    } 
+    } else if (notificationMessage.indexOf("verification") >= 0) {
+      history.push("/");
+    }
     props.resetReduxStoreAndHideNotifications()
-
-
   }
+
+
+
+  const handleKeypress = e => {
+    //it triggers by pressing the enter key
+    //console.log("keypress  ... ")
+    if (e.keyCode === 13) {
+      handleRequestClose();
+    }
+  };
+
   const createMarkup = str => {
     return { __html: str }
   }
@@ -126,13 +153,13 @@ const NotificationError = (props) => {
           </span>
         }
         action={[
-          <IconButton key="close" id="notificationCloseBtn" aria-label="Close" color="inherit" ref={closeFocusRef} onClick={handleRequestClose}>
+          <IconButton key="close" id="notificationCloseBtn" aria-label="Close" color="inherit" ref={closeFocusRef} onKeyPress={handleKeypress} onClick={handleRequestClose}>
             <CloseIcon className={classes.closeButton} />
           </IconButton>,
         ]}
       />
     </Snackbar>
-    
+
   )
 }
 

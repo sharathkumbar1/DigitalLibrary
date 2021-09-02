@@ -61,14 +61,14 @@ export default function FormDialog(props) {
             dispatch(showNotificationError(true, "Please enter the email ", "reset"));
         }
         else if (validateEmail(userEmail) === false) {
-            dispatch(showNotificationError(true, "email format is not valid ", "reset"));
+            dispatch(showNotificationError(true, "email format is not valid 111", "reset"));
         }
         else {
             dispatch(showNotificationError(false, ""));
             pwprocessRequest();
         }
     };
-    
+
     return (
         <div>
             <Dialog open={open} aria-labelledby="form-dialog-title">
