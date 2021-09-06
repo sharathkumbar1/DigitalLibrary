@@ -20,6 +20,7 @@ export function forgotPw(requestBody) {
         dispatch(handleForgotPwSuccess(response));
       })
       .catch((response) => {
+        console.log(response);
         dispatch(handleForgotPwError(response));
       });
   };

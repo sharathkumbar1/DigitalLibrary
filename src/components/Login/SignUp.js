@@ -102,6 +102,11 @@ const SignUp = (props) => {
     props.history.push('/');
   };
 
+  function validateEmail(email) {
+    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+  }
+
   const signUpClicked = () => {
     // console.log(termsAndConditions)
     if (firstname === "") {
@@ -112,6 +117,9 @@ const SignUp = (props) => {
     }
     else if (email === "") {
       dispatch(showNotificationError(true, "Please fill in Email"));
+    }
+    else if (validateEmail(email) === false) {
+      dispatch(showNotificationError(true, "Email format is not valid"));
     }
     else if (password === "") {
       dispatch(showNotificationError(true, "Please fill in Password"));

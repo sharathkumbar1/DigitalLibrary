@@ -62,6 +62,7 @@ const NotificationError = (props) => {
 
   useEffect(() => {
     //console.log(closeFocusRef);
+    console.log(notificationIsShown)
     if (notificationIsShown) {
       //console.log("inside iffffffff")
       document.getElementById("notificationCloseBtn").focus();
@@ -81,9 +82,9 @@ const NotificationError = (props) => {
 
   const handleRequestClose = (event, reason) => {
 
-    // console.log("bbb ", notificationMessage);
-    // console.log("aaaa ", notificationMessage.indexOf("email"))
-    // console.log("ccc ", notificationInWhichPage);
+    console.log("bbb ", notificationMessage);
+    console.log("aaaa ", notificationMessage.indexOf("email"))
+    console.log("ccc ", notificationInWhichPage);
     if ((notificationMessage.indexOf("Email") > 0 || notificationMessage.indexOf("email") > 0) && notificationInWhichPage == "login") {
       document.getElementById("email").focus();
     } else if (notificationMessage.indexOf("Password") > 0 && notificationInWhichPage == "login") {
@@ -94,11 +95,13 @@ const NotificationError = (props) => {
     } else if (notificationMessage.indexOf("email format") >= 0 && notificationInWhichPage == "reset") {
       //console.log("22222223")
       document.getElementById("resetEmailFormat").focus();
+    } else if (notificationMessage.indexOf("No user found") >= 0) {
+      document.getElementById("resetEmailFormat").focus();
     } else if (notificationMessage.indexOf("First Name") > 0) {
       document.getElementById("firstName").focus();
     } else if (notificationMessage.indexOf("Last Name") > 0) {
       document.getElementById("lastName").focus();
-    } else if (notificationMessage.indexOf("Email") > 0) {
+    } else if (notificationMessage.indexOf("Email") >= 0) {
       document.getElementById("signupEmail").focus();
     } else if (notificationMessage.indexOf("Password") > 0) {
       document.getElementById("signupPassword").focus();
