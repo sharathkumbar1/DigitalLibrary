@@ -140,6 +140,7 @@ const HomeAudioBooks = () => {
           </Typography>
           <Button
             variant="text"
+            aria-label="Recently added audibles more"
             style={{ marginLeft: "90px" }}
             className={classes.btnAlignRight}
             onClick={recentlyAddedAudioBooks}
@@ -194,6 +195,7 @@ const HomeAudioBooks = () => {
             <Typography className={classes.fonts}> Saved Audibles</Typography>
             <Button
               variant="text"
+              aria-label="Saved audibles more"
               style={{ marginLeft: "175px" }}
               className={classes.btnAlignRight}
               onClick={bookMarkedAudio}
@@ -253,6 +255,7 @@ const HomeAudioBooks = () => {
             </Typography>
             <Button
               variant="text"
+              aria-label="Recently viewed audibles more"
               className={classes.btnAlignRight}
               onClick={recentlyViewed}
             >

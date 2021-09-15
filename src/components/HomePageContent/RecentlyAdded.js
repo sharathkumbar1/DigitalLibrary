@@ -111,7 +111,7 @@ function RecentlyAdded() {
                     >
                       <img
                         className={classes.img}
-                        alt="complex"
+                        alt={item.title}
                         src={item.thumbnail_url}
                         onError={(e) => {
                           e.target.onerror = null;

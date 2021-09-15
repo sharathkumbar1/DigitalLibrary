@@ -114,7 +114,7 @@ function RecentlyViewed() {
                     >
                       <img
                         className={classes.img}
-                        alt="complex"
+                        alt={item.book.title}
                         src={item.book.thumbnail_url}
                       />
                     </ButtonBase>
