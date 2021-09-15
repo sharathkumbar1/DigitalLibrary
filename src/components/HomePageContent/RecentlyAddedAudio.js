@@ -97,7 +97,7 @@ function RecentlyAddedAudio() {
                     <ButtonBase className={classes.image}>
                       <img
                         className={classes.img}
-                        alt="complex"
+                        alt={item.title}
                         src={item.thumbnail_url}
                         onClick={() =>
                           openAudioBook(item.file_name, item.title)

@@ -451,7 +451,7 @@ export default function SearchPage(props) {
                     <ButtonBase className={classes.image}>
                       <img
                         className={classes.img}
-                        alt="complex"
+                        alt={item.title}
                         src={item.thumbnail_url}
                         onError={(e) => {
                           e.target.onerror = null;

@@ -147,7 +147,7 @@ const HomePDFBooks = () => {
         </Typography>
         <Button
           variant="text"
-          //aria-label="Recently added books more"
+          aria-label="Recently added books more"
           style={{ marginLeft: "115px" }}
           className={classes.btnAlignRight}
           onClick={recentlyAddedBooks}
@@ -197,6 +197,7 @@ const HomePDFBooks = () => {
         <Typography className={classes.fonts}>Bookmarked Books</Typography>
         <Button
           variant="text"
+          aria-label="Bookmarked books more"
           style={{ marginLeft: "145px" }}
           className={classes.btnAlignRight}
           onClick={bookMarked}
@@ -247,6 +248,7 @@ const HomePDFBooks = () => {
         <Typography className={classes.fonts}>Recently Viewed Books</Typography>
         <Button
           variant="text"
+          aria-label="Recently viewed books more"
           style={{ marginLeft: "110px" }}
           className={classes.btnAlignRight}
           onClick={recentlyViewed}

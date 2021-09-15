@@ -87,7 +87,7 @@ function ViewedAudio() {
                     <ButtonBase className={classes.image}>
                       <img
                         className={classes.img}
-                        alt="complex"
+                        alt={item.book.title}
                         src={item.book.thumbnail_url}
                         onError={(e) => {
                           e.target.onerror = null;
