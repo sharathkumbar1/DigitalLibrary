@@ -152,6 +152,24 @@ export default function SearchPage(props) {
     (state) => state.signInReducer.signInPostResponse
   );
 
+  useEffect(() => {
+
+    console.log("search.... ", searchBook);
+    if (!isEmpty(searchBook)) {
+
+      getSearchBooks(searchBook).then((result) => {
+
+        setIsFetched(true);
+        setSearchList(result.data);
+        setOriginalSearchList(result.data);
+      });
+      console.log("submittttted");
+      console.log(searchList);
+      console.log("search.... ", searchBook);
+      setIsOnSelect(true);
+      setHideCheckbox(true);
+    }
+  }, [searchBook])
 
   useEffect(() => {
     if (signInPostResponse) {
@@ -178,21 +196,9 @@ export default function SearchPage(props) {
 
   const handleSearch = (event) => {
     const copySearchBook = event.target.value.toLowerCase();
+    console.log("copySearchBook ", copySearchBook)
     setSearchBook(copySearchBook);
     dispatch(saveSearchValue(copySearchBook));
-
-    if (!isEmpty(searchBook)) {
-      getSearchBooks(searchBook).then((result) => {
-        setIsFetched(true);
-        setSearchList(result.data);
-        setOriginalSearchList(result.data);
-      });
-      console.log("submittttted");
-      console.log(searchList);
-      console.log(searchBook);
-      setIsOnSelect(true);
-      setHideCheckbox(true);
-    }
   };
 
   function getSearchBooks(searchBook) {
@@ -213,8 +219,15 @@ export default function SearchPage(props) {
       setHideCheckbox(true);
     }
   };
+  const onClear = (e) => {
+    console.log("kkkk", e.keyCode)
+    if (e.keyCode == 13 || e.which == 13 || e.key == 'Enter') {
+      onSearchSubmit();
+    }
+  };
 
   const onClearSubmit = (event) => {
+    console.log("clear search results")
     setSearchBook("");
     setPdfBooks("");
     setIsOnSelect(false);
@@ -372,7 +385,7 @@ export default function SearchPage(props) {
   const deleteFunc = (isbn) => {
     if (window.confirm("Are you sure?")) {
       return axios.delete(
-        "http://ec2-13-127-107-224.ap-south-1.compute.amazonaws.com:5000/books/" +
+        "http://ec2-65-2-70-66.ap-south-1.compute.amazonaws.com:5000/books/" +
         isbn,
         {
           headers: { "Content-type": "application/json" },
@@ -402,12 +415,13 @@ export default function SearchPage(props) {
           inputProps={{ "aria-label": "search" }}
           value={searchBook}
           onChange={handleSearch}
+          onKeyPress={(e) => onClear(e)}
 
           endAdornment={
             <InputAdornment position="end">
-              <IconButton aria-label="delete">
-                <SearchIcon onClick={onSearchSubmit} />
-                <ClearIcon onClick={onClearSubmit} />
+              <IconButton aria-label="clear text" onClick={onClearSubmit}>
+                {/* <SearchIcon onKeyPress={(e) => onClear(e)} onClick={onSearchSubmit} /> */}
+                <ClearIcon />
               </IconButton>
             </InputAdornment>
           }
