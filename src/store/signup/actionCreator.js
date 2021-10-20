@@ -10,7 +10,7 @@ export function signUp(requestBody) {
   };
 
   const url =
-    "http://ec2-65-2-70-66.ap-south-1.compute.amazonaws.com:5000/user/signup";
+    "http://ec2-52-66-200-15.ap-south-1.compute.amazonaws.com:5000/user/signup";
   return (dispatch) => {
     let apiUrl = url;
 
