@@ -11,7 +11,7 @@ const error = (e) => {
 
 export function HomePageBooksPDF(currentUserId) {
   return fetch(
-    "http://ec2-65-2-70-66.ap-south-1.compute.amazonaws.com:5000/home_page_books?user_id=" +
+    "http://ec2-52-66-200-15.ap-south-1.compute.amazonaws.com:5000/home_page_books?user_id=" +
     currentUserId +
     "&book_type=PDF"
   );
@@ -19,7 +19,7 @@ export function HomePageBooksPDF(currentUserId) {
 
 export function readPDF(file_name) {
   return axios.get(
-    "http://ec2-65-2-70-66.ap-south-1.compute.amazonaws.com:5000/download_url?file_name=" +
+    "http://ec2-52-66-200-15.ap-south-1.compute.amazonaws.com:5000/download_url?file_name=" +
     file_name +
     ".pdf"
   );
@@ -27,13 +27,13 @@ export function readPDF(file_name) {
 
 export function recentlyAddedPDFPage() {
   return fetch(
-    "http://ec2-65-2-70-66.ap-south-1.compute.amazonaws.com:5000/recently_added_books?book_type=PDF"
+    "http://ec2-52-66-200-15.ap-south-1.compute.amazonaws.com:5000/recently_added_books?book_type=PDF"
   );
 }
 
 export function bookmarkedPDFPage(currentUserId) {
   return fetch(
-    "http://ec2-65-2-70-66.ap-south-1.compute.amazonaws.com:5000/users/" +
+    "http://ec2-52-66-200-15.ap-south-1.compute.amazonaws.com:5000/users/" +
     currentUserId +
     "/bookmarked_books?book_type=PDF"
   );
@@ -41,7 +41,7 @@ export function bookmarkedPDFPage(currentUserId) {
 
 export function viewedPDFPage(currentUserId) {
   return fetch(
-    "http://ec2-65-2-70-66.ap-south-1.compute.amazonaws.com:5000/users/" +
+    "http://ec2-52-66-200-15.ap-south-1.compute.amazonaws.com:5000/users/" +
     currentUserId +
     "/recently_viewed_books?book_type=PDF"
   );
@@ -49,7 +49,7 @@ export function viewedPDFPage(currentUserId) {
 
 export function savePDFCall(requestBody, requestConfig) {
   return axios.post(
-    "http://ec2-65-2-70-66.ap-south-1.compute.amazonaws.com:5000/bookmarked_books",
+    "http://ec2-52-66-200-15.ap-south-1.compute.amazonaws.com:5000/bookmarked_books",
     requestBody,
     requestConfig
   );
@@ -57,7 +57,7 @@ export function savePDFCall(requestBody, requestConfig) {
 
 export function recentlyViewedPDFCall(requestBody, requestConfig) {
   return axios.post(
-    "http://ec2-65-2-70-66.ap-south-1.compute.amazonaws.com:5000/recently_viewed_books",
+    "http://ec2-52-66-200-15.ap-south-1.compute.amazonaws.com:5000/recently_viewed_books",
     requestBody,
     requestConfig
   );
@@ -65,7 +65,7 @@ export function recentlyViewedPDFCall(requestBody, requestConfig) {
 
 export function HomePageBooksAudio(currentUserId) {
   return fetch(
-    "http://ec2-65-2-70-66.ap-south-1.compute.amazonaws.com:5000/home_page_books?user_id=" +
+    "http://ec2-52-66-200-15.ap-south-1.compute.amazonaws.com:5000/home_page_books?user_id=" +
     currentUserId +
     "&per_page=3&book_type=AUDIO_BOOK"
   );
@@ -73,7 +73,7 @@ export function HomePageBooksAudio(currentUserId) {
 
 export function listenAudibles(file_name) {
   return axios.get(
-    "http://ec2-65-2-70-66.ap-south-1.compute.amazonaws.com:5000/download_url?file_name=" +
+    "http://ec2-52-66-200-15.ap-south-1.compute.amazonaws.com:5000/download_url?file_name=" +
     file_name +
     ".mp3"
   );
@@ -81,14 +81,14 @@ export function listenAudibles(file_name) {
 
 export function audioBookUrl(titleName) {
   return axios.get(
-    "http://ec2-65-2-70-66.ap-south-1.compute.amazonaws.com:5000/search?bookType=Audio_Book&book_name=" +
+    "http://ec2-52-66-200-15.ap-south-1.compute.amazonaws.com:5000/search?bookType=Audio_Book&book_name=" +
     titleName
   );
 }
 
 export function saveAudioCall(requestBody, requestConfig) {
   return axios.post(
-    "http://ec2-65-2-70-66.ap-south-1.compute.amazonaws.com:5000/bookmarked_books",
+    "http://ec2-52-66-200-15.ap-south-1.compute.amazonaws.com:5000/bookmarked_books",
     requestBody,
     requestConfig
   );
@@ -96,7 +96,7 @@ export function saveAudioCall(requestBody, requestConfig) {
 
 export function recentlyViewedAudioCall(requestBody, requestConfig) {
   return axios.post(
-    "http://ec2-65-2-70-66.ap-south-1.compute.amazonaws.com:5000/recently_viewed_books",
+    "http://ec2-52-66-200-15.ap-south-1.compute.amazonaws.com:5000/recently_viewed_books",
     requestBody,
     requestConfig
   );
@@ -104,13 +104,13 @@ export function recentlyViewedAudioCall(requestBody, requestConfig) {
 
 export function recentlyAddedAudioPage() {
   return fetch(
-    "http://ec2-65-2-70-66.ap-south-1.compute.amazonaws.com:5000/recently_added_books?book_type=AUDIO_BOOK"
+    "http://ec2-52-66-200-15.ap-south-1.compute.amazonaws.com:5000/recently_added_books?book_type=AUDIO_BOOK"
   );
 }
 
 export function bookmarkedAudioPage(currentUserId) {
   return fetch(
-    "http://ec2-65-2-70-66.ap-south-1.compute.amazonaws.com:5000/users/" +
+    "http://ec2-52-66-200-15.ap-south-1.compute.amazonaws.com:5000/users/" +
     currentUserId +
     "/bookmarked_books?book_type=AUDIO_BOOK"
   );
@@ -118,7 +118,7 @@ export function bookmarkedAudioPage(currentUserId) {
 
 export function viewedAudioPage(currentUserId) {
   return fetch(
-    "http://ec2-65-2-70-66.ap-south-1.compute.amazonaws.com:5000/users/" +
+    "http://ec2-52-66-200-15.ap-south-1.compute.amazonaws.com:5000/users/" +
     currentUserId +
     "/recently_viewed_books?book_type=AUDIO_BOOK"
   );
@@ -126,7 +126,7 @@ export function viewedAudioPage(currentUserId) {
 
 export function searchCall(searchBook) {
   return axios.get(
-    "http://ec2-65-2-70-66.ap-south-1.compute.amazonaws.com:5000/search",
+    "http://ec2-52-66-200-15.ap-south-1.compute.amazonaws.com:5000/search",
     {
       headers: { "Content-type": "application/json" },
       params: {
@@ -138,19 +138,19 @@ export function searchCall(searchBook) {
 
 export function getAuthorList() {
   return fetch(
-    "http://ec2-65-2-70-66.ap-south-1.compute.amazonaws.com:5000/authors"
+    "http://ec2-52-66-200-15.ap-south-1.compute.amazonaws.com:5000/authors"
   );
 }
 
 export function getCategoryList() {
   return fetch(
-    "http://ec2-65-2-70-66.ap-south-1.compute.amazonaws.com:5000/book_categories?"
+    "http://ec2-52-66-200-15.ap-south-1.compute.amazonaws.com:5000/book_categories?"
   );
 }
 
 export function postPdf(bookDetails, requestConfig) {
   return axios.post(
-    "http://ec2-65-2-70-66.ap-south-1.compute.amazonaws.com:5000/books",
+    "http://ec2-52-66-200-15.ap-south-1.compute.amazonaws.com:5000/books",
     bookDetails,
     requestConfig
   );
@@ -158,7 +158,7 @@ export function postPdf(bookDetails, requestConfig) {
 
 export function postAudioBook(bookDetailsAudio, requestConfig) {
   return axios.post(
-    "http://ec2-65-2-70-66.ap-south-1.compute.amazonaws.com:5000/books",
+    "http://ec2-52-66-200-15.ap-south-1.compute.amazonaws.com:5000/books",
     bookDetailsAudio,
     requestConfig
   );
@@ -166,7 +166,7 @@ export function postAudioBook(bookDetailsAudio, requestConfig) {
 
 export function editPdf(isbn, bookDetails, requestConfig) {
   return axios.put(
-    "http://ec2-65-2-70-66.ap-south-1.compute.amazonaws.com:5000/books/" +
+    "http://ec2-52-66-200-15.ap-south-1.compute.amazonaws.com:5000/books/" +
     isbn,
     bookDetails,
     requestConfig
@@ -175,7 +175,7 @@ export function editPdf(isbn, bookDetails, requestConfig) {
 
 export function editAudibles(isbn, bookDetailsAudio, requestConfig) {
   return axios.put(
-    "http://ec2-65-2-70-66.ap-south-1.compute.amazonaws.com:5000/books/" +
+    "http://ec2-52-66-200-15.ap-south-1.compute.amazonaws.com:5000/books/" +
     isbn,
     bookDetailsAudio,
     requestConfig
