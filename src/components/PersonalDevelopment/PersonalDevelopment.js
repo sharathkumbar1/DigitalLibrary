@@ -90,7 +90,7 @@ const PersonalDevelopment = () => {
   const readClicked = (file_name) => {
     console.log("pdf file_name " + file_name);
 
-    const apiUrl = "http://ec2-52-66-200-15.ap-south-1.compute.amazonaws.com:5000/download_url?file_name=";
+    const apiUrl = "http://ec2-65-1-112-155.ap-south-1.compute.amazonaws.com:5000/download_url?file_name=";
     let pdfLink = "";
     axios
       .get(apiUrl + file_name)
