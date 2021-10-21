@@ -9,7 +9,7 @@ export function forgotPw(requestBody) {
     },
   };
 
-  const url = "http://ec2-52-66-200-15.ap-south-1.compute.amazonaws.com:5000/user/password/forgot";
+  const url = "http://ec2-65-1-112-155.ap-south-1.compute.amazonaws.com:5000/user/password/forgot";
   return (dispatch) => {
     let apiUrl = url;
 

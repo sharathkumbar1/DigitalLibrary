@@ -11,7 +11,7 @@ export function updatePw(requestBody, requestConfigToken) {
   };
 
   const url =
-    "http://ec2-52-66-200-15.ap-south-1.compute.amazonaws.com:5000/user/password/update";
+    "http://ec2-65-1-112-155.ap-south-1.compute.amazonaws.com:5000/user/password/update";
   return (dispatch) => {
     let apiUrl = url;
 
