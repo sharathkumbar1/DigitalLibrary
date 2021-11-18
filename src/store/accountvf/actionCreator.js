@@ -12,7 +12,7 @@ export function accountVf(tokenParam, requestConfigToken) {
   };
 
   const url =
-    "http://ec2-65-1-112-155.ap-south-1.compute.amazonaws.com:5000/user/signup/verify?token=";
+    "http://ec2-52-66-201-52.ap-south-1.compute.amazonaws.com:5000/user/signup/verify?token=";
   return (dispatch) => {
     let apiUrl = url + tokenParam; //`${apiConfig.signup.url}`;
     console.log(apiUrl);
