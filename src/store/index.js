@@ -2,12 +2,13 @@ import { combineReducers } from "redux";
 import signUpReducer from "./signup/reducer";
 import signInReducer from "./signin/reducer";
 import forgotPwReducer from "./forgotpw/reducer";
-import notification from './notification/reducer'
-import headerReducer from './header/reducer';
-import personalDevelopment from './personalDevelopment/reducer';
+import notification from "./notification/reducer";
+import headerReducer from "./header/reducer";
+import personalDevelopment from "./personalDevelopment/reducer";
 import updatePwReducer from "./updatepw/reducer";
 import accountVfReducer from "./accountvf/reducer";
 import searchReducer from "./search/reducer";
+import subCategoryReducer from "./subCategory/reducer";
 
 const rootReducer = combineReducers({
   signUpReducer,
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
   updatePwReducer,
   accountVfReducer,
   searchReducer,
+  subCategoryReducer,
 });
 
 export default rootReducer;

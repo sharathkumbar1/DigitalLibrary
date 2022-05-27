@@ -16,12 +16,19 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormGroup from "@material-ui/core/FormGroup";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { setPdfURL, setPdfISBN } from "../../store/personalDevelopment/actionCreator";
+import {
+  setPdfURL,
+  setPdfISBN,
+} from "../../store/personalDevelopment/actionCreator";
 import {
   saveSearchValue,
   clearSearchValue,
   clearSearchList,
 } from "../../store/search/ActionCreator";
+import {
+  setSubCategoryId,
+  setSubCategoryName,
+} from "../../store/subCategory/actionCreator";
 import Button from "@material-ui/core/Button";
 import AdminPage from "../AdminPage/AdminPage";
 import Popup from "../SearchPage/Popup";
@@ -39,7 +46,31 @@ import NotificationSuccess from "../Notifications/NotificationSuccess";
 import NotificationError from "../Notifications/NotificationError";
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
-import { readPDF, editAudibles, editPdf, searchCall } from "../../config/apiCalls";
+import {
+  readPDF,
+  editAudibles,
+  editPdf,
+  searchCall,
+  getCategoryList,
+  getAllSubCategories,
+} from "../../config/apiCalls";
+import Link from "@material-ui/core/Link";
+import Accordion from "@material-ui/core/Accordion";
+import AccordionSummary from "@material-ui/core/AccordionSummary";
+import AccordionDetails from "@material-ui/core/AccordionDetails";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import ArrowRightIcon from "@mui/icons-material/ArrowRight";
+import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import CloseIcon from "@mui/icons-material/Close";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
+import HelpIcon from "@material-ui/icons/Help";
+import { styled } from "@mui/material/styles";
+import PropTypes from "prop-types";
+import Box from "@material-ui/core/Box";
 
 const styles = makeStyles((theme) => ({
   root: {
@@ -118,6 +149,69 @@ const styles = makeStyles((theme) => ({
   // }
 }));
 
+const BootstrapDialog = styled(Dialog)(({ theme }) => ({
+  "& .MuiDialogContent-root": {
+    padding: theme.spacing(2),
+  },
+  "& .MuiDialogActions-root": {
+    padding: theme.spacing(1),
+  },
+}));
+
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`full-width-tabpanel-${index}`}
+      aria-labelledby={`full-width-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box p={3}>
+          <div>{children}</div>
+        </Box>
+      )}
+    </div>
+  );
+}
+
+TabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.any.isRequired,
+  value: PropTypes.any.isRequired,
+};
+
+const BootstrapDialogTitle = (props) => {
+  const { children, onClose, ...other } = props;
+  return (
+    <DialogTitle sx={{ m: 0, p: 2 }} {...other}>
+      {children}
+      {onClose ? (
+        <IconButton
+          aria-label="close"
+          onClick={onClose}
+          sx={{
+            position: "absolute",
+            right: 8,
+            top: 8,
+            color: (theme) => theme.palette.grey[500],
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
+      ) : null}
+    </DialogTitle>
+  );
+};
+BootstrapDialogTitle.propTypes = {
+  children: PropTypes.node,
+  onClose: PropTypes.func.isRequired,
+};
+
+
 export default function SearchPage(props) {
   const searchTextFocus = useRef();
   const [searchBook, setSearchBook] = useState([]);
@@ -127,8 +221,8 @@ export default function SearchPage(props) {
   const [error, setError] = useState(null);
   let history = useHistory();
   const [checkBox, setCheckBox] = React.useState({
-    pdf: true,
-    audio: true,
+    Book: true,
+    Audible: true,
   });
   const [originalSearchList, setOriginalSearchList] = useState([]);
   const [pdfBooks, setPdfBooks] = useState([]);
@@ -140,8 +234,10 @@ export default function SearchPage(props) {
   const [recordsForEdit, setRecordsForEdit] = useState(null);
   const [admin, setAdmin] = useState("");
   const [isfetched, setIsFetched] = useState(false);
-
-
+  const [categoryList, setCategoryList] = useState([]);
+  const [showCategory, setShowCategory] = useState(true);
+  const [subCategoryList, setSubCategoryList] = useState([]);
+  const [open, setOpen] = React.useState(false);
 
   const searchValue = useSelector((state) => state.searchReducer.searchValue);
   const searchRetainList = useSelector(
@@ -152,13 +248,17 @@ export default function SearchPage(props) {
     (state) => state.signInReducer.signInPostResponse
   );
 
-  useEffect(() => {
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
 
+  useEffect(() => {
     console.log("search.... ", searchBook);
     if (!isEmpty(searchBook)) {
-
       getSearchBooks(searchBook).then((result) => {
-
         setIsFetched(true);
         setSearchList(result.data);
         setOriginalSearchList(result.data);
@@ -168,8 +268,9 @@ export default function SearchPage(props) {
       console.log("search.... ", searchBook);
       setIsOnSelect(true);
       setHideCheckbox(true);
+      setShowCategory(false);
     }
-  }, [searchBook])
+  }, [searchBook]);
 
   useEffect(() => {
     if (signInPostResponse) {
@@ -185,7 +286,29 @@ export default function SearchPage(props) {
     !isEmpty(searchValue) ? setIsOnSelect(true) : setIsOnSelect(false);
     !isEmpty(searchValue) ? setHideCheckbox(true) : setHideCheckbox(false);
     !isEmpty(searchValue) ? setSearchBook(searchValue) : setSearchBook("");
+    !isEmpty(searchValue) ? setShowCategory(false) : setShowCategory(true);
+
+    getCategoryList()
+      .then((result) => result.json())
+      .then(
+        (result) => {
+          setCategoryList(result);
+          console.log(result);
+        },
+        (error) => {
+          setError(error);
+        }
+      );
   }, []);
+
+  useEffect(() => {
+    getAllSubCategories().then((result) => {
+      const { data = [] } = result;
+      setSubCategoryList(result);
+    });
+  }, []);
+
+  const { data = [] } = subCategoryList;
 
   const resetReduxStoreAndHideNotifications = () => {
     dispatch(handleSignUpSuccess({ data: null }));
@@ -196,7 +319,7 @@ export default function SearchPage(props) {
 
   const handleSearch = (event) => {
     const copySearchBook = event.target.value.toLowerCase();
-    console.log("copySearchBook ", copySearchBook)
+    console.log("copySearchBook ", copySearchBook);
     setSearchBook(copySearchBook);
     dispatch(saveSearchValue(copySearchBook));
   };
@@ -220,18 +343,19 @@ export default function SearchPage(props) {
     }
   };
   const onClear = (e) => {
-    console.log("kkkk", e.keyCode)
-    if (e.keyCode == 13 || e.which == 13 || e.key == 'Enter') {
+    console.log("kkkk", e.keyCode);
+    if (e.keyCode == 13 || e.which == 13 || e.key == "Enter") {
       onSearchSubmit();
     }
   };
 
   const onClearSubmit = (event) => {
-    console.log("clear search results")
+    console.log("clear search results");
     setSearchBook("");
     setPdfBooks("");
     setIsOnSelect(false);
     setHideCheckbox(false);
+    setShowCategory(true);
     if (!isfetched) {
       dispatch(clearSearchValue());
       dispatch(clearSearchList());
@@ -258,34 +382,34 @@ export default function SearchPage(props) {
       });
   };
 
-  const handleChange = (event) => {
-    setCheckBox({ ...checkBox, [event.target.name]: event.target.checked });
-    console.log(event.target.checked);
-    console.log(event.target.name);
-    if (event.target.name === "pdf") {
-      if (event.target.checked) {
-        listOfPdfBooks = searchList.filter((obj) => obj.book_type === "PDF");
-        setSearchList(listOfPdfBooks);
-      } else {
-        console.log(originalSearchList);
-        setSearchList(originalSearchList);
-      }
-    }
-    if (event.target.name === "audio") {
-      if (event.target.checked) {
-        listOfPdfBooks = searchList.filter(
-          (obj) => obj.book_type === "Audio Book"
-        );
-        setSearchList(listOfPdfBooks);
-      } else {
-        console.log(originalSearchList);
-        setSearchList(originalSearchList);
-      }
-    }
-    if (event.target.name === "pdf" && event.target.name === "Audio Book") {
-      setSearchList(originalSearchList);
-    }
-  };
+  // const handleChange = (event) => {
+  //   setCheckBox({ ...checkBox, [event.target.name]: event.target.checked });
+  //   console.log(event.target.checked);
+  //   console.log(event.target.name);
+  //   if (event.target.name === "pdf") {
+  //     if (event.target.checked) {
+  //       listOfPdfBooks = searchList.filter((obj) => obj.book_type === "PDF");
+  //       setSearchList(listOfPdfBooks);
+  //     } else {
+  //       console.log(originalSearchList);
+  //       setSearchList(originalSearchList);
+  //     }
+  //   }
+  //   if (event.target.name === "audio") {
+  //     if (event.target.checked) {
+  //       listOfPdfBooks = searchList.filter(
+  //         (obj) => obj.book_type === "Audio Book"
+  //       );
+  //       setSearchList(listOfPdfBooks);
+  //     } else {
+  //       console.log(originalSearchList);
+  //       setSearchList(originalSearchList);
+  //     }
+  //   }
+  //   if (event.target.name === "pdf" && event.target.name === "Audio Book") {
+  //     setSearchList(originalSearchList);
+  //   }
+  // };
 
   const handleChangePdf = (event) => {
     setSearchList(originalSearchList);
@@ -293,7 +417,7 @@ export default function SearchPage(props) {
     console.log(event.target.name);
 
     listOfPdfBooks = originalSearchList.filter(
-      (obj) => obj.book_type === "PDF"
+      (obj) => obj.book_type === "BOOK"
     );
     setSearchList(listOfPdfBooks);
     console.log(listOfPdfBooks);
@@ -304,7 +428,7 @@ export default function SearchPage(props) {
     console.log(event.target.checked);
     console.log(event.target.name);
     listOfPdfBooks = originalSearchList.filter(
-      (obj) => obj.book_type === "Audio Book"
+      (obj) => obj.book_type === "AUDIBLE"
     );
     setSearchList(listOfPdfBooks);
     console.log(listOfPdfBooks);
@@ -312,7 +436,7 @@ export default function SearchPage(props) {
 
   const handleRoute = (route) => {
     listOfPdfBooks = searchList.filter((obj) =>
-      obj.book_type === "Audio Book" ? history.push(`${route}`) : ""
+      obj.book_type === "AUDIBLE" ? history.push(`${route}`) : ""
     );
   };
 
@@ -386,7 +510,7 @@ export default function SearchPage(props) {
     if (window.confirm("Are you sure?")) {
       return axios.delete(
         "http://ec2-52-66-201-52.ap-south-1.compute.amazonaws.com:5000/books/" +
-        isbn,
+          isbn,
         {
           headers: { "Content-type": "application/json" },
         }
@@ -402,11 +526,25 @@ export default function SearchPage(props) {
     setSearchList(indexCopy);
   };
 
+  const openSubCatBooks = (sub_category_id, sub_category_name) => {
+    console.log("id = " + sub_category_id);
+    // getSubCategories(category_id).then((response) => {
+    //   const { data = [] } = response;
+
+    //   console.log(
+    //     "response data" + data.map((obj={}) => {const })
+    //   );
+    // });
+
+    dispatch(setSubCategoryId(sub_category_id));
+    dispatch(setSubCategoryName(sub_category_name));
+    history.push("/sub_category");
+  };
+
   return (
-    <div >
+    <div>
       {/* style={{ width: 450 }} */}
       <div>
-
         <InputBase
           placeholder="Search…"
           ref={searchTextFocus}
@@ -416,7 +554,6 @@ export default function SearchPage(props) {
           value={searchBook}
           onChange={handleSearch}
           onKeyPress={(e) => onClear(e)}
-
           endAdornment={
             <InputAdornment position="end">
               <IconButton aria-label="clear text" onClick={onClearSubmit}>
@@ -427,23 +564,145 @@ export default function SearchPage(props) {
           }
         />
 
+        {showCategory ? (
+          <div>
+            <Typography
+              variant="h5"
+              style={{
+                paddingLeft: "20px",
+                fontWeight: "bold",
+                fontStyle: "italic",
+              }}
+            >
+              Categories
+              <HelpIcon
+                    onClick={handleClickOpen}
+                    color="primary"
+                    style={{
+                      position: "relative",
+                      top: "5px",
+                      left: "10px"
+                    }}
+                  />
+            </Typography>
+            <BootstrapDialog
+                  onClose={handleClose}
+                  aria-labelledby="customized-dialog-title"
+                  open={open}
+                >
+                  <BootstrapDialogTitle
+                    id="customized-dialog-title"
+                    onClose={handleClose}
+                  >
+                    Info
+                  </BootstrapDialogTitle>
+                  <DialogContent dividers>
+                    <Typography gutterBottom>
+                      <List sx={{ width: "100%", bgcolor: "background.paper" }}>
+                        {[
+                          "Category Name (Total number of books in a category)",
+                          "> Sub-category name (Total number of books in sub-category)"
+                          
+                        ].map((value) => (
+                          <ListItem key={value} disableGutters>
+                            <ListItemText primary={`${value}`} />
+                          </ListItem>
+                        ))}
+                      </List>
+                    </Typography>
+                  </DialogContent>
+                </BootstrapDialog>
+            {categoryList.map((value) => (
+              <Accordion>
+                <AccordionSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  aria-controls="panel1a-content"
+                  id="panel1a-header"
+                >
+                  <Typography
+                    style={{
+                      // paddingTop: "10px",
+                      paddingLeft: "20px",
+                      fontWeight: "50px",
+                    }}
+                  >
+                    {value.category_name} ({value.books_count})
+                  </Typography>
+                </AccordionSummary>
+                <AccordionDetails
+                  style={{
+                    display: "flow-root",
+                  }}
+                >
+                  {data.map((obj) => (
+                    <Typography>
+                      {value.category_id === obj.category.category_id ? (
+                        <Link
+                          component="button"
+                          variant="body1"
+                          color="black"
+                          style={{
+                            paddingLeft: "20px",
+                            fontWeight: "50px",
+                            display: "inline-flex",
+                          }}
+                          onClick={() =>
+                            openSubCatBooks(
+                              obj.sub_category_id,
+                              obj.sub_category_name
+                            )
+                          }
+                        >
+                          <ArrowRightIcon /> {obj.sub_category_name} ({obj.books_count})
+                        </Link>
+                      ) : (
+                        " "
+                      )}
+                    </Typography>
+                  ))}
+                </AccordionDetails>
+              </Accordion>
+            ))}
+            {/* {categoryList.map((value) => (
+              <Typography
+                style={{
+                  paddingTop: "5px",
+                  paddingLeft: "20px",
+                  fontWeight: "50px",
+                }}
+              >
+                <Link
+                  component="button"
+                  variant="body1"
+                  color="black"
+                  onClick={() => openSubCat(value.category_id)}
+                >
+                  {value.category_name}
+                </Link>
+              </Typography>
+            ))} */}
+          </div>
+        ) : (
+          ""
+        )}
+
         <div>
           {hideCheckbox ? (
             <FormGroup row className={classes.check}>
               <RadioGroup row aria-label="position">
                 <FormControlLabel
-                  value="pdf"
-                  name="pdf"
+                  value="Book"
+                  name="Book"
                   control={<Radio color="primary" />}
-                  label="pdf"
+                  label="Book"
                   labelPlacement="End"
                   onClick={handleChangePdf}
                 />
                 <FormControlLabel
-                  value="audio"
-                  name="audio"
+                  value="Audible"
+                  name="Audible"
                   control={<Radio color="primary" />}
-                  label="audio"
+                  label="Audible"
                   labelPlacement="End"
                   onClick={handleChangeAudio}
                 />
@@ -456,97 +715,105 @@ export default function SearchPage(props) {
       </div>
       {isOnSelect
         ? searchList.map((item) =>
-          item.title.toLowerCase().includes(searchBook) ||
+            item.title.toLowerCase().includes(searchBook) ||
             item.author_name.toLowerCase().includes(searchBook) ? (
-            <Paper className={classes.paper}>
-              <Grid container spacing={2}>
-                <Grid item xs={12} sm container>
-                  <Grid item>
-                    <ButtonBase className={classes.image}>
-                      <img
-                        className={classes.img}
-                        alt={item.title}
-                        src={item.thumbnail_url}
-                        onError={(e) => {
-                          e.target.onerror = null;
-                          e.target.src = carasoul1;
-                        }}
-                        onClick={() => {
-                          if (item.book_type === "Audio Book") {
-                            handleRoute(
-                              `/audiobook/${item.file_name}/${item.title}`
-                            );
-                          } else {
-                            readClicked(item.file_name, item.isbn);
-                          }
-                        }}
-                      />
-                    </ButtonBase>
-                  </Grid>
+              <Paper className={classes.paper}>
+                <Grid container spacing={2}>
+                  <Grid item xs={12} sm container>
+                    <Grid item>
+                      <ButtonBase className={classes.image}>
+                        <img
+                          className={classes.img}
+                          alt={item.title}
+                          src={item.thumbnail_url}
+                          onError={(e) => {
+                            e.target.onerror = null;
+                            e.target.src = carasoul1;
+                          }}
+                          onClick={() => {
+                            if (item.book_type === "AUDIBLE") {
+                              handleRoute(
+                                `/audiobook/${item.file_name}/${item.title}`
+                              );
+                            } else {
+                              readClicked(item.file_name, item.isbn);
+                            }
+                          }}
+                        />
+                      </ButtonBase>
+                    </Grid>
 
-                  <Grid item xs container direction="column" spacing={2}>
-                    <Grid item xs>
-                      <Typography
-                        gutterBottom
-                        onClick={() => {
-                          if (item.book_type === "Audio Book") {
-                            handleRoute(
-                              `/audiobook/${item.file_name}/${item.title}`
-                            );
-                          } else {
-                            readClicked(item.file_name, item.isbn);
-                          }
-                        }}
-                      >
-                        {item.title}
-                      </Typography>
-                      <Typography variant="body2" gutterBottom>
-                        Author: {item.author_name}
-                        <br /> {item.book_type}
-                      </Typography>
-                      {admin ? (
-                        <div >
-                          <Button
-                            variant="text"
-                            size="small"
-                            style={{
-                              position: "relative",
-                              left: "200px",
-                              bottom: "35px",
-                            }}
-                            onClick={() => openInPopup(item)}
-                          >
-                            edit
-                          </Button>
-                          <Button
-                            variant="text"
-                            size="small"
-                            style={{
-                              position: "relative",
-                              backgroundColor: "#f03131",
-                              left: "136px",
-                              bottom: "2px",
-                            }}
-                            onClick={() => {
-                              deleteFunc(item.isbn);
-                              softDlt(item.isbn);
-                            }}
-                          >
-                            DELETE
-                          </Button>
-                        </div>
-                      ) : (
-                        ""
-                      )}
+                    <Grid item xs container direction="column" spacing={2}>
+                      <Grid item xs>
+                        <Typography
+                          gutterBottom
+                          onClick={() => {
+                            if (item.book_type === "AUDIBLE") {
+                              handleRoute(
+                                `/audiobook/${item.file_name}/${item.title}`
+                              );
+                            } else {
+                              readClicked(item.file_name, item.isbn);
+                            }
+                          }}
+                        >
+                          {item.title}
+                        </Typography>
+                        {item.book_type === 'BOOK' ? (
+                        <Typography variant="body2" gutterBottom>
+                          Author: {item.author_name}
+                          <br /> {item.book_type}
+                        <br/>Number of Pages:  {item.total_pages}
+                        </Typography>) : (
+                        <Typography variant="body2" gutterBottom>
+                          Author: {item.author_name}
+                          <br /> {item.book_type}
+                          <br/> Audio Time: {item.total_audio_time}
+                        </Typography>)
+}
+                        {admin ? (
+                          <div>
+                            <Button
+                              variant="text"
+                              size="small"
+                              style={{
+                                position: "relative",
+                                left: "200px",
+                                bottom: "35px",
+                              }}
+                              onClick={() => openInPopup(item)}
+                            >
+                              edit
+                            </Button>
+                            <Button
+                              variant="text"
+                              size="small"
+                              style={{
+                                position: "relative",
+                                backgroundColor: "#f03131",
+                                left: "136px",
+                                bottom: "2px",
+                              }}
+                              onClick={() => {
+                                deleteFunc(item.isbn);
+                                softDlt(item.isbn);
+                              }}
+                            >
+                              DELETE
+                            </Button>
+                          </div>
+                        ) : (
+                          ""
+                        )}
+                      </Grid>
                     </Grid>
                   </Grid>
                 </Grid>
-              </Grid>
-            </Paper>
-          ) : (
-            ""
+              </Paper>
+            ) : (
+              ""
+            )
           )
-        )
         : ""}
 
       <Popup openPopup={openPopup} setOpenPopup={setOpenPopup}>

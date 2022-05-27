@@ -130,7 +130,7 @@ function RecentlyAdded() {
                       <Typography variant="body2" color="textSecondary">
                         Category: {item.category_name}
                         <br />
-                        Page No. {item.total_pages}
+                        Number of Pages: {item.total_pages}
                       </Typography>
                     </Grid>
                     <Grid item></Grid>

@@ -84,25 +84,27 @@ export default function Footer() {
           </IconButton>
           <div className={classes.grow1} />
           <IconButton
+          
             color="inherit"
             aria-label="book marked books"
             onClick={() => handleBottomMenuItemClick("/book_marked_books")}
           >
             <BookmarkIcon />
           </IconButton>
-          {admin ? (
-            <div className={classes.grow2}>
-              <IconButton
-                color="inherit"
-                aria-label="admin"
-                onClick={() => handleBottomMenuItemClick("/admin")}
-              >
-                <AccountCircleIcon />
-              </IconButton>
-            </div>
-          ) : (
-            ""
-          )}
+
+          <div className={classes.grow2}>
+            <IconButton
+              color="inherit"
+              aria-label="admin"
+              onClick={() =>
+                admin
+                  ? handleBottomMenuItemClick("/admin")
+                  : handleBottomMenuItemClick("/profile")
+              }
+            >
+              <AccountCircleIcon />
+            </IconButton>
+          </div>
         </Toolbar>
       </AppBar>
     </React.Fragment>
