@@ -9,7 +9,7 @@ export function forgotPw(requestBody) {
     },
   };
 
-  const url = "http://ec2-52-66-201-52.ap-south-1.compute.amazonaws.com:5000/user/password/forgot";
+  const url = "http://digilib-env-1.eba-fphgpw6n.ap-south-1.elasticbeanstalk.com:5000/user/password/forgot";
   return (dispatch) => {
     let apiUrl = url;
 
