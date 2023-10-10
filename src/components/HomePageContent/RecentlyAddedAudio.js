@@ -55,7 +55,7 @@ function RecentlyAddedAudio() {
 
   useEffect(() => {
     // fetch(
-    //   "http://ec2-13-235-86-101.ap-south-1.compute.amazonaws.com:5000/recently_added_books?book_type=AUDIO_BOOK"
+    //   "backend/recently_added_books?book_type=AUDIO_BOOK"
     // )
     recentlyAddedAudioPage()
       .then((res) => res.json())

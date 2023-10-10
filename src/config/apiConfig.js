@@ -11,10 +11,6 @@ const envConfigs = {
       key: "b9ef4b57f852f9a3c886bd8b0da5447c23eacb65",
       url: "http://digilib-env-1.eba-fphgpw6n.ap-south-1.elasticbeanstalk.com:5000/user/signup",
     },
-    signup: {
-      key: 'b9ef4b57f852f9a3c886bd8b0da5447c23eacb65',
-      url: 'http://digilib-env-1.eba-fphgpw6n.ap-south-1.elasticbeanstalk.com:5000/user/signup',
-    },
     signin: {
       key: 'b9ef4b57f852f9a3c886bd8b0da5447c23eacb65',
       url: 'http://digilib-env-1.eba-fphgpw6n.ap-south-1.elasticbeanstalk.com:5000/user/login',
@@ -37,10 +33,6 @@ const envConfigs = {
     signup: {
       key: "b9ef4b57f852f9a3c886bd8b0da5447c23eacb65",
       url: "http://digilib-env-1.eba-fphgpw6n.ap-south-1.elasticbeanstalk.com:5000/user/signup",
-    },
-    signup: {
-      key: 'b9ef4b57f852f9a3c886bd8b0da5447c23eacb65',
-      url: 'http://digilib-env-1.eba-fphgpw6n.ap-south-1.elasticbeanstalk.com:5000/user/signup',
     },
     signin: {
       key: 'b9ef4b57f852f9a3c886bd8b0da5447c23eacb65',
