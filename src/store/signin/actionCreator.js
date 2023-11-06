@@ -1,6 +1,7 @@
 import { SIGN_IN_ERROR, SIGN_IN_SUCCESS } from "./actionType";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
+import { url as mainURL} from "../../config/apiCalls";
 
 export function signIn(requestBody) {
   const requestConfig = {
@@ -11,7 +12,7 @@ export function signIn(requestBody) {
   };
 
   const url =
-    "http://ec2-52-66-201-52.ap-south-1.compute.amazonaws.com:5000/user/login";
+  mainURL+"user/login";
   return (dispatch) => {
     let apiUrl = url;
 

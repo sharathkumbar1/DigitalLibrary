@@ -1,6 +1,7 @@
 import { ACCOUNT_VF_ERROR, ACCOUNT_VF_SUCCESS } from "./actionType";
 import axios from "axios";
 import apiConfig from "../../config/apiConfig";
+import { url as mainURL} from "../../config/apiCalls";
 
 export function accountVf(tokenParam, requestConfigToken) {
   const requestConfig = {
@@ -12,7 +13,7 @@ export function accountVf(tokenParam, requestConfigToken) {
   };
 
   const url =
-    "http://ec2-52-66-201-52.ap-south-1.compute.amazonaws.com:5000/user/signup/verify?token=";
+  mainURL+"user/signup/verify?token=";
   return (dispatch) => {
     let apiUrl = url + tokenParam; //`${apiConfig.signup.url}`;
     console.log(apiUrl);

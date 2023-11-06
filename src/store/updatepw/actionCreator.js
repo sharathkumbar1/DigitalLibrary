@@ -1,5 +1,6 @@
 import { UPDATE_PW_ERROR, UPDATE_PW_SUCCESS } from "./actionType";
 import axios from "axios";
+import { url as mainURL } from "../../config/apiCalls";
 
 export function updatePw(requestBody, requestConfigToken) {
   const requestConfig = {
@@ -11,7 +12,7 @@ export function updatePw(requestBody, requestConfigToken) {
   };
 
   const url =
-    "http://ec2-52-66-201-52.ap-south-1.compute.amazonaws.com:5000/user/password/update";
+  mainURL+"user/password/update";
   return (dispatch) => {
     let apiUrl = url;
 

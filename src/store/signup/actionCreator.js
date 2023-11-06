@@ -1,5 +1,6 @@
 import { SIGN_UP_ERROR, SIGN_UP_SUCCESS } from "./actionType";
 import axios from "axios";
+import { url as mainURL } from "../../config/apiCalls";
 
 export function signUp(requestBody) {
   const requestConfig = {
@@ -10,7 +11,7 @@ export function signUp(requestBody) {
   };
 
   const url =
-    "http://ec2-52-66-201-52.ap-south-1.compute.amazonaws.com:5000/user/signup";
+  mainURL+"user/signup";
   return (dispatch) => {
     let apiUrl = url;
 

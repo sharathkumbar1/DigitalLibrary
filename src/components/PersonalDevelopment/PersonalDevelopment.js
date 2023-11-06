@@ -9,6 +9,7 @@ import { Grid, IconButton, ListItem } from "@material-ui/core";
 import CloudDownloadOutlinedIcon from "@material-ui/icons/CloudDownloadOutlined";
 import ImportContactsOutlinedIcon from "@material-ui/icons/ImportContactsOutlined";
 import axios from "axios";
+import { url } from "../../config/apiCalls";
 
 const useStyles = makeStyles({
   root: {
@@ -90,7 +91,7 @@ const PersonalDevelopment = () => {
   const readClicked = (file_name) => {
     console.log("pdf file_name " + file_name);
 
-    const apiUrl = "http://ec2-52-66-201-52.ap-south-1.compute.amazonaws.com:5000/download_url?file_name=";
+    const apiUrl = url+"download_url?file_name=";
     let pdfLink = "";
     axios
       .get(apiUrl + file_name)

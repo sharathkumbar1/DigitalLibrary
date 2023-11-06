@@ -1,5 +1,6 @@
 import { FORGOT_PW_SUCCESS, FORGOT_PW_ERROR } from "./actionType";
 import axios from "axios";
+import { url as mainURL} from "../../config/apiCalls";
 
 export function forgotPw(requestBody) {
   const requestConfig = {
@@ -9,7 +10,7 @@ export function forgotPw(requestBody) {
     },
   };
 
-  const url = "http://ec2-52-66-201-52.ap-south-1.compute.amazonaws.com:5000/user/password/forgot";
+  const url = mainURL+"user/password/forgot";
   return (dispatch) => {
     let apiUrl = url;
 

@@ -71,6 +71,7 @@ import HelpIcon from "@material-ui/icons/Help";
 import { styled } from "@mui/material/styles";
 import PropTypes from "prop-types";
 import Box from "@material-ui/core/Box";
+import { url } from "../../config/apiCalls";
 
 const styles = makeStyles((theme) => ({
   root: {
@@ -509,7 +510,7 @@ export default function SearchPage(props) {
   const deleteFunc = (isbn) => {
     if (window.confirm("Are you sure?")) {
       return axios.delete(
-        "http://ec2-52-66-201-52.ap-south-1.compute.amazonaws.com:5000/books/" +
+        url+"books/" +
           isbn,
         {
           headers: { "Content-type": "application/json" },

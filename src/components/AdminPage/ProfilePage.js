@@ -18,6 +18,7 @@ import { Grid, Link } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import Button from "@material-ui/core/Button";
 import moment from "moment";
+import { url } from "../../config/apiCalls";
 
 const useStyles = makeStyles((theme) => ({
   homePage: {
@@ -91,7 +92,7 @@ export default function ProfilePage() {
     let currentUserId = userdata.signInPostResponse.userSequenceId;
 
     fetch(
-      "http://ec2-52-66-201-52.ap-south-1.compute.amazonaws.com:5000/user/profile/" +
+      url+"user/profile/" +
         currentUserId
     )
       .then((res) => res.json())
